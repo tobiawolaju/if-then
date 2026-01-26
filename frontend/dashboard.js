@@ -48,7 +48,48 @@ function renderActivityChart() {
     }
 }
 
+// Theme Management
+const initTheme = () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    const themeButtons = themeToggle.querySelectorAll('.theme-btn');
+    const savedTheme = localStorage.getItem('theme') || 'system';
+
+    const applyTheme = (theme) => {
+        let actualTheme = theme;
+        if (theme === 'system') {
+            actualTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', actualTheme);
+
+        // Update UI
+        themeButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.theme === theme);
+        });
+
+        localStorage.setItem('theme', theme);
+    };
+
+    // Initial apply
+    applyTheme(savedTheme);
+
+    // Add click listeners
+    themeButtons.forEach(btn => {
+        btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+    });
+
+    // Listen for system changes if in system mode
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (localStorage.getItem('theme') === 'system') {
+            applyTheme('system');
+        }
+    });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     const backBtn = document.getElementById('back-home-btn');
     const logoutBtnSmall = document.getElementById('signout-btn');
 

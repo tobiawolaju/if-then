@@ -1,5 +1,5 @@
 :root {
-    /* Onyx Pro Design System - Deep Dark Mode */
+    /* Onyx Pro Design System - Default Dark Mode */
     --bg-main: #0B0C0E;
     --bg-surface: #14161A;
     --bg-surface-elevated: #1C1F25;
@@ -10,14 +10,12 @@
     --text-tertiary: #62676E;
 
     --accent-primary: #5865F2;
-    /* Electric Indigo */
     --accent-glow: rgba(88, 101, 242, 0.3);
 
     --border-subtle: rgba(255, 255, 255, 0.06);
     --border-glow: rgba(255, 255, 255, 0.1);
 
     --hour-width: 200px;
-    /* Maximum precision */
     --ruler-height: 56px;
     --track-height: 80px;
     --track-gap: 16px;
@@ -30,6 +28,25 @@
 
     --ease-standard: cubic-bezier(0.2, 0, 0, 1);
     --ease-pro: cubic-bezier(0.16, 1, 0.3, 1);
+
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="light"] {
+    --bg-main: #F8F9FA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #EDF2F7;
+    --bg-glass: rgba(248, 249, 250, 0.8);
+
+    --text-primary: #1A202C;
+    --text-secondary: #4A5568;
+    --text-tertiary: #718096;
+
+    --accent-primary: #4F46E5;
+    --accent-glow: rgba(79, 70, 229, 0.1);
+
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    --border-glow: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -739,4 +756,45 @@ header h1 {
 
 .danger-zone {
     border-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Theme Toggle UI */
+.theme-toggle-container {
+    display: flex;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    gap: 4px;
+    margin-right: 12px;
+}
+
+.theme-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all 0.2s var(--ease-pro);
+}
+
+.theme-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--border-subtle);
+}
+
+.theme-btn.active {
+    background-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.theme-btn svg {
+    width: 16px;
+    height: 16px;
 }
