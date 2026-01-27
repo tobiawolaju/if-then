@@ -8,6 +8,15 @@ function getCalendarClient(accessToken) {
     return google.calendar({ version: 'v3', auth });
 }
 
+// Helper: Convert HH:MM to ISO string for today
+function convertToISO(timeStr) {
+    if (!timeStr) return undefined;
+    const now = new Date();
+    const [hours, minutes] = timeStr.split(':');
+    now.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+    return now.toISOString();
+}
+
 const tools = {
     getSchedule: async (args, context) => {
         const { uid } = context;
@@ -15,7 +24,9 @@ const tools = {
 
         const ref = db.ref(`users/${uid}/schedule`);
         const snapshot = await ref.once('value');
-        return snapshot.val() || [];
+        const val = snapshot.val();
+        // Return array whether it's stored as object or array
+        return val ? (Array.isArray(val) ? val : Object.values(val)) : [];
     },
 
     addActivity: async ({ title, startTime, endTime, description, location, attendees }, context) => {
@@ -26,10 +37,10 @@ const tools = {
         const snapshot = await ref.once('value');
         const activities = snapshot.val() || [];
 
-        // Handle activities being an object or array
+        // Handle activities being an object or array in DB
         const activitiesArray = Array.isArray(activities) ? activities : Object.values(activities);
 
-        // Robust ID generation: Filter valid IDs and default to 0 if none found
+        // Robust ID generation: Find max ID and add 1
         const existingIds = activitiesArray.map(a => parseInt(a.id)).filter(id => !isNaN(id));
         const newId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
 
@@ -42,7 +53,7 @@ const tools = {
             location: location || "",
             attendees: attendees || [],
             status: "Pending",
-            color: "#" + Math.floor(Math.random() * 16777215).toString(16)
+            color: "#" + Math.floor(Math.random() * 16777215).toString(16) // Random Hex Color
         };
 
         // Add to Google Calendar
@@ -55,7 +66,7 @@ const tools = {
                     description: description,
                     start: {
                         dateTime: convertToISO(startTime),
-                        timeZone: 'UTC', // Ideally should use user's timezone
+                        timeZone: 'UTC', // Ideally, get user's timezone from frontend
                     },
                     end: {
                         dateTime: convertToISO(endTime),
@@ -71,22 +82,15 @@ const tools = {
 
                 newActivity.googleEventId = res.data.id;
                 newActivity.htmlLink = res.data.htmlLink;
-                console.log("Event added to Google Calendar:", res.data.htmlLink);
+                console.log(`Event '${title}' added to Google Calendar.`);
 
             } catch (err) {
-                console.error("Failed to add to Google Calendar:", err);
-                // Continue adding to local DB even if Calendar fails
+                console.error("Failed to add to Google Calendar:", err.message);
+                // We continue adding to DB even if Calendar fails
             }
         }
 
-        // Save to Firebase
-        // We'll use the ID as the key for easier updates/deletions if we convert to object structure, 
-        // but for now let's append to list or use numeric ID mapping.
-        // Actually, using push() is better for Firebase, but let's stick to array for compatibility with existing frontend logic if possible,
-        // OR better: use ID as key.
-        // The frontend expects an array. Let's rewrite the whole array for simplicity or update a specific node.
-        // Rewriting whole array is inefficient but easiest for migration.
-
+        // Save to Firebase (Re-saving the whole array to keep indices clean)
         activitiesArray.push(newActivity);
         await ref.set(activitiesArray);
 
@@ -114,7 +118,6 @@ const tools = {
         if (accessToken && originalActivity.googleEventId) {
             try {
                 const calendar = getCalendarClient(accessToken);
-
                 const eventPatch = {};
                 if (updates.title) eventPatch.summary = updates.title;
                 if (updates.description) eventPatch.description = updates.description;
@@ -129,7 +132,7 @@ const tools = {
                 });
                 console.log("Google Calendar event updated");
             } catch (err) {
-                console.error("Failed to update Google Calendar:", err);
+                console.error("Failed to update Google Calendar:", err.message);
             }
         }
 
@@ -161,7 +164,7 @@ const tools = {
                 });
                 console.log("Google Calendar event deleted");
             } catch (err) {
-                console.error("Failed to delete from Google Calendar:", err);
+                console.error("Failed to delete from Google Calendar:", err.message);
             }
         }
 
@@ -181,14 +184,5 @@ const tools = {
         };
     }
 };
-
-// Helper: Convert HH:MM to ISO string for today
-function convertToISO(timeStr) {
-    if (!timeStr) return undefined;
-    const now = new Date();
-    const [hours, minutes] = timeStr.split(':');
-    now.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
-    return now.toISOString();
-}
 
 module.exports = tools;
