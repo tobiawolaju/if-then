@@ -28,7 +28,10 @@ const tools = {
 
         // Handle activities being an object or array
         const activitiesArray = Array.isArray(activities) ? activities : Object.values(activities);
-        const newId = activitiesArray.length > 0 ? Math.max(...activitiesArray.map(a => a.id)) + 1 : 1;
+
+        // Robust ID generation: Filter valid IDs and default to 0 if none found
+        const existingIds = activitiesArray.map(a => parseInt(a.id)).filter(id => !isNaN(id));
+        const newId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
 
         const newActivity = {
             id: newId,
