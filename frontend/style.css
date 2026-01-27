@@ -779,12 +779,11 @@ header h1 {
 /* Theme Toggle UI */
 .theme-toggle-container {
     display: flex;
-    background-color: var(--bg-surface-elevated);
+    background-color: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     padding: 4px;
     border-radius: var(--radius-pill);
     gap: 4px;
-    margin-right: 12px;
 }
 
 .theme-btn {
