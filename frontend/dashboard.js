@@ -48,44 +48,21 @@ function renderActivityChart() {
     }
 }
 
-// Theme Management
+// Strict System Theme Management
 const initTheme = () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
+    // Just listen for system changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const themeButtons = themeToggle.querySelectorAll('.theme-btn');
-    const savedTheme = localStorage.getItem('theme') || 'system';
-
-    const applyTheme = (theme) => {
-        let actualTheme = theme;
-        if (theme === 'system') {
-            actualTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-
-        document.documentElement.setAttribute('data-theme', actualTheme);
-
-        // Update UI
-        themeButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.theme === theme);
-        });
-
-        localStorage.setItem('theme', theme);
+    const applySystemTheme = () => {
+        const theme = mediaQuery.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
     };
 
-    // Initial apply
-    applyTheme(savedTheme);
+    // Apply init
+    applySystemTheme();
 
-    // Add click listeners
-    themeButtons.forEach(btn => {
-        btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
-    });
-
-    // Listen for system changes if in system mode
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (localStorage.getItem('theme') === 'system') {
-            applyTheme('system');
-        }
-    });
+    // Listen
+    mediaQuery.addEventListener('change', applySystemTheme);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

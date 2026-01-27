@@ -777,44 +777,7 @@ header h1 {
 }
 
 /* Theme Toggle UI */
-.theme-toggle-container {
-    display: flex;
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    padding: 4px;
-    border-radius: var(--radius-pill);
-    gap: 4px;
-}
 
-.theme-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    color: var(--text-tertiary);
-    cursor: pointer;
-    transition: all 0.2s var(--ease-pro);
-}
-
-.theme-btn:hover {
-    color: var(--text-primary);
-    background-color: var(--border-subtle);
-}
-
-.theme-btn.active {
-    background-color: var(--accent-primary);
-    color: white;
-    box-shadow: none;
-}
-
-.theme-btn svg {
-    width: 16px;
-    height: 16px;
-}
 
 /* Edit Form Styles */
 .edit-container {
