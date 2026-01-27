@@ -386,20 +386,20 @@ header h1 {
 }
 
 .action-button:hover {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
 }
 
 .action-button.primary {
     background-color: var(--accent-primary);
     color: #FFF;
     font-weight: 600;
-    box-shadow: 0 4px 15px var(--accent-glow);
+    box-shadow: none;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .action-button.primary:hover {
     background-color: #6c77ff;
-    box-shadow: 0 8px 25px var(--accent-glow);
+    box-shadow: none;
     transform: translateY(-2px);
 }
 
@@ -472,7 +472,7 @@ header h1 {
     transform: translateY(-4px) scale(1.01);
     background: var(--bg-surface-elevated);
     border: 1px solid var(--border-glow);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
     z-index: 100;
 }
 
@@ -509,7 +509,7 @@ header h1 {
     background-color: var(--accent-primary);
     pointer-events: none;
     z-index: 20;
-    box-shadow: 0 0 5px var(--accent-glow);
+    box-shadow: none;
 }
 
 .current-time-indicator::after {
@@ -806,7 +806,7 @@ header h1 {
 .theme-btn.active {
     background-color: var(--accent-primary);
     color: white;
-    box-shadow: 0 4px 12px var(--accent-glow);
+    box-shadow: none;
 }
 
 .theme-btn svg {
