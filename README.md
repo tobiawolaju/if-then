@@ -68,22 +68,18 @@ graph TD
 - Google Cloud Project with Calendar API enabled
 - Firebase Project with Auth & Realtime Database enabled
 
-### Installation
+### Live Deployment
+The backend is deployed on Render: [https://to-do-iun8.onrender.com](https://to-do-iun8.onrender.com)
+The frontend is configured to point to this URL in `frontend/script.js`.
+
+### Installation & Local Development
 
 1.  **Clone the repository**
-2.  **Backend Setup**:
-    ```bash
-    cd backend
-    npm install
-    ```
-    - Create `.env` with `GEMINI_API_KEY`.
-    - Place `serviceAccountKey.json` (from Firebase) in `backend/`.
-    - Run: `node server.js`
-3.  **Frontend Setup**:
-    ```bash
-    cd frontend
-    npm install
-    npm run dev
-    ```
-    - Configure `firebaseConfig` in `script.js`.
-4.  Open the local URL (e.g., `http://localhost:5173`).
+2.  **Using Yarn**:
+    The project is configured to use **Yarn**. 
+    - In `backend/`: Run `yarn install` and `yarn start`.
+    - In `frontend/`: Run `yarn install` and `yarn dev`.
+
+3.  **Environment Variables**:
+    - **Backend**: Create `.env` with `GEMINI_API_KEY`. Render uses "Secret Files" for `serviceAccountKey.json`.
+    - **Frontend**: Configure `firebaseConfig` in `script.js`.
