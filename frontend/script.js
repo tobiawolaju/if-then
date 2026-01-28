@@ -573,13 +573,13 @@ function layoutAndRenderActivities(activities) {
     const trackHeight = 80; // Match CSS
     const trackGap = 16;  // Match CSS
 
-    container.style.height = `${tracks.length * (trackHeight + trackGap)} px`;
+    container.style.height = `${tracks.length * (trackHeight + trackGap)}px`;
 
     sorted.forEach(activity => {
         const el = document.createElement('div');
         el.className = 'activity-block';
         el.innerHTML = `
-    < div class="activity-title" > ${activity.title}</div >
+    <div class="activity-title">${activity.title}</div>
         <div class="activity-time">${activity.startTime} - ${activity.endTime}</div>
 `;
 
@@ -588,14 +588,15 @@ function layoutAndRenderActivities(activities) {
         const duration = end - start;
 
         // Use CSS variables for time-based positioning
-        el.style.left = `calc(${start} * var(--pixels - per - minute))`;
-        el.style.width = `calc(${duration} * var(--pixels - per - minute))`;
-        el.style.top = `${activity.trackIndex * (80 + 16)} px`; // 80 is trackHeight, 16 is trackGap
+        el.style.left = `calc(${start} * var(--pixels-per-minute))`;
+        el.style.width = `calc(${duration} * var(--pixels-per-minute))`;
+        el.style.top = `${activity.trackIndex * (80 + 16)}px`; // 80 is trackHeight, 16 is trackGap
 
         let bgColor = activity.color || '#5865F2';
         el.style.backgroundColor = hexToRgba(bgColor, 0.15);
-        el.style.borderLeft = `4px solid ${bgColor} `;
+        el.style.borderLeft = `4px solid ${bgColor}`;
         el.style.color = 'var(--text-primary)';
+
 
         el.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -625,7 +626,7 @@ function setupCurrentTimeIndicator() {
     function update() {
         const now = new Date();
         const minutes = now.getHours() * 60 + now.getMinutes();
-        indicator.style.left = `calc(${minutes} * var(--pixels - per - minute))`;
+        indicator.style.left = `calc(${minutes} * var(--pixels-per-minute))`;
         requestAnimationFrame(update);
     }
     update();
