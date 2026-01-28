@@ -370,6 +370,10 @@ header h1 {
     margin-top: 40px;
 }
 
+.action-button2 {
+    display: none;
+}
+
 .action-button {
     padding: 6px 16px;
     flex: 1;
