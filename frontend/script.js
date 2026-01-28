@@ -164,8 +164,6 @@ function renderDetails(activity) {
                     </div>
                 </div>
                 ` : ''}
-                ` : ''
-}
 
 <div class="detail-item">
     <h3>Tags</h3>
@@ -173,13 +171,13 @@ function renderDetails(activity) {
         ${(activity.tags || []).map(tag => `<span class="tag-chip">${tag}</span>`).join('') || '<span class="no-tags">No tags</span>'}
     </div>
 </div>
-            </div >
+            </div>
 
     <div class="detail-actions">
         <button class="action-button primary" id="edit-btn">Edit</button>
         <button class="action-button secondary" id="delete-btn">Delete</button>
     </div>
-        </div >
+        </div>
     `;
 
     // Button Listeners
@@ -202,7 +200,7 @@ function renderDetails(activity) {
 function editActivity(activity) {
     const panel = document.getElementById('details-panel');
     panel.innerHTML = `
-    < div class="edit-container" >
+    <div class="edit-container">
             <h3>Edit Activity</h3>
             <div class="form-group">
                 <label>Title</label>
@@ -234,7 +232,7 @@ function editActivity(activity) {
                 <button class="action-button primary" id="save-edit">Save Changes</button>
                 <button class="action-button secondary" id="cancel-edit">Cancel</button>
             </div>
-        </div >
+        </div>
     `;
 
     document.getElementById('cancel-edit').addEventListener('click', () => {
@@ -505,7 +503,7 @@ function parseTime(timeStr) {
 function formatTime(minutes) {
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
-    return `${ String(h).padStart(2, '0') }:${ String(m).padStart(2, '0') } `;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')} `;
 }
 
 function renderTimeRuler() {
@@ -515,7 +513,7 @@ function renderTimeRuler() {
     for (let i = CONFIG.startHour; i < CONFIG.endHour; i++) {
         const marker = document.createElement('div');
         marker.className = 'time-marker';
-        marker.textContent = `${ String(i).padStart(2, '0') }:00`;
+        marker.textContent = `${String(i).padStart(2, '0')}:00`;
         ruler.appendChild(marker);
     }
 }
@@ -557,13 +555,13 @@ function layoutAndRenderActivities(activities) {
     const trackHeight = 80; // Match CSS
     const trackGap = 16;  // Match CSS
 
-    container.style.height = `${ tracks.length * (trackHeight + trackGap) } px`;
+    container.style.height = `${tracks.length * (trackHeight + trackGap)} px`;
 
     sorted.forEach(activity => {
         const el = document.createElement('div');
         el.className = 'activity-block';
         el.innerHTML = `
-    < div class="activity-title" > ${ activity.title }</div >
+    < div class="activity-title" > ${activity.title}</div >
         <div class="activity-time">${activity.startTime} - ${activity.endTime}</div>
 `;
 
@@ -572,13 +570,13 @@ function layoutAndRenderActivities(activities) {
         const duration = end - start;
 
         // Use CSS variables for time-based positioning
-        el.style.left = `calc(${ start } * var(--pixels - per - minute))`;
-        el.style.width = `calc(${ duration } * var(--pixels - per - minute))`;
-        el.style.top = `${ activity.trackIndex * (80 + 16) } px`; // 80 is trackHeight, 16 is trackGap
+        el.style.left = `calc(${start} * var(--pixels - per - minute))`;
+        el.style.width = `calc(${duration} * var(--pixels - per - minute))`;
+        el.style.top = `${activity.trackIndex * (80 + 16)} px`; // 80 is trackHeight, 16 is trackGap
 
         let bgColor = activity.color || '#5865F2';
         el.style.backgroundColor = hexToRgba(bgColor, 0.15);
-        el.style.borderLeft = `4px solid ${ bgColor } `;
+        el.style.borderLeft = `4px solid ${bgColor} `;
         el.style.color = 'var(--text-primary)';
 
         el.addEventListener('click', (e) => {
@@ -609,7 +607,7 @@ function setupCurrentTimeIndicator() {
     function update() {
         const now = new Date();
         const minutes = now.getHours() * 60 + now.getMinutes();
-        indicator.style.left = `calc(${ minutes } * var(--pixels - per - minute))`;
+        indicator.style.left = `calc(${minutes} * var(--pixels - per - minute))`;
         requestAnimationFrame(update);
     }
     update();
