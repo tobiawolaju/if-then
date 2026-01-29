@@ -147,13 +147,11 @@ function renderAttendeesHtml(attendees) {
 }
 
 function renderTagsHtml(tags) {
-    const tagsList = tags || [];
-    const tagsHtml = tagsList.length > 0
-        ? tagsList.map(tag => `<span class="tag-chip">${tag}</span>`).join('')
-        : '<span class="no-tags">No tags</span>';
+    if (!tags || tags.length === 0) return '';
+    const tagsHtml = tags.map(tag => `<span class="tag-chip">${tag}</span>`).join('');
 
     return `
-        <div class="detail-item">
+        <div class="detail-section">
             <h3>Tags</h3>
             <div class="tags-list">
                 ${tagsHtml}
@@ -163,13 +161,11 @@ function renderTagsHtml(tags) {
 }
 
 function renderDaysHtml(days) {
-    const daysList = days || [];
-    const daysHtml = daysList.length > 0
-        ? daysList.map(day => `<span class="tag-chip">${day}</span>`).join('')
-        : '<span class="no-tags">Every day</span>';
+    if (!days || days.length === 0) return '';
+    const daysHtml = days.map(day => `<span class="tag-chip day-chip">${day}</span>`).join('');
 
     return `
-        <div class="detail-item">
+        <div class="detail-section">
             <h3>Active Days</h3>
             <div class="tags-list">
                 ${daysHtml}
@@ -193,16 +189,16 @@ function renderDetails(activity) {
 
     panel.innerHTML = `
         <div class="detail-container">
-            <div class="detail-header">
+            <header class="detail-header">
                 <div class="detail-title-row">
                     <h2>${activity.title}</h2>
-                    <span class="status-chip" style="background-color: ${hexToRgba(statusColor, 0.1)}; color: ${statusColor}; border: 1px solid ${hexToRgba(statusColor, 0.3)}">${activity.status || 'Scheduled'}</span>
+                    <span class="status-chip" style="background-color: ${hexToRgba(statusColor, 0.1)}; color: ${statusColor}; border: 1px solid ${hexToRgba(statusColor, 0.2)}">${activity.status || 'Scheduled'}</span>
                 </div>
                 <div class="detail-time">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    ${activity.startTime} - ${activity.endTime}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    ${activity.startTime} — ${activity.endTime}
                 </div>
-            </div>
+            </header>
             
             <div class="detail-section">
                 <h3>Description</h3>
@@ -210,25 +206,30 @@ function renderDetails(activity) {
             </div>
             
             <div class="detail-grid">
-                <div class="detail-item">
+                <div class="detail-section">
                     <h3>Location</h3>
                     <div class="detail-value">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        ${activity.location || 'N/A'}
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        ${activity.location || 'Not specified'}
                     </div>
                 </div>
                 
-                ${renderAttendeesHtml(activity.attendees)}
-
-                ${renderTagsHtml(activity.tags)}
-
-                ${renderDaysHtml(activity.days)}
+                ${activity.attendees?.length > 0 ? `
+                <div class="detail-section">
+                    <h3>Attendees</h3>
+                    <div class="tags-list">
+                        ${activity.attendees.map(name => `<span class="tag-chip">${name}</span>`).join('')}
+                    </div>
+                </div>` : ''}
             </div>
 
-    <div class="detail-actions">
-        <button class="action-button primary" id="edit-btn">Edit</button>
-        <button class="action-button secondary" id="delete-btn">Delete</button>
-    </div>
+            ${renderTagsHtml(activity.tags)}
+            ${renderDaysHtml(activity.days)}
+
+            <div class="detail-actions">
+                <button class="action-button primary" id="edit-btn">Edit Details</button>
+                <button class="action-button secondary" id="delete-btn">Delete</button>
+            </div>
         </div>
     `;
 
@@ -252,12 +253,17 @@ function renderDetails(activity) {
 function editActivity(activity) {
     const panel = document.getElementById('details-panel');
     panel.innerHTML = `
-    <div class="edit-container">
-            <h3>Edit Activity</h3>
+        <div class="detail-container edit-container">
+            <header class="detail-header">
+                <h2>Edit Activity</h2>
+                <p style="color: var(--text-tertiary); font-size: 0.875rem;">Modify the details of your scheduled activity.</p>
+            </header>
+
             <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="edit-title" value="${activity.title}">
+                <label>Activity Title</label>
+                <input type="text" id="edit-title" value="${activity.title}" placeholder="e.g., Deep Work Session">
             </div>
+
             <div class="form-grid">
                 <div class="form-group">
                     <label>Start Time</label>
@@ -268,22 +274,27 @@ function editActivity(activity) {
                     <input type="time" id="edit-end" value="${activity.endTime}">
                 </div>
             </div>
+
             <div class="form-group">
                 <label>Location</label>
-                <input type="text" id="edit-location" value="${activity.location || ''}">
+                <input type="text" id="edit-location" value="${activity.location || ''}" placeholder="Add a location">
             </div>
+
             <div class="form-group">
                 <label>Tags (comma separated)</label>
-                <input type="text" id="edit-tags" value="${(activity.tags || []).join(', ')}">
+                <input type="text" id="edit-tags" value="${(activity.tags || []).join(', ')}" placeholder="Work, Urgent, Personal">
             </div>
+
             <div class="form-group">
-                <label>Days (comma separated, e.g., Monday, Tuesday)</label>
-                <input type="text" id="edit-days" value="${(activity.days || []).join(', ')}">
+                <label>Recurrence Days (comma separated)</label>
+                <input type="text" id="edit-days" value="${(activity.days || []).join(', ')}" placeholder="Monday, Wednesday, Friday">
             </div>
+
             <div class="form-group">
-                <label>Description</label>
-                <textarea id="edit-description">${activity.description || ''}</textarea>
+                <label>Notes / Description</label>
+                <textarea id="edit-description" placeholder="Add any additional details here...">${activity.description || ''}</textarea>
             </div>
+
             <div class="detail-actions">
                 <button class="action-button primary" id="save-edit">Save Changes</button>
                 <button class="action-button secondary" id="cancel-edit">Cancel</button>
