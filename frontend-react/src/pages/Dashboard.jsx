@@ -15,7 +15,7 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
     const handleSendMessage = async (message) => {
         setIsProcessing(true);
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch('https://to-do-iun8.onrender.com/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, userId: user.uid, accessToken })
@@ -34,7 +34,7 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
 
         // Handle direct direct API call for updates to sync with calendar
         try {
-            await fetch('/api/activities/update', {
+            await fetch('https://to-do-iun8.onrender.com/api/activities/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -55,7 +55,7 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
         if (!user || !window.confirm("Are you sure?")) return;
 
         try {
-            await fetch('/api/activities/delete', {
+            await fetch('https://to-do-iun8.onrender.com/api/activities/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
