@@ -1,6 +1,6 @@
 {
-    "name": "Life Timeline",
-    "short_name": "Timeline",
+    "name": "Focus",
+    "short_name": "Focus",
     "description": "AI-Powered Life Planning and Timeline Visualization.",
     "start_url": "/",
     "display": "standalone",
