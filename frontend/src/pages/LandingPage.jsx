@@ -14,7 +14,7 @@ export default function LandingPage({ onLogin }) {
 
                 {/* Final CTA Section */}
                 <section className="landing-section signin-section">
-                    <h1>Ready to start?</h1>
+                    <h2>Ready to start?</h2>
                     <button className="action-button primary hero-cta" onClick={onLogin}>
                         Sign in with Google
                     </button>
