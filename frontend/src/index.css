@@ -354,6 +354,7 @@ header h1 {
   resize: none;
   max-height: 200px;
   flex: 1;
+  height: auto;
 }
 
 #chat-input::placeholder {
