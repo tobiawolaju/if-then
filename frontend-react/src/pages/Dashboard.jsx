@@ -7,7 +7,7 @@ import { useSchedule } from '../hooks/useSchedule';
 import { database } from '../firebase-config';
 import { ref, update, remove } from 'firebase/database';
 
-export default function Dashboard({ user, onLogout }) {
+export default function Dashboard({ user, onLogout, accessToken }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -18,7 +18,7 @@ export default function Dashboard({ user, onLogout }) {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message, userId: user.uid })
+                body: JSON.stringify({ message, userId: user.uid, accessToken })
             });
             const result = await response.json();
             console.log("AI Response:", result);
@@ -31,15 +31,43 @@ export default function Dashboard({ user, onLogout }) {
 
     const handleSaveActivity = async (updatedActivity) => {
         if (!user) return;
-        const activityRef = ref(database, `users/${user.uid}/schedule/${updatedActivity.id}`);
-        await update(activityRef, updatedActivity);
+
+        // Handle direct direct API call for updates to sync with calendar
+        try {
+            await fetch('/api/activities/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: updatedActivity.id,
+                    updates: updatedActivity,
+                    userId: user.uid,
+                    accessToken
+                })
+            });
+        } catch (error) {
+            console.error("Save error:", error);
+        }
+
         setSelectedActivity(null);
     };
 
     const handleDeleteActivity = async (activityId) => {
         if (!user || !window.confirm("Are you sure?")) return;
-        const activityRef = ref(database, `users/${user.uid}/schedule/${activityId}`);
-        await remove(activityRef);
+
+        try {
+            await fetch('/api/activities/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: activityId,
+                    userId: user.uid,
+                    accessToken
+                })
+            });
+        } catch (error) {
+            console.error("Delete error:", error);
+        }
+
         setSelectedActivity(null);
     };
 

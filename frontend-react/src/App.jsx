@@ -5,7 +5,7 @@ import { useAuth } from './hooks/useAuth';
 import './index.css';
 
 function App() {
-  const { user, login, logout, loading: authLoading } = useAuth();
+  const { user, login, logout, accessToken, loading: authLoading } = useAuth();
 
   if (authLoading) return <div className="loading">Initializing...</div>;
 
@@ -14,7 +14,7 @@ function App() {
       {!user ? (
         <LandingPage onLogin={login} />
       ) : (
-        <Dashboard user={user} onLogout={logout} />
+        <Dashboard user={user} onLogout={logout} accessToken={accessToken} />
       )}
     </>
   );
