@@ -229,7 +229,7 @@ function renderDetails(activity) {
         <button class="action-button primary" id="edit-btn">Edit</button>
         <button class="action-button secondary" id="delete-btn">Delete</button>
     </div>
-        </div >
+        </div>
     `;
 
     // Button Listeners
@@ -252,7 +252,7 @@ function renderDetails(activity) {
 function editActivity(activity) {
     const panel = document.getElementById('details-panel');
     panel.innerHTML = `
-    < div class="edit-container" >
+    <div class="edit-container">
             <h3>Edit Activity</h3>
             <div class="form-group">
                 <label>Title</label>
@@ -288,7 +288,7 @@ function editActivity(activity) {
                 <button class="action-button primary" id="save-edit">Save Changes</button>
                 <button class="action-button secondary" id="cancel-edit">Cancel</button>
             </div>
-        </div >
+        </div>
     `;
 
     document.getElementById('cancel-edit').addEventListener('click', () => {
@@ -590,14 +590,18 @@ function applyZoom(newZoom, centerX = window.innerWidth / 2) {
 
 
 function parseTime(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
+    if (!timeStr || typeof timeStr !== 'string') return 0;
+    const parts = timeStr.trim().split(':');
+    if (parts.length < 2) return 0;
+    const hours = parseInt(parts[0], 10) || 0;
+    const minutes = parseInt(parts[1], 10) || 0;
     return hours * 60 + minutes;
 }
 
 function formatTime(minutes) {
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
-    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')} `;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 function renderTimeRuler() {
@@ -615,11 +619,11 @@ function renderTimeRuler() {
 function layoutAndRenderActivities(activities) {
     if (!activities) return;
 
-    // Filter by current day of the week
-    const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+    // Filter by current day of the week (case-insensitive)
+    const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     const filteredActivities = activities.filter(activity => {
         if (!activity.days || activity.days.length === 0) return true; // Show if no days specified
-        return activity.days.includes(currentDay);
+        return activity.days.some(day => day.toString().toLowerCase() === currentDay);
     });
 
     // 1. Sort by start time
@@ -656,13 +660,13 @@ function layoutAndRenderActivities(activities) {
     const trackHeight = 80; // Match CSS
     const trackGap = 16;  // Match CSS
 
-    container.style.height = `${tracks.length * (trackHeight + trackGap)} px`;
+    container.style.height = `${tracks.length * (trackHeight + trackGap)}px`;
 
     sorted.forEach(activity => {
         const el = document.createElement('div');
         el.className = 'activity-block';
         el.innerHTML = `
-    < div class="activity-title" > ${activity.title}</div >
+    <div class="activity-title">${activity.title}</div>
         <div class="activity-time">${activity.startTime} - ${activity.endTime}</div>
 `;
 
@@ -671,13 +675,13 @@ function layoutAndRenderActivities(activities) {
         const duration = end - start;
 
         // Use CSS variables for time-based positioning
-        el.style.left = `calc(${start} * var(--pixels - per - minute))`;
-        el.style.width = `calc(${duration} * var(--pixels - per - minute))`;
-        el.style.top = `${activity.trackIndex * (80 + 16)} px`; // 80 is trackHeight, 16 is trackGap
+        el.style.left = `calc(${start} * var(--pixels-per-minute))`;
+        el.style.width = `calc(${duration} * var(--pixels-per-minute))`;
+        el.style.top = `${activity.trackIndex * (80 + 16)}px`; // 80 is trackHeight, 16 is trackGap
 
         let bgColor = activity.color || '#5865F2';
         el.style.backgroundColor = hexToRgba(bgColor, 0.15);
-        el.style.borderLeft = `4px solid ${bgColor} `;
+        el.style.borderLeft = `4px solid ${bgColor}`;
         el.style.color = 'var(--text-primary)';
 
 
@@ -709,7 +713,7 @@ function setupCurrentTimeIndicator() {
     function update() {
         const now = new Date();
         const minutes = now.getHours() * 60 + now.getMinutes();
-        indicator.style.left = `calc(${minutes} * var(--pixels - per - minute))`;
+        indicator.style.left = `calc(${minutes} * var(--pixels-per-minute))`;
         requestAnimationFrame(update);
     }
     update();
