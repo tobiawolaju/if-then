@@ -689,7 +689,8 @@ header h1 {
         /* Adjust for sidebar */
     }
 
-    #cancel-edit {
+    #cancel-edit,
+    .close-panel-btn {
         display: none !important;
     }
 }
