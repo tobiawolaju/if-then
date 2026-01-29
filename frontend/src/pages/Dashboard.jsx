@@ -80,21 +80,7 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
 
     return (
         <div className="app-container">
-            <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
-            <main className={`main-content ${selectedActivity ? 'has-selection' : ''}`}>
-                <Timeline
-                    activities={activities}
-                    onSelectActivity={setSelectedActivity}
-                />
-                <DetailsSheet
-                    activity={selectedActivity}
-                    isOpen={!!selectedActivity}
-                    onClose={() => setSelectedActivity(null)}
-                    onSave={handleSaveActivity}
-                    onDelete={handleDeleteActivity}
-                />
-            </main>
-            <ChatInput onSendMessage={handleSendMessage} isProcessing={isProcessing} />
+            {/* Dashboard is blank for now */}
         </div>
     );
 }
