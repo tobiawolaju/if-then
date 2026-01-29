@@ -1,0 +1,17 @@
+{
+    "name": "Life Timeline",
+    "short_name": "Timeline",
+    "description": "AI-Powered Life Planning and Timeline Visualization.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#0a0a0a",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/3652/3652191.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
