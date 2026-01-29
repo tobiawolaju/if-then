@@ -32,9 +32,8 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
     const handleSaveActivity = async (updatedActivity) => {
         if (!user) return;
 
-        // Handle direct direct API call for updates to sync with calendar
         try {
-            await fetch('https://to-do-iun8.onrender.com/api/activities/update', {
+            const response = await fetch('https://to-do-iun8.onrender.com/api/activities/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -44,11 +43,17 @@ export default function Dashboard({ user, onLogout, accessToken, onNavigateToPro
                     accessToken
                 })
             });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || "Failed to update activity");
+            }
+
+            return true;
         } catch (error) {
             console.error("Save error:", error);
+            throw error;
         }
-
-        setSelectedActivity(null);
     };
 
     const handleDeleteActivity = async (activityId) => {

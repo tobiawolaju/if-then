@@ -4,24 +4,40 @@ import { X, Clock, MapPin } from 'lucide-react';
 export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState(activity || {});
+    const [saveStatus, setSaveStatus] = useState('idle'); // 'idle', 'saving', 'saved'
 
     useEffect(() => {
         if (activity) {
             setEditData(activity);
             setIsEditing(false);
+            setSaveStatus('idle');
         }
     }, [activity]);
 
     if (!activity && !editData.id) return null;
 
-    const handleSave = () => {
+    const handleSave = async () => {
+        setSaveStatus('saving');
         const updatedData = {
             ...editData,
             tags: typeof editData.tags === 'string' ? editData.tags.split(',').map(t => t.trim()).filter(t => t) : editData.tags,
             days: typeof editData.days === 'string' ? editData.days.split(',').map(t => t.trim()).filter(t => t) : editData.days
         };
-        onSave(updatedData);
-        setIsEditing(false);
+
+        try {
+            await onSave(updatedData);
+            setSaveStatus('saved');
+            // Wait 1 second before closing
+            setTimeout(() => {
+                onClose();
+                setIsEditing(false);
+                setSaveStatus('idle');
+            }, 1000);
+        } catch (error) {
+            console.error("Failed to save:", error);
+            setSaveStatus('idle');
+            alert("Failed to save changes. Please try again.");
+        }
     };
 
     const getStatusColor = (status) => {
@@ -180,7 +196,13 @@ export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDele
             </div>
 
             <div className="detail-actions">
-                <button className="action-button primary" onClick={handleSave}>Save Changes</button>
+                <button
+                    className="action-button primary"
+                    onClick={handleSave}
+                    disabled={saveStatus !== 'idle'}
+                >
+                    {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'saved' ? 'Saved ✓' : 'Save Changes'}
+                </button>
                 <button className="action-button secondary" onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
         </div>
