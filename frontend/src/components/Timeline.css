@@ -8,6 +8,11 @@
         linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
     background-size: 100% var(--grid-track-total), var(--hour-width) 100%;
     background-attachment: local;
+
+    /* Mobile Zoom Fixes */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .time-ruler {
