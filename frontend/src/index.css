@@ -1,10 +1,10 @@
 /* ============================================
-   CRASTINAT - Web3 / Crypto Aesthetic
-   Vibe: "DeFi Protocol", "Cyberpunk", "Deep Space"
-   Dark, Neon, Glassmorphism, Spacious, Futuristic
+   CRASTINAT - Minimalist Time Editor
+   Vibe: "Focus", "Deep Work", "Technical"
+   Monochrome, Grid, Spacious, Functional
    ============================================ */
 
-/* Import Space Grotesk for that Crypto feel */
+/* Import Space Grotesk for Headings & Inter for body */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {

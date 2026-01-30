@@ -42,7 +42,7 @@ function BlockClock() {
             alignItems: 'center',
             gap: '12px'
         }}>
-            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8em' }}>BLOCK_TIME:</span>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8em' }}>CURRENT TIME:</span>
             <span>{format(time.getHours())}:{format(time.getMinutes())}:{format(time.getSeconds())}</span>
         </div>
     );
@@ -81,7 +81,7 @@ export default function LandingPage({ onLogin }) {
                     >
                         <div className="hero-badge fade-in-up">
                             <span className="badge-dot" style={{ background: '#fff', boxShadow: '0 0 10px #fff' }}></span>
-                            <span>PROTOCOL V2.0</span>
+                            <span>TIME EDITOR v1.0</span>
                         </div>
 
                         <h1 className="brand-title fade-in-up" style={{ animationDelay: '0.1s' }}>
@@ -95,7 +95,7 @@ export default function LandingPage({ onLogin }) {
                             color: 'var(--text-secondary)',
                             letterSpacing: '0.05em'
                         }}>
-                            THE DECENTRALIZED TIME LAYER.
+                            STOP DELAYING. START LIVING.
                         </p>
 
                         <BlockClock />
@@ -120,13 +120,13 @@ export default function LandingPage({ onLogin }) {
                                 textTransform: 'uppercase'
                             }}
                         >
-                            Connect Identity
+                            Start Editing Time
                         </button>
 
                         <div className="trust-badges" style={{ marginTop: '32px', opacity: 0.7 }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>zk-Sync Ready</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>Focus First</span>
                             <span style={{ margin: '0 12px', color: '#555' }}>//</span>
-                            <span style={{ color: 'var(--text-secondary)' }}>Zero Latency</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>Real Intent</span>
                         </div>
                     </div>
                 </section>

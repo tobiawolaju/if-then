@@ -44,9 +44,9 @@ export default function ProfilePage({ user, onLogout, onBack }) {
                         width: '96px',
                         height: '96px',
                         borderRadius: '50%',
-                        border: '3px solid var(--accent-primary)',
+                        border: '1px solid var(--border-visible)',
                         marginBottom: '24px',
-                        boxShadow: 'var(--shadow-glow)'
+                        boxShadow: 'none'
                     }}
                 />
                 <h2 style={{
