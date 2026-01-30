@@ -389,7 +389,7 @@ export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDele
                         width: '32px',
                         height: '4px',
                         background: 'rgba(255,255,255,0.2)',
-                        borderRadius: '2px',
+                        borderRadius: '0px',
                     }} />
                 </div>
                 {isEditing ? renderEdit() : renderView()}

@@ -19,9 +19,10 @@
   --bg-block: rgba(255, 255, 255, 0.1);
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-subtle: transparent;
+  /* No visible borders usually */
   --border-visible: rgba(255, 255, 255, 0.1);
-  --border-glow: rgba(255, 255, 255, 0.2);
+  --border-glow: transparent;
 
   /* Text - Pure White & Grey */
   --text-primary: #ffffff;
@@ -34,7 +35,7 @@
   --accent-secondary: #d4d4d8;
   --accent-tertiary: #a1a1aa;
 
-  --accent-glow: rgba(255, 255, 255, 0.15);
+  --accent-glow: transparent;
   --accent-text: #ffffff;
 
   /* Status */
@@ -60,14 +61,14 @@
   --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
-  --radius-s: 4px;
-  --radius-m: 8px;
-  --radius-l: 12px;
-  --radius-pill: 9999px;
+  --radius-s: 0px;
+  --radius-m: 0px;
+  --radius-l: 0px;
+  --radius-pill: 0px;
 
   /* Effects */
-  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.1);
-  --backdrop-blur: blur(12px);
+  --shadow-glow: none;
+  --backdrop-blur: none;
 }
 
 /* ===== LIGHT MODE REMOVED OR NEUTRALIZED FOR THIS AESTHETIC ===== */
@@ -221,7 +222,7 @@ header {
   font-size: 20px;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  text-shadow: none;
 }
 
 #current-date {
@@ -679,6 +680,7 @@ textarea:focus {
   font-weight: 800;
   letter-spacing: -0.05em;
   background: linear-gradient(to right, #fff 20%, #a1a1aa 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 32px;
@@ -694,7 +696,8 @@ textarea:focus {
   font-family: var(--font-mono);
   font-size: 13px;
   margin-bottom: 40px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  margin-bottom: 40px;
+  box-shadow: none;
 }
 
 @keyframes pulse {

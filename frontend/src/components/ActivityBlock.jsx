@@ -22,6 +22,8 @@ export default function ActivityBlock({ activity, onClick }) {
         borderLeftStyle: 'solid',
         borderLeftColor: accentColor,
         '--block-accent': accentColor,
+        borderRadius: '0px',
+        boxShadow: 'none',
     };
 
     return (

@@ -43,7 +43,7 @@ export default function ProfilePage({ user, onLogout, onBack }) {
                     style={{
                         width: '96px',
                         height: '96px',
-                        borderRadius: '50%',
+                        borderRadius: '0px',
                         border: '1px solid var(--border-visible)',
                         marginBottom: '24px',
                         boxShadow: 'none'

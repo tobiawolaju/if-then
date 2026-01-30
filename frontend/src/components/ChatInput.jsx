@@ -20,7 +20,7 @@ export default function ChatInput({ onSendMessage, isProcessing }) {
     };
 
     return (
-        <div className="chat-input-container">
+        <div className="chat-input-container" style={{ borderRadius: '0px', boxShadow: 'none' }}>
             <textarea
                 ref={textareaRef}
                 id="chat-input"
@@ -29,6 +29,7 @@ export default function ChatInput({ onSendMessage, isProcessing }) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 disabled={isProcessing}
+                style={{ borderRadius: '0px' }}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -41,6 +42,7 @@ export default function ChatInput({ onSendMessage, isProcessing }) {
                 onClick={handleSubmit}
                 disabled={isProcessing}
                 aria-label={message.trim() ? "Send message" : "Voice input"}
+                style={{ borderRadius: '0px', boxShadow: 'none' }}
             >
                 {isProcessing ? (
                     <Sparkles size={18} className="animate-pulse" />

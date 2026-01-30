@@ -79,8 +79,8 @@ export default function LandingPage({ onLogin }) {
                             transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * -15}px)`
                         }}
                     >
-                        <div className="hero-badge fade-in-up">
-                            <span className="badge-dot" style={{ background: '#fff', boxShadow: '0 0 10px #fff' }}></span>
+                        <div className="hero-badge fade-in-up" style={{ borderRadius: '0px' }}>
+                            <span className="badge-dot" style={{ background: '#fff', boxShadow: 'none', borderRadius: '0px' }}></span>
                             <span>TIME EDITOR v1.0</span>
                         </div>
 
@@ -110,13 +110,13 @@ export default function LandingPage({ onLogin }) {
                                 background: '#fff',
                                 color: '#000',
                                 padding: '16px 48px',
-                                borderRadius: '30px',
+                                borderRadius: '0px',
                                 fontWeight: 700,
                                 fontSize: '16px',
                                 letterSpacing: '0.1em',
                                 border: 'none',
                                 cursor: 'pointer',
-                                boxShadow: '0 0 30px rgba(255, 255, 255, 0.3)',
+                                boxShadow: 'none',
                                 textTransform: 'uppercase'
                             }}
                         >
