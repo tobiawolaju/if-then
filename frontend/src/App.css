@@ -1,45 +1,228 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ============================================
+   CRASTINAT - Minimalist Time Editor
+   Global Styles & Variables
+   ============================================ */
+
+/* Import Space Grotesk for Headings & Inter for body */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ===== COLOR SYSTEM: MONOCHROME TECH ===== */
+  --bg-void: #1a1a1a;
+  /* Neutral Dark Grey */
+  --bg-surface: #262626;
+  /* Slightly lighter */
+  --bg-elevated: #333333;
+  --bg-glass: rgba(26, 26, 26, 0.8);
+  --bg-panel: #262626;
+  --bg-block: rgba(255, 255, 255, 0.1);
+
+  /* Borders */
+  --border-subtle: transparent;
+  /* No visible borders usually */
+  --border-visible: rgba(255, 255, 255, 0.1);
+  --border-glow: transparent;
+
+  /* Text - Pure White & Grey */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-ghost: #52525b;
+
+  /* Accents - Monochrome / Subtle */
+  --accent-primary: #ffffff;
+  --accent-secondary: #d4d4d8;
+  --accent-tertiary: #a1a1aa;
+
+  --accent-glow: transparent;
+  --accent-text: #ffffff;
+
+  /* Status */
+  --status-success: #fff;
+  --status-warning: #d4d4d8;
+  --status-error: #fff;
+  --status-info: #fff;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Metrics */
+  --header-height: 70px;
+  --track-height: 80px;
+  --track-gap: 12px;
+  --grid-track-total: calc(var(--track-height) + var(--track-gap));
+
+  /* Zoom */
+  --zoom-level: 1;
+  --base-hour-width: 240px;
+  --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
+  --pixels-per-minute: calc(var(--hour-width) / 60);
+
+  --radius-s: 0px;
+  --radius-m: 0px;
+  --radius-l: 0px;
+  --radius-pill: 0px;
+
+  /* Effects */
+  --shadow-glow: none;
+  --backdrop-blur: none;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow: hidden;
+  height: 100vh;
+  font-size: 15px;
+
+  /* Starline / Technical Grid with Varying Opacity */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+  background-position:
+    -1px -1px,
+    -1px -1px,
+    -1px -1px,
+    -1px -1px;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.brand-font {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ============================================
+   SHARED UTILITIES
+   ============================================ */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Shared Button Styles */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-visible);
+  backdrop-filter: blur(10px);
+}
+
+.action-button.primary {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.action-button.primary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.action-button.secondary {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.action-button.secondary:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 0px;
+  /* Flat */
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
   }
 
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

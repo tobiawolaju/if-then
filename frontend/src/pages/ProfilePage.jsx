@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, LogOut } from 'lucide-react';
+import './ProfilePage.css';
 
 export default function ProfilePage({ user, onLogout, onBack }) {
     return (

@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef, useLayoutEffect } from 'react';
 import ActivityBlock from './ActivityBlock';
+import './Timeline.css';
 
 const { memo } = React;
 

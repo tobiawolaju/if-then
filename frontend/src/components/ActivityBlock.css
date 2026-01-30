@@ -1,0 +1,49 @@
+.activity-block {
+    position: absolute;
+    height: var(--track-height);
+    background: var(--bg-block);
+    border: 1px solid var(--border-visible);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: inset 4px 0 0 var(--accent-primary);
+
+    /* Flat Design Overrides */
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
+.activity-block:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    z-index: 10;
+    transform: translateY(-2px) scale(1.01);
+}
+
+.activity-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.activity-time {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}

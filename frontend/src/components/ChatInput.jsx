@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles } from 'lucide-react';
+import './ChatInput.css';
 
 export default function ChatInput({ onSendMessage, isProcessing }) {
     const [message, setMessage] = useState('');

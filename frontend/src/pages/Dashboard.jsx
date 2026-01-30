@@ -6,6 +6,7 @@ import DetailsSheet from '../components/DetailsSheet';
 import { useSchedule } from '../hooks/useSchedule';
 import { database } from '../firebase-config';
 import { ref, update, remove } from 'firebase/database';
+import './Dashboard.css';
 
 export default function Dashboard({ user, onLogout, accessToken, onNavigateToProfile }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);

@@ -1,4 +1,5 @@
 import React from 'react';
+import './ActivityBlock.css';
 
 export default function ActivityBlock({ activity, onClick }) {
     const parseTime = (timeStr) => {

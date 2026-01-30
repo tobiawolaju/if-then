@@ -1,5 +1,6 @@
 import React from 'react';
 import { LogOut, ChevronRight } from 'lucide-react';
+import './Header.css';
 
 export default function Header({ user, onLogout, onProfileClick }) {
     if (!user) return null;

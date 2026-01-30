@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Clock, MapPin, Calendar } from 'lucide-react';
+import './DetailsSheet.css';
 
 export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);

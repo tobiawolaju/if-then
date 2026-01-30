@@ -1,0 +1,65 @@
+.timeline-container {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    /* Functional Grid - Tracks & Time */
+    background-image:
+        linear-gradient(var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+    background-size: 100% var(--grid-track-total), var(--hour-width) 100%;
+    background-attachment: local;
+}
+
+.time-ruler {
+    height: 50px;
+    display: flex;
+    position: sticky;
+    top: 0;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 40;
+    border-bottom: 1px solid var(--border-visible);
+}
+
+.time-marker {
+    width: var(--hour-width);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    border-right: 1px dashed var(--border-visible);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0 8px 12px;
+}
+
+.tracks-container {
+    position: relative;
+    padding: 20px 0;
+    min-height: calc(100% - 50px);
+}
+
+.current-time-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent-tertiary);
+    box-shadow: none;
+    z-index: 30;
+    pointer-events: none;
+}
+
+.current-time-indicator::after {
+    content: 'NOW';
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--accent-tertiary);
+    color: #000;
+    padding: 2px 4px;
+    border-radius: 0px;
+    font-weight: 700;
+}
