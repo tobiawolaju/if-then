@@ -323,7 +323,7 @@ export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDele
                         value={editData.description || ''}
                         onChange={e => setEditData({ ...editData, description: e.target.value })}
                         placeholder="Additional details..."
-                        style={{ minHeight: '120px', resize: 'vertical' }}
+                        style={{ height: 'auto', resize: 'vertical' }}
                     />
                 </div>
             </div>
