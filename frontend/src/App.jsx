@@ -35,6 +35,7 @@ function App() {
       ) : (
         <ProfilePage
           user={user}
+          accessToken={accessToken}
           onLogout={logout}
           onBack={() => setView('timeline')}
         />

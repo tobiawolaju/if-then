@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import './ProfilePage.css';
 
-export default function ProfilePage({ user, onLogout, onBack }) {
+export default function ProfilePage({ user, accessToken, onLogout, onBack }) {
     return (
         <div className="app-container">
             <header>
@@ -34,9 +34,10 @@ export default function ProfilePage({ user, onLogout, onBack }) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 padding: '48px 24px',
-                textAlign: 'center'
+                textAlign: 'center',
+                overflowY: 'auto'
             }}>
                 <img
                     src={user?.photoURL}
@@ -62,10 +63,39 @@ export default function ProfilePage({ user, onLogout, onBack }) {
                 <p style={{
                     color: 'var(--text-muted)',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.875rem'
+                    fontSize: '0.875rem',
+                    marginBottom: '32px'
                 }}>
                     {user?.email}
                 </p>
+
+                {/* DEBUG SECTION */}
+                <div style={{
+                    marginTop: '20px',
+                    padding: '20px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid var(--border-visible)',
+                    borderRadius: '8px',
+                    width: '100%',
+                    maxWidth: '600px',
+                    textAlign: 'left',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.75rem'
+                }}>
+                    <h3 style={{ marginBottom: '12px', fontSize: '1rem', color: 'var(--text-primary)' }}>Debug Info (Testing Only)</h3>
+
+                    <div style={{ marginBottom: '16px' }}>
+                        <label style={{ display: 'block', color: 'var(--text-muted)', marginBottom: '4px' }}>User ID:</label>
+                        <code style={{ display: 'block', padding: '8px', backgroundColor: '#000', borderRadius: '4px', wordBreak: 'break-all' }}>{user?.uid}</code>
+                    </div>
+
+                    <div>
+                        <label style={{ display: 'block', color: 'var(--text-muted)', marginBottom: '4px' }}>Access Token:</label>
+                        <code style={{ display: 'block', padding: '8px', backgroundColor: '#000', borderRadius: '4px', wordBreak: 'break-all', maxHeight: '100px', overflowY: 'auto' }}>{accessToken}</code>
+                    </div>
+
+                    <p style={{ marginTop: '16px', color: '#ff4444', fontSize: '0.7rem' }}>⚠️ This info is sensitive. Remove this section after testing.</p>
+                </div>
             </main>
         </div>
     );
