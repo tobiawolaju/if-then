@@ -5,11 +5,11 @@ function NeonOrbs() {
     return (
         <div className="floating-orbs" style={{ display: 'block' }}>
             <div className="orb orb-1" style={{
-                background: 'radial-gradient(circle, rgba(112,0,255,0.4) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
                 animationDuration: '10s'
             }} />
             <div className="orb orb-2" style={{
-                background: 'radial-gradient(circle, rgba(0,240,255,0.3) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(200,200,200,0.05) 0%, transparent 70%)',
                 animationDuration: '15s'
             }} />
         </div>
@@ -32,17 +32,17 @@ function BlockClock() {
             animationDelay: '0.4s',
             fontFamily: "'JetBrains Mono', monospace",
             background: 'var(--bg-glass)',
-            border: '1px solid var(--accent-primary)',
+            border: '1px solid rgba(255,255,255,0.2)',
             padding: '12px 24px',
             borderRadius: '8px',
             color: 'var(--text-primary)',
-            textShadow: '0 0 10px var(--accent-primary)',
+            textShadow: '0 0 10px rgba(255,255,255,0.2)',
             marginTop: '40px',
             display: 'flex',
             alignItems: 'center',
             gap: '12px'
         }}>
-            <span style={{ color: 'var(--accent-secondary)', fontSize: '0.8em' }}>BLOCK_TIME:</span>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8em' }}>BLOCK_TIME:</span>
             <span>{format(time.getHours())}:{format(time.getMinutes())}:{format(time.getSeconds())}</span>
         </div>
     );
@@ -80,7 +80,7 @@ export default function LandingPage({ onLogin }) {
                         }}
                     >
                         <div className="hero-badge fade-in-up">
-                            <span className="badge-dot" style={{ background: '#00ff9d', boxShadow: '0 0 10px #00ff9d' }}></span>
+                            <span className="badge-dot" style={{ background: '#fff', boxShadow: '0 0 10px #fff' }}></span>
                             <span>PROTOCOL V2.0</span>
                         </div>
 
@@ -107,8 +107,8 @@ export default function LandingPage({ onLogin }) {
                             className="hero-cta"
                             onClick={onLogin}
                             style={{
-                                background: 'linear-gradient(90deg, #7000ff, #00f0ff)',
-                                color: '#fff',
+                                background: '#fff',
+                                color: '#000',
                                 padding: '16px 48px',
                                 borderRadius: '30px',
                                 fontWeight: 700,
@@ -116,7 +116,7 @@ export default function LandingPage({ onLogin }) {
                                 letterSpacing: '0.1em',
                                 border: 'none',
                                 cursor: 'pointer',
-                                boxShadow: '0 0 30px rgba(112, 0, 255, 0.5)',
+                                boxShadow: '0 0 30px rgba(255, 255, 255, 0.3)',
                                 textTransform: 'uppercase'
                             }}
                         >
@@ -124,9 +124,9 @@ export default function LandingPage({ onLogin }) {
                         </button>
 
                         <div className="trust-badges" style={{ marginTop: '32px', opacity: 0.7 }}>
-                            <span style={{ color: 'var(--accent-secondary)' }}>zk-Sync Ready</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>zk-Sync Ready</span>
                             <span style={{ margin: '0 12px', color: '#555' }}>//</span>
-                            <span style={{ color: 'var(--accent-secondary)' }}>Zero Latency</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>Zero Latency</span>
                         </div>
                     </div>
                 </section>

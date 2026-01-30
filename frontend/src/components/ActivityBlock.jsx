@@ -12,7 +12,7 @@ export default function ActivityBlock({ activity, onClick }) {
     const duration = end - start;
 
     // Color variations for visual interest
-    const accentColor = activity.color || '#d4a853';
+    const accentColor = activity.color || '#e4e4e7';
 
     const style = {
         left: `calc(${start} * var(--pixels-per-minute))`,
