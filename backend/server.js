@@ -8,7 +8,9 @@ const tools = require('./tools');
 // Gemini Chat Route
 // --------------------
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+// Switching to gemini-2.0-flash which typically has higher free tier limits (1500 RPD) 
+// compared to the newer gemini-2.5-flash (currently limited to 20 RPD in some regions).
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 // --------------------
 // Express App
@@ -152,8 +154,6 @@ IMPORTANT:
 - DO NOT invent new field names
 - Map user language to these exact keys
 
-// Map "tags" -> tags (array of strings) if present.
-
 Schema:
 {
   "intent": "getSchedule" | "addActivity" | "updateActivity" | "deleteActivity" | "findHackathons" | null,
@@ -166,30 +166,28 @@ Mapping rules:
 - "time", "at", "starts" → startTime
 - "for X minutes/hours" → duration
 - "with tags X, Y" or "tagged as X" → tags (array of strings)
-- "on Mondays", "every Tuesday", "weekdays", "daily" → days (array of strings, e.g., ["Monday", "Tuesday"])// if user says to tommrow, gigure out the right day if it is monday -sunday and use that, dont use users adjective of day
+- "on Mondays", "every Tuesday", "weekdays", "daily" → days (array of strings, e.g., ["Monday", "Tuesday"])
 
 MULTIPLE TASKS:
 If the user wants to add multiple activities (e.g., "Swim at 10pm AND Read at 8am"),
 set "intent" to "addActivity" and make "arguments" an ARRAY of objects.
-Example: "arguments": [{ "title": "Swim", "time": "10pm" }, { "title": "Read", "time": "8am", "tags": ["study"] }]
-
-Rules:
-- If required fields are missing, still return best guess
-- confidence must be between 0 and 1
 
 User message:
 "${message}"
 `;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().trim();
-
     try {
-        // Clean markdown code blocks if AI adds them
+        const result = await model.generateContent(prompt);
+        const text = result.response.text().trim();
         const jsonText = text.replace(/```json/g, "").replace(/```/g, "");
         return JSON.parse(jsonText);
     } catch (err) {
-        console.error("Intent JSON parse failed:", text);
+        // Handle 429 Quota Exceeded
+        if (err.status === 429 || err.message?.includes("429")) {
+            console.error("Gemini Quota Exceeded:", err.message);
+            return { intent: "quotaError", arguments: {}, confidence: 1 };
+        }
+        console.error("Intent extraction failed:", err);
         return { intent: null, arguments: {}, confidence: 0 };
     }
 }
@@ -208,6 +206,13 @@ app.post("/api/chat", async (req, res) => {
         const { intent, arguments: rawArgs, confidence } = await extractIntent(message);
         console.log("INTENT:", intent, "ARGS:", JSON.stringify(rawArgs, null, 2), "TZ:", timeZone);
 
+        if (intent === "quotaError") {
+            return res.json({
+                reply: "I’m getting tons of requests right now! Please try again in a minute. ⏳",
+                refreshNeeded: false
+            });
+        }
+
         if (!intent || confidence < 0.6) {
             return res.json({ reply: "I’m not sure what you want to do.", refreshNeeded: false });
         }
@@ -219,11 +224,8 @@ app.post("/api/chat", async (req, res) => {
 
         switch (intent) {
             case "addActivity": {
-                // Handle Single Object or Array of Objects
                 const argsList = Array.isArray(rawArgs) ? rawArgs : [rawArgs];
                 const responses = [];
-
-                // Process sequentially to prevent Database ID race conditions
                 for (const args of argsList) {
                     try {
                         const aliasedArgs = normalizeAliases(args);
@@ -235,8 +237,6 @@ app.post("/api/chat", async (req, res) => {
                         responses.push({ success: false, error: innerErr.message });
                     }
                 }
-
-                // Create a summary message
                 const successCount = responses.filter(r => r.success).length;
                 const failCount = responses.length - successCount;
 
@@ -245,14 +245,10 @@ app.post("/api/chat", async (req, res) => {
                 } else if (successCount > 0 && failCount > 0) {
                     reply = `Partially successful. Added ${successCount} tasks, but ${failCount} failed.`;
                 } else {
-                    const firstError = responses[0]?.error || "Unknown error";
-                    reply = `I couldn't add that. Error: ${firstError}`;
+                    reply = `I couldn't add that. Error: ${responses[0]?.error || "Unknown error"}`;
                 }
 
-                result = {
-                    message: `Processed ${responses.length} requests.`,
-                    details: responses
-                };
+                result = { message: `Processed ${responses.length} requests.`, details: responses };
                 refreshNeeded = successCount > 0;
                 break;
             }
@@ -289,11 +285,7 @@ app.post("/api/chat", async (req, res) => {
         }
 
         if (!res.headersSent) {
-            res.json({
-                reply,
-                result,
-                refreshNeeded
-            });
+            res.json({ reply, result, refreshNeeded });
         }
 
     } catch (err) {
@@ -337,10 +329,16 @@ app.post("/api/predict-future", async (req, res) => {
             Goal: Help the user see the long-term impact of their current daily choices.
         `;
 
-        const result = await model.generateContent(prompt);
-        const prediction = result.response.text().trim();
-
-        res.json({ prediction });
+        try {
+            const result = await model.generateContent(prompt);
+            const prediction = result.response.text().trim();
+            res.json({ prediction });
+        } catch (err) {
+            if (err.status === 429 || err.message?.includes("429")) {
+                return res.json({ prediction: "I'm a bit overwhelmed with predictions right now! Please try again in a few minutes. ⏳" });
+            }
+            throw err;
+        }
 
     } catch (err) {
         console.error("Prediction error:", err);
@@ -352,7 +350,6 @@ app.post("/api/predict-future", async (req, res) => {
 // Debug Route
 // --------------------
 app.get("/api/debug", async (_, res) => {
-    // Basic check without crashing if firebase-config isn't perfectly set up in dev
     let firebaseStatus = "Unknown";
     try {
         const { firebaseReady } = require('./firebase-config');
