@@ -10,7 +10,7 @@ const tools = require('./tools');
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // Switching to gemini-2.0-flash which typically has higher free tier limits (1500 RPD) 
 // compared to the newer gemini-2.5-flash (currently limited to 20 RPD in some regions).
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
 // --------------------
 // Express App
