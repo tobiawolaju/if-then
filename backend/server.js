@@ -347,6 +347,170 @@ app.post("/api/predict-future", async (req, res) => {
 });
 
 // --------------------
+// Conversational Chat API
+// --------------------
+const LIFE_PLANNER_PROMPT = `You are a life planning assistant for Crastinat - a personal time editor app.
+
+Your role is to help users transform their goals and dreams into actionable daily routines.
+
+CONVERSATION FLOW:
+1. Listen to the user's goals, dreams, and current situation
+2. Ask clarifying questions to understand their constraints (time, energy, commitments)
+3. Review their existing schedule (provided below) to avoid conflicts
+4. Only propose activities when you have enough information
+
+RESPONSE FORMAT:
+You MUST respond with ONLY valid JSON in one of these formats:
+
+For conversation (asking questions, discussing):
+{"type": "conversation", "message": "Your response here..."}
+
+For proposing activities (only when ready):
+{"type": "proposal", "message": "Based on our conversation, here's your routine...", "activities": [
+  {"title": "Activity name", "startTime": "HH:MM", "endTime": "HH:MM", "days": ["Monday", "Tuesday"], "description": "..."},
+  ...
+]}
+
+GUIDELINES:
+- Be warm, motivating, and realistic
+- Ask about their wake/sleep times, work schedule, energy levels
+- Consider their existing commitments before proposing new ones
+- Start small - don't overwhelm with too many activities at once
+- Use 24-hour time format (e.g., "06:00", "14:30")
+- Days should be full names: "Monday", "Tuesday", etc.
+
+NEVER respond with plain text - always use the JSON format above.`;
+
+app.post("/api/chat/conversation", async (req, res) => {
+    try {
+        const { message, userId, accessToken, timeZone } = req.body;
+        if (!message || !userId) {
+            return res.status(400).json({ error: "message and userId required" });
+        }
+
+        // Get conversation history and schedule
+        const { messages: history, schedule } = await tools.getConversationHistory(userId);
+
+        // Save user's message
+        await tools.saveConversationMessage(userId, "user", message);
+
+        // Build conversation context for Gemini
+        const conversationContext = history.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`).join('\n');
+
+        const scheduleContext = schedule.length > 0
+            ? `\n\nUSER'S CURRENT SCHEDULE:\n${JSON.stringify(schedule.map(a => ({ title: a.title, days: a.days, startTime: a.startTime, endTime: a.endTime })), null, 2)}`
+            : '\n\nUSER HAS NO EXISTING ACTIVITIES.';
+
+        const fullPrompt = `${LIFE_PLANNER_PROMPT}
+${scheduleContext}
+
+CONVERSATION HISTORY:
+${conversationContext}
+
+User: ${message}
+
+Respond with JSON only:`;
+
+        console.log("Conversation: Processing message from", userId);
+
+        try {
+            const result = await model.generateContent(fullPrompt);
+            const text = result.response.text().trim();
+
+            // Try to parse JSON from response
+            let parsed;
+            try {
+                // Remove markdown code blocks if present
+                const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                parsed = JSON.parse(cleanText);
+            } catch (parseErr) {
+                // If parsing fails, wrap as conversation
+                console.warn("Failed to parse AI response as JSON, wrapping:", text);
+                parsed = { type: "conversation", message: text };
+            }
+
+            // Save assistant's response
+            await tools.saveConversationMessage(userId, "assistant", parsed.message || text);
+
+            res.json({
+                type: parsed.type || "conversation",
+                message: parsed.message || text,
+                activities: parsed.activities || null
+            });
+
+        } catch (err) {
+            if (err.status === 429 || err.message?.includes("429")) {
+                return res.json({
+                    type: "conversation",
+                    message: "I'm getting lots of requests right now! Please try again in a moment. ⏳"
+                });
+            }
+            throw err;
+        }
+
+    } catch (err) {
+        console.error("Conversation error:", err);
+        res.status(500).json({ error: "Conversation failed: " + err.message });
+    }
+});
+
+app.post("/api/chat/confirm", async (req, res) => {
+    try {
+        const { activities, userId, accessToken, timeZone } = req.body;
+        if (!activities || !userId) {
+            return res.status(400).json({ error: "activities and userId required" });
+        }
+
+        const context = { uid: userId, accessToken, timeZone };
+        const results = [];
+
+        for (const activity of activities) {
+            try {
+                // Normalize the activity data
+                const normalized = normalizeAliases(activity);
+                const safeArgs = normalizeAddActivityArgs(normalized);
+                const result = await tools.addActivity(safeArgs, context);
+                results.push({ success: true, activity: result.activity });
+            } catch (err) {
+                console.error("Error adding activity:", activity.title, err);
+                results.push({ success: false, title: activity.title, error: err.message });
+            }
+        }
+
+        // Clear conversation after successful confirmation
+        await tools.clearConversation(userId);
+
+        const successCount = results.filter(r => r.success).length;
+        res.json({
+            success: successCount > 0,
+            message: `Added ${successCount} of ${activities.length} activities to your schedule!`,
+            results,
+            refreshNeeded: successCount > 0
+        });
+
+    } catch (err) {
+        console.error("Confirm error:", err);
+        res.status(500).json({ error: "Failed to confirm activities: " + err.message });
+    }
+});
+
+app.post("/api/chat/clear", async (req, res) => {
+    try {
+        const { userId } = req.body;
+        if (!userId) {
+            return res.status(400).json({ error: "userId required" });
+        }
+
+        await tools.clearConversation(userId);
+        res.json({ success: true, message: "Conversation cleared" });
+
+    } catch (err) {
+        console.error("Clear error:", err);
+        res.status(500).json({ error: "Failed to clear conversation: " + err.message });
+    }
+});
+
+// --------------------
 // Debug Route
 // --------------------
 app.get("/api/debug", async (_, res) => {

@@ -1,0 +1,163 @@
+.chat-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    animation: bubbleIn 0.2s ease-out;
+}
+
+@keyframes bubbleIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-bubble.user {
+    align-self: flex-end;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--border-visible);
+}
+
+.chat-bubble.assistant {
+    align-self: flex-start;
+    background: var(--bg-block);
+    color: var(--text-primary);
+    border: 1px solid var(--border-visible);
+}
+
+.chat-bubble.proposal {
+    background: var(--bg-surface);
+    border: 1px solid var(--accent-secondary);
+}
+
+.bubble-content {
+    white-space: pre-wrap;
+}
+
+/* Typing Indicator */
+.chat-bubble.typing {
+    padding: 16px 20px;
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-6px);
+    }
+}
+
+/* Proposal Styles */
+.proposal-activities {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-visible);
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.activity-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-block);
+    border: 1px solid var(--border-visible);
+    font-size: 13px;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.activity-time {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.activity-days {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.proposal-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.confirm-btn,
+.reject-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-visible);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.confirm-btn {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+
+.confirm-btn:hover {
+    background: var(--btn-hover);
+}
+
+.reject-btn {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.reject-btn:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}

@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Timeline from '../components/Timeline';
 import ChatInput from '../components/ChatInput';
+import ChatOverlay from '../components/ChatOverlay';
 import DetailsSheet from '../components/DetailsSheet';
 import { useSchedule } from '../hooks/useSchedule';
-import { database } from '../firebase-config';
-import { ref, update, remove } from 'firebase/database';
+import { useConversation } from '../hooks/useConversation';
 import './Dashboard.css';
 
 export default function Dashboard({ user, onLogout, accessToken, getFreshAccessToken, onNavigateToProfile }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);
     const [selectedActivity, setSelectedActivity] = useState(null);
-    const [isProcessing, setIsProcessing] = useState(false);
+
+    // Conversation state
+    const conversation = useConversation(user, getFreshAccessToken);
 
     // Dynamic API URL for local vs production testing
     const API_BASE_URL = window.location.hostname === 'localhost'
@@ -19,28 +21,13 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
         : 'https://to-do-iun8.onrender.com';
 
     const handleSendMessage = async (message) => {
-        setIsProcessing(true);
-        console.log(`Flow: Sending chat message to ${API_BASE_URL}/api/chat`);
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        try {
-            // Get a fresh token before API call
-            const freshToken = await getFreshAccessToken();
-            const response = await fetch(`${API_BASE_URL}/api/chat`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message, userId: user.uid, accessToken: freshToken, timeZone })
-            });
-            const result = await response.json();
-            console.log("Flow: AI Response received:", result);
+        // Use the new conversation system
+        await conversation.sendMessage(message);
+    };
 
-            if (result.calendarError) {
-                console.warn("Flow: Google Calendar sync issues:", result.calendarError);
-            }
-        } catch (error) {
-            console.error("Flow: Chat error:", error);
-        } finally {
-            setIsProcessing(false);
-        }
+    const handleConfirmActivities = async () => {
+        const success = await conversation.confirmActivities();
+        // Firebase real-time updates will automatically refresh the schedule
     };
 
     const handleSaveActivity = async (updatedActivity) => {
@@ -49,7 +36,6 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         try {
-            // Get a fresh token before API call
             const freshToken = await getFreshAccessToken();
             const response = await fetch(`${API_BASE_URL}/api/activities/update`, {
                 method: 'POST',
@@ -83,7 +69,6 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         try {
-            // Get a fresh token before API call
             const freshToken = await getFreshAccessToken();
             const response = await fetch(`${API_BASE_URL}/api/activities/delete`, {
                 method: 'POST',
@@ -122,7 +107,22 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                     onDelete={handleDeleteActivity}
                 />
             </main>
-            <ChatInput onSendMessage={handleSendMessage} isProcessing={isProcessing} />
+
+            <ChatOverlay
+                isOpen={conversation.isOpen}
+                messages={conversation.messages}
+                isTyping={conversation.isTyping}
+                pendingActivities={conversation.pendingActivities}
+                onClose={conversation.closeOverlay}
+                onConfirm={handleConfirmActivities}
+                onReject={conversation.rejectActivities}
+                onClear={conversation.clearConversation}
+            />
+
+            <ChatInput
+                onSendMessage={handleSendMessage}
+                isProcessing={conversation.isTyping}
+            />
         </div>
     );
 }

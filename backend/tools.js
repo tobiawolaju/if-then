@@ -294,6 +294,76 @@ const tools = {
                 { title: "Web3 Builder Jam", date: "2026-03-01", link: "https://web3jam.example.com" }
             ]
         };
+    },
+
+    // ===== CONVERSATION CONTEXT MANAGEMENT =====
+
+    getConversationHistory: async (uid) => {
+        if (!uid) return { messages: [], schedule: [] };
+
+        try {
+            // Get conversation history
+            const chatRef = db.ref(`users/${uid}/chatContext`);
+            const chatSnapshot = await chatRef.once('value');
+            const chatData = chatSnapshot.val() || { messages: [] };
+
+            // Also get current schedule for context
+            const scheduleRef = db.ref(`users/${uid}/schedule`);
+            const scheduleSnapshot = await scheduleRef.once('value');
+            const scheduleVal = scheduleSnapshot.val();
+            const schedule = scheduleVal ? (Array.isArray(scheduleVal) ? scheduleVal : Object.values(scheduleVal)) : [];
+
+            return {
+                messages: chatData.messages || [],
+                schedule
+            };
+        } catch (err) {
+            console.error("Error fetching conversation history:", err);
+            return { messages: [], schedule: [] };
+        }
+    },
+
+    saveConversationMessage: async (uid, role, content) => {
+        if (!uid) return { success: false, error: "No user ID" };
+
+        try {
+            const ref = db.ref(`users/${uid}/chatContext`);
+            const snapshot = await ref.once('value');
+            const data = snapshot.val() || { messages: [] };
+
+            const messages = data.messages || [];
+            messages.push({
+                role,
+                content,
+                timestamp: Date.now()
+            });
+
+            // Keep only last 20 messages to avoid context overflow
+            const trimmedMessages = messages.slice(-20);
+
+            await ref.set({
+                messages: trimmedMessages,
+                lastUpdated: Date.now()
+            });
+
+            return { success: true };
+        } catch (err) {
+            console.error("Error saving message:", err);
+            return { success: false, error: err.message };
+        }
+    },
+
+    clearConversation: async (uid) => {
+        if (!uid) return { success: false, error: "No user ID" };
+
+        try {
+            const ref = db.ref(`users/${uid}/chatContext`);
+            await ref.remove();
+            return { success: true };
+        } catch (err) {
+            console.error("Error clearing conversation:", err);
+            return { success: false, error: err.message };
+        }
     }
 };
 
