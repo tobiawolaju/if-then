@@ -8,7 +8,6 @@ export default function ChatOverlay({
     messages,
     isTyping,
     pendingActivities,
-    pendingActions,
     onClose,
     onConfirm,
     onReject,
@@ -50,9 +49,7 @@ export default function ChatOverlay({
 
                 {messages.map((msg, i) => {
                     const isLastAssistant = !msg.isUser && i === messages.length - 1;
-                    const hasActivities = pendingActivities && pendingActivities.length > 0;
-                    const hasActions = pendingActions && pendingActions.length > 0;
-                    const showProposal = isLastAssistant && (hasActivities || hasActions);
+                    const showProposal = isLastAssistant && pendingActivities && pendingActivities.length > 0;
 
                     return (
                         <ChatBubble
@@ -61,7 +58,6 @@ export default function ChatOverlay({
                             isUser={msg.isUser}
                             isProposal={showProposal}
                             activities={showProposal ? pendingActivities : null}
-                            actions={showProposal ? pendingActions : null}
                             onConfirm={onConfirm}
                             onReject={onReject}
                         />

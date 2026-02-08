@@ -1,8 +1,9 @@
+import { useState, useCallback } from 'react';
+
 export function useConversation(user, getFreshAccessToken) {
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const [pendingActivities, setPendingActivities] = useState(null);
-    const [pendingActions, setPendingActions] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
 
     const API_BASE_URL = window.location.hostname === 'localhost'
@@ -38,13 +39,11 @@ export function useConversation(user, getFreshAccessToken) {
             // Add assistant response
             setMessages(prev => [...prev, { content: result.message, isUser: false }]);
 
-            // Handle proposal (activities and/or actions)
-            if (result.type === 'proposal') {
-                if (result.activities) setPendingActivities(result.activities);
-                if (result.actions) setPendingActions(result.actions);
+            // Handle proposal
+            if (result.type === 'proposal' && result.activities) {
+                setPendingActivities(result.activities);
             } else {
                 setPendingActivities(null);
-                setPendingActions(null);
             }
 
         } catch (error) {
@@ -59,7 +58,7 @@ export function useConversation(user, getFreshAccessToken) {
     }, [user, getFreshAccessToken, API_BASE_URL]);
 
     const confirmActivities = useCallback(async () => {
-        if (!user || (!pendingActivities && !pendingActions)) return false;
+        if (!user || !pendingActivities) return false;
 
         setIsTyping(true);
 
@@ -71,8 +70,7 @@ export function useConversation(user, getFreshAccessToken) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    activities: pendingActivities || [],
-                    actions: pendingActions || [],
+                    activities: pendingActivities,
                     userId: user.uid,
                     accessToken: freshToken,
                     timeZone
@@ -89,7 +87,6 @@ export function useConversation(user, getFreshAccessToken) {
                     isUser: false
                 }]);
                 setPendingActivities(null);
-                setPendingActions(null);
 
                 // Close overlay after short delay
                 setTimeout(() => {
@@ -100,7 +97,7 @@ export function useConversation(user, getFreshAccessToken) {
                 return true;
             } else {
                 setMessages(prev => [...prev, {
-                    content: "Failed to execute some items. Please try again.",
+                    content: "Failed to add some activities. Please try again.",
                     isUser: false
                 }]);
                 return false;
@@ -109,18 +106,17 @@ export function useConversation(user, getFreshAccessToken) {
         } catch (error) {
             console.error("Confirm error:", error);
             setMessages(prev => [...prev, {
-                content: "Failed to confirm plan. Please try again.",
+                content: "Failed to confirm activities. Please try again.",
                 isUser: false
             }]);
             return false;
         } finally {
             setIsTyping(false);
         }
-    }, [user, pendingActivities, pendingActions, getFreshAccessToken, API_BASE_URL]);
+    }, [user, pendingActivities, getFreshAccessToken, API_BASE_URL]);
 
     const rejectActivities = useCallback(() => {
         setPendingActivities(null);
-        setPendingActions(null);
         setMessages(prev => [...prev, {
             content: "No problem! Let me know if you'd like to adjust the plan.",
             isUser: false
@@ -142,7 +138,6 @@ export function useConversation(user, getFreshAccessToken) {
 
         setMessages([]);
         setPendingActivities(null);
-        setPendingActions(null);
     }, [user, API_BASE_URL]);
 
     const closeOverlay = useCallback(() => {
@@ -158,7 +153,6 @@ export function useConversation(user, getFreshAccessToken) {
         isTyping,
         isOpen,
         pendingActivities,
-        pendingActions,
         sendMessage,
         confirmActivities,
         rejectActivities,
