@@ -349,7 +349,7 @@ app.post("/api/predict-future", async (req, res) => {
 // --------------------
 // Conversational Chat API
 // --------------------
-const LIFE_PLANNER_PROMPT = `You are a life planning assistant for Crastinat - a personal time editor app.
+const LIFE_PLANNER_PROMPT = `You are a life planning assistant for IF·THEN - a personal consequence simulator.
 
 Your role is to help users transform their goals and dreams into actionable daily routines.
 
