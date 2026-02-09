@@ -9,9 +9,9 @@ const tools = require('./tools');
 // Gemini Chat Route
 // --------------------
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-// Switching to gemini-2.0-flash which typically has higher free tier limits (1500 RPD) 
-// compared to the newer gemini-2.5-flash (currently limited to 20 RPD in some regions).
-const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+// Switching to gemini-1.5-flash which is generally available and stable.
+// 'gemini-flash-latest' was causing 400 Bad Request errors due to regional/availability issues.
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // --------------------
 // Express App
