@@ -5,6 +5,7 @@ import ChatInput from '../components/ChatInput';
 import ChatOverlay from '../components/ChatOverlay';
 import DetailsSheet from '../components/DetailsSheet';
 import FuturesNotification from '../components/FuturesNotification';
+import FuturesModal from '../components/FuturesModal';
 import { useSchedule } from '../hooks/useSchedule';
 import { useConversation } from '../hooks/useConversation';
 import './Dashboard.css';
@@ -12,6 +13,7 @@ import './Dashboard.css';
 export default function Dashboard({ user, onLogout, accessToken, getFreshAccessToken, onNavigateToProfile }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);
     const [selectedActivity, setSelectedActivity] = useState(null);
+    const [showFuturesModal, setShowFuturesModal] = useState(false);
 
     // Conversation state
     const conversation = useConversation(user, getFreshAccessToken);
@@ -123,13 +125,22 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
             <ChatInput
                 onSendMessage={handleSendMessage}
                 isProcessing={conversation.isTyping}
+                onOpenFutures={() => setShowFuturesModal(true)}
             />
 
             <FuturesNotification
                 userId={user?.uid}
                 apiBaseUrl={API_BASE_URL}
-                onViewFutures={onNavigateToProfile}
+                onViewFutures={() => setShowFuturesModal(true)}
             />
+
+            {showFuturesModal && (
+                <FuturesModal
+                    user={user}
+                    onClose={() => setShowFuturesModal(false)}
+                    apiBaseUrl={API_BASE_URL}
+                />
+            )}
         </div>
     );
 }

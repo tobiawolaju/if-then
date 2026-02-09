@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles } from 'lucide-react';
 import './ChatInput.css';
 
-export default function ChatInput({ onSendMessage, isProcessing }) {
+export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }) {
     const [message, setMessage] = useState('');
     const textareaRef = useRef(null);
 
@@ -39,16 +39,25 @@ export default function ChatInput({ onSendMessage, isProcessing }) {
                 }}
             />
             <button
-                className="action-btn"
-                onClick={handleSubmit}
+                className={`action-btn ${!message.trim() && !isProcessing ? 'futures-trigger' : ''}`}
+                onClick={() => {
+                    if (!message.trim() && !isProcessing) {
+                        onOpenFutures?.();
+                    } else {
+                        handleSubmit();
+                    }
+                }}
                 disabled={isProcessing}
-                aria-label={message.trim() ? "Send message" : "Voice input"}
+                aria-label={message.trim() ? "Send message" : "Predict Future"}
                 style={{ borderRadius: '0px', boxShadow: 'none' }}
+                title={!message.trim() ? "See your predicted future" : "Send"}
             >
                 {isProcessing ? (
                     <Sparkles size={18} className="animate-pulse" />
-                ) : (
+                ) : message.trim() ? (
                     <Send size={18} />
+                ) : (
+                    <Sparkles size={18} style={{ color: 'var(--accent-primary)' }} />
                 )}
             </button>
         </div>
