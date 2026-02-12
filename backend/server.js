@@ -1,50 +1,22 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { VertexAI } = require('@google-cloud/vertexai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const crypto = require('crypto');
 const tools = require('./tools');
 
 // --------------------
-// Vertex AI Configuration
+// Google AI Studio (Gemini) Configuration
 // --------------------
-const path = require('path');
-const fs = require('fs');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const projectId = process.env.VERTEX_AI_PROJECT_ID;
-const location = process.env.VERTEX_AI_LOCATION || 'us-central1';
+// Using gemini-1.5-flash for speed and cost efficiency
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// --------------------
-// Health Check and Error Handling
-// --------------------
-process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-});
-
-process.on('uncaughtException', (err) => {
-    console.error('Uncaught Exception:', err);
-    process.exit(1);
-});
-
-// Authentication Logic for Vertex AI / Firebase
-const serviceAccountPath = process.env.RENDER
-    ? '/etc/secrets/serviceAccountKey.json'
-    : path.join(__dirname, 'serviceAccountKey.json');
-
-if (fs.existsSync(serviceAccountPath)) {
-    process.env.GOOGLE_APPLICATION_CREDENTIALS = serviceAccountPath;
-}
-
-const vertexAI = new VertexAI({ project: projectId, location: location });
-
-// Using gemini-1.5-flash model via Vertex AI for better regional support
-const model = 'gemini-1.5-flash';
-
-// Helper function to generate content using Vertex AI
+// Helper function to generate content using Google AI Studio
 async function generateContent(prompt) {
-    console.log(`[VertexAI] Generating content with model: ${model} in project: ${projectId}`);
-    const generativeModel = vertexAI.getGenerativeModel({ model: model });
-    const result = await generativeModel.generateContent(prompt);
+    console.log(`[Gemini API] Generating content with model: gemini-1.5-flash`);
+    const result = await model.generateContent(prompt);
     return result;
 }
 
@@ -217,7 +189,7 @@ User message:
 
     try {
         const result = await generateContent(prompt);
-        const text = result.response.candidates[0].content.parts[0].text.trim();
+        const text = result.response.text().trim();
         const jsonText = text.replace(/```json/g, "").replace(/```/g, "");
         return JSON.parse(jsonText);
     } catch (err) {
@@ -421,7 +393,7 @@ app.post("/api/predict-future", async (req, res) => {
         // 4. Call Vertex AI
         try {
             const result = await generateContent(prompt);
-            const text = result.response.candidates[0].content.parts[0].text.trim();
+            const text = result.response.text().trim();
             const jsonText = text.replace(/```json/g, "").replace(/```/g, "").trim();
             const futures = JSON.parse(jsonText);
 
@@ -557,7 +529,7 @@ Respond with JSON only:`;
 
         try {
             const result = await generateContent(fullPrompt);
-            const text = result.response.candidates[0].content.parts[0].text.trim();
+            const text = result.response.text().trim();
 
             // Try to parse JSON from response
             let parsed;
@@ -663,9 +635,7 @@ app.get("/api/debug", async (_, res) => {
     } catch (e) { firebaseStatus = "Error loading module"; }
 
     const status = {
-        vertexAIConfigured: !!(process.env.VERTEX_AI_PROJECT_ID && process.env.VERTEX_AI_LOCATION),
-        vertexAIProject: process.env.VERTEX_AI_PROJECT_ID || 'Not Set',
-        vertexAILocation: process.env.VERTEX_AI_LOCATION || 'Not Set',
+        geminiKeyPresent: !!process.env.GEMINI_API_KEY,
         firebase: firebaseStatus,
         envFile: require("fs").existsSync(".env"),
         nodeVersion: process.version
