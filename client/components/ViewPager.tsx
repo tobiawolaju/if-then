@@ -69,7 +69,7 @@ export default function ViewPager() {
     };
 
     return (
-        <section className="h-screen w-screen flex flex-col relative overflow-hidden bg-abyss">
+        <section className="h-[70vh] w-screen flex flex-col relative overflow-hidden bg-abyss">
             {/* Background grid */}
             <div
                 className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -89,8 +89,8 @@ export default function ViewPager() {
                             key={tf}
                             onClick={() => setTimeframe(tf)}
                             className={`px-5 py-2 rounded-full text-[12px] font-black tracking-tighter transition-all ${timeframe === tf
-                                    ? 'bg-neon text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
-                                    : 'text-muted hover:text-white'
+                                ? 'bg-neon text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                                : 'text-muted hover:text-white'
                                 }`}
                         >
                             {tf.toUpperCase()}
