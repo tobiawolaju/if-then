@@ -3,8 +3,10 @@
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { useDeriverseStore, type TabType } from "@/lib/store";
 import { useState } from "react";
-import { AreaChart, Area, ResponsiveContainer, YAxis } from "recharts";
-import { Search, ChevronDown } from "lucide-react";
+import { LightweightChart } from "./LightweightChart";
+import { useMarketData } from "../hooks/useMarketData";
+import { Timeframe } from "../services/candleAggregator";
+import { Search, ChevronDown, Clock } from "lucide-react";
 
 const tabs: TabType[] = ["Futures", "Perps", "Options"];
 
@@ -29,44 +31,14 @@ const tabIcons: Record<TabType, React.ReactNode> = {
     ),
 };
 
-const chartLines = [
-    [20, 45, 35, 55, 48, 62, 58, 72, 65, 80, 75, 90, 85, 78, 88].map((val, i) => ({ time: i, price: val })),
-    [50, 42, 55, 38, 45, 32, 48, 35, 52, 40, 58, 45, 62, 50, 55].map((val, i) => ({ time: i, price: val })),
-    [30, 35, 28, 42, 38, 50, 45, 55, 60, 52, 65, 58, 70, 62, 68].map((val, i) => ({ time: i, price: val })),
-];
-
-function RealChart({ tabIndex }: { tabIndex: number }) {
-    const data = chartLines[tabIndex];
-
-    return (
-        <div className="w-full h-32 md:h-48 mt-6">
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={data}>
-                    <defs>
-                        <linearGradient id={`colorPrice-${tabIndex}`} x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#a855f7" stopOpacity={0.4} />
-                            <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
-                        </linearGradient>
-                    </defs>
-                    <YAxis domain={['dataMin - 10', 'dataMax + 10']} hide />
-                    <Area
-                        type="monotone"
-                        dataKey="price"
-                        stroke="#a855f7"
-                        strokeWidth={2}
-                        fillOpacity={1}
-                        fill={`url(#colorPrice-${tabIndex})`}
-                        isAnimationActive={true}
-                    />
-                </AreaChart>
-            </ResponsiveContainer>
-        </div>
-    );
-}
+const timeframes: Timeframe[] = ['1m', '5m', '15m', '1h'];
 
 export default function ViewPager() {
     const { activeTab, setActiveTab } = useDeriverseStore();
     const [direction, setDirection] = useState(0);
+    const [timeframe, setTimeframe] = useState<Timeframe>('1m');
+
+    const { candles, loading, currentPrice, setOnCandleUpdate } = useMarketData(activeTab, timeframe);
 
     const currentIndex = tabs.indexOf(activeTab);
 
@@ -109,12 +81,28 @@ export default function ViewPager() {
             />
 
             {/* Token Selector Header */}
-            <div className="absolute top-6 left-6 z-[60]">
+            <div className="absolute top-6 left-6 z-[60] flex items-center gap-3">
                 <button className="flex items-center gap-2 glass px-4 py-2 rounded-full hover:bg-white/10 transition-colors group shadow-lg">
                     <Search size={16} className="text-muted group-hover:text-neon transition-colors" />
                     <span className="font-bold text-white tracking-wide text-sm">SOL/USDC</span>
                     <ChevronDown size={16} className="text-muted group-hover:text-white transition-colors" />
                 </button>
+
+                {/* Timeframe Selector */}
+                <div className="flex bg-abyss-light/50 glass rounded-full p-1 gap-1">
+                    {timeframes.map(tf => (
+                        <button
+                            key={tf}
+                            onClick={() => setTimeframe(tf)}
+                            className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${timeframe === tf
+                                    ? 'bg-neon text-white shadow-lg shadow-neon/20'
+                                    : 'text-muted hover:text-white'
+                                }`}
+                        >
+                            {tf.toUpperCase()}
+                        </button>
+                    ))}
+                </div>
             </div>
 
 
@@ -147,19 +135,28 @@ export default function ViewPager() {
                             </h2>
                         </div>
 
-                        <p className="text-muted text-sm mt-2 tracking-wide">
-                            TradingView Chart · {activeTab.toUpperCase()}
+                        <p className="text-muted text-sm mt-2 tracking-wide flex items-center gap-2">
+                            <Clock size={12} /> TradingView Terminal · {activeTab.toUpperCase()} · {timeframe}
                         </p>
 
-                        {/* Real Chart */}
-                        <div className="w-full px-8 h-32 md:h-48 mb-6 mt-4 relative z-0">
-                            <RealChart tabIndex={currentIndex} />
+                        {/* Professional Chart */}
+                        <div className="w-full px-4 md:px-8 h-48 md:h-64 mb-6 mt-6 relative z-0">
+                            {loading ? (
+                                <div className="w-full h-full flex items-center justify-center bg-abyss-light/20 rounded-xl border border-white/5 animate-pulse">
+                                    <div className="text-neon/40 text-xs font-bold tracking-widest uppercase">Initializing Stream...</div>
+                                </div>
+                            ) : (
+                                <LightweightChart
+                                    data={candles}
+                                    onTick={setOnCandleUpdate}
+                                />
+                            )}
                         </div>
 
                         {/* Price mock */}
-                        <div className="flex items-baseline gap-2 mt-4">
+                        <div className="flex items-baseline gap-2 mt-4 glass px-4 py-2 rounded-xl">
                             <span className="text-xl font-mono font-bold text-white">
-                                $145.20
+                                ${currentPrice?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '---'}
                             </span>
                             <span className="text-xs text-buy font-medium">+2.34%</span>
                         </div>
