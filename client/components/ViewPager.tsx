@@ -9,6 +9,23 @@ import { Timeframe } from "../services/candleAggregator";
 import { Search, ChevronDown, Clock, MousePointer2, Slash, Minus, Ruler, Magnet, Trash2, LayoutGrid, BookOpen } from "lucide-react";
 
 import { mockWalletData } from "@/lib/mockWalletData";
+import { mockOrderBookData } from "@/lib/mockOrderBook";
+import dynamic from 'next/dynamic';
+
+interface ListProps {
+    height: number;
+    itemCount: number;
+    itemSize: number;
+    width: string | number;
+    className?: string;
+    style?: React.CSSProperties;
+    children: (props: { index: number; style: React.CSSProperties }) => React.ReactElement;
+}
+
+const List = dynamic<ListProps>(() => import('react-window').then((mod: any) => mod.FixedSizeList), {
+    ssr: false,
+    loading: () => <div className="animate-pulse bg-white/5 w-full h-full rounded-md" />
+});
 
 const tabs: TabType[] = ["Chart", "Orderbook", "Wallet"];
 
@@ -118,10 +135,67 @@ export default function ViewPager() {
                         )}
 
                         {activeTab === "Orderbook" && (
-                            <div className="w-full h-full flex flex-col items-center justify-center bg-abyss text-white/50 p-6">
-                                <BookOpen size={48} className="mb-4 opacity-50" />
-                                <h2 className="text-2xl font-black tracking-tighter text-white">ORDERBOOK</h2>
-                                <p className="text-sm">Real-time liquidity depth coming soon.</p>
+                            <div className="w-full h-full flex flex-col bg-abyss text-white/90 pt-16 px-4">
+                                {/* Orderbook Header */}
+                                <div className="flex justify-between items-center pb-2 border-b border-white/10 text-xs font-bold text-white/50 tracking-wider">
+                                    <span className="w-1/3 text-left">PRICE</span>
+                                    <span className="w-1/3 text-right">SIZE</span>
+                                    <span className="w-1/3 text-right">TOTAL</span>
+                                </div>
+
+                                {/* Asks (Descending to Mid) */}
+                                <div className="flex-1 overflow-hidden mt-2 relative">
+                                    <List
+                                        height={300} // Approximate half-height, flex handles actual bounds poorly in old react-window without AutoSizer
+                                        itemCount={mockOrderBookData.asks.length}
+                                        itemSize={24}
+                                        width="100%"
+                                        className="scrollbar-hide"
+                                        style={{ height: '40vh' }}
+                                    >
+                                        {({ index, style }) => {
+                                            // Reverse index so lowest ask is at the bottom near the spread
+                                            const ask = mockOrderBookData.asks[mockOrderBookData.asks.length - 1 - index];
+                                            return (
+                                                <div style={style} className="flex justify-between items-center text-sm font-mono cursor-pointer hover:bg-white/5">
+                                                    <span className="w-1/3 text-left text-sell drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">{ask.price}</span>
+                                                    <span className="w-1/3 text-right text-white/80">{ask.size}</span>
+                                                    <span className="w-1/3 text-right text-white/40">{ask.total}</span>
+                                                </div>
+                                            );
+                                        }}
+                                    </List>
+                                </div>
+
+                                {/* Spread / Mid Price */}
+                                <div className="flex items-center justify-center py-2 bg-white/5 border-y border-white/10 my-2 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+                                    <span className="text-xl font-black text-white tracking-tighter">
+                                        {currentPrice?.toFixed(2) || "96,500.00"}
+                                    </span>
+                                </div>
+
+                                {/* Bids (Ascending from Mid) */}
+                                <div className="flex-1 overflow-hidden mb-2 relative">
+                                    <List
+                                        height={300}
+                                        itemCount={mockOrderBookData.bids.length}
+                                        itemSize={24}
+                                        width="100%"
+                                        className="scrollbar-hide"
+                                        style={{ height: '40vh' }}
+                                    >
+                                        {({ index, style }) => {
+                                            const bid = mockOrderBookData.bids[index];
+                                            return (
+                                                <div style={style} className="flex justify-between items-center text-sm font-mono cursor-pointer hover:bg-white/5">
+                                                    <span className="w-1/3 text-left text-buy drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]">{bid.price}</span>
+                                                    <span className="w-1/3 text-right text-white/80">{bid.size}</span>
+                                                    <span className="w-1/3 text-right text-white/40">{bid.total}</span>
+                                                </div>
+                                            );
+                                        }}
+                                    </List>
+                                </div>
                             </div>
                         )}
 
