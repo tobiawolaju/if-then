@@ -120,8 +120,10 @@ export default function ViewPager() {
                                     <span className="w-1/3 text-right">Total</span>
                                 </div>
 
-                                {/* Asks (Sell Orders) - Bottom Aligned */}
-                                <div className="flex-1 flex flex-col justify-end overflow-hidden py-1">
+                                <div
+                                    className="flex-1 flex flex-col justify-end overflow-hidden py-1"
+                                    style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%)' }}
+                                >
                                     {mockOrderBookData.asks.slice(0, 15).reverse().map((ask, i) => {
                                         const total = parseFloat(ask.total);
                                         const maxTotal = parseFloat(mockOrderBookData.asks[14].total);
@@ -159,8 +161,10 @@ export default function ViewPager() {
                                     </div>
                                 </div>
 
-                                {/* Bids (Buy Orders) - Top Aligned */}
-                                <div className="flex-1 flex flex-col justify-start overflow-hidden py-1">
+                                <div
+                                    className="flex-1 flex flex-col justify-start overflow-hidden py-1"
+                                    style={{ maskImage: 'linear-gradient(to top, transparent, black 20%)', WebkitMaskImage: 'linear-gradient(to top, transparent, black 20%)' }}
+                                >
                                     {mockOrderBookData.bids.slice(0, 15).map((bid, i) => {
                                         const total = parseFloat(bid.total);
                                         const maxTotal = parseFloat(mockOrderBookData.bids[14].total);
@@ -192,7 +196,10 @@ export default function ViewPager() {
 
 
                         {activeTab === "Wallet" && (
-                            <div className="w-full h-full flex flex-col items-center justify-start bg-abyss pt-12 px-6 overflow-y-auto pb-20 scrollbar-hide">
+                            <div
+                                className="w-full h-full flex flex-col items-center justify-start bg-abyss pt-12 px-6 overflow-y-auto pb-24 scrollbar-hide"
+                                style={{ maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)' }}
+                            >
                                 <div className="w-full max-w-sm flex flex-col items-center gap-1 mb-10">
                                     <div style={{ marginTop: "60px" }}></div>
                                     <h2 className="text-4xl font-black text-white tracking-tighter drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">
