@@ -130,7 +130,7 @@ export default function ViewPager() {
                         {activeTab === "Wallet" && (
                             <div className="w-full h-full flex flex-col items-center justify-start bg-abyss pt-12 px-6">
                                 <div className="w-full max-w-sm flex flex-col items-center gap-1 mb-10">
-                                    <div style={{ marginTop="100px" }}></div>
+                                    <div style={{ marginTop: "100px" }}></div>
                                     <h2 className="text-4xl font-black text-white tracking-tighter drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">
                                         {mockWalletData.totalBalanceUsd}
                                     </h2>
