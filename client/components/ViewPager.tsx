@@ -40,6 +40,7 @@ export default function ViewPager() {
     const [direction, setDirection] = useState(0);
     const [timeframe, setTimeframe] = useState<Timeframe>('1m');
     const [activeTool, setActiveTool] = useState<string>("cursor");
+    const [isMagnetActive, setIsMagnetActive] = useState(false);
 
     // Update direction when tab changes
     if (currentIndex !== prevIndex) {
@@ -123,6 +124,7 @@ export default function ViewPager() {
                                 data={candles}
                                 onTick={setOnCandleUpdate}
                                 activeTool={activeTool}
+                                isMagnetActive={isMagnetActive}
                                 onToolChange={setActiveTool}
                             />
                         )}
@@ -164,8 +166,8 @@ export default function ViewPager() {
                     <div className="w-full h-px bg-white/5 my-1" />
                     <ToolButton
                         icon={<Magnet size={18} />}
-                        active={activeTool === "magnet"}
-                        onClick={() => setActiveTool("magnet")}
+                        active={isMagnetActive}
+                        onClick={() => setIsMagnetActive(!isMagnetActive)}
                     />
                     <ToolButton
                         icon={<Trash2 size={18} />}

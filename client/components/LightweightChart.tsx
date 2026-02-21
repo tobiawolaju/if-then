@@ -6,6 +6,7 @@ interface LightweightChartProps {
     data: CandleData[];
     onTick?: (callback: (candle: CandleData) => void) => void;
     activeTool?: string;
+    isMagnetActive?: boolean;
     onToolChange?: (tool: string) => void;
     colors?: {
         backgroundColor?: string;
@@ -31,6 +32,7 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
     data,
     onTick,
     activeTool = 'cursor',
+    isMagnetActive = false,
     onToolChange,
     colors: {
         backgroundColor = '#09090b',
@@ -159,25 +161,38 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
 
     // 4. Drawing Layer Interactions
     const getPointFromEvent = useCallback((e: React.PointerEvent) => {
-        if (!chartRef.current || !candleSeriesRef.current) return null;
+        if (!chartRef.current || !candleSeriesRef.current || !data.length) return null;
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
         const logical = chartRef.current.timeScale().coordinateToLogical(x);
-        const price = candleSeriesRef.current.coordinateToPrice(y);
-        if (price === null) return null;
-        return { logical, price };
-    }, []);
+        let price = candleSeriesRef.current.coordinateToPrice(y);
+
+        if (price === null || logical === null) return null;
+
+        // Magnet Logic
+        if (isMagnetActive) {
+            const index = Math.max(0, Math.min(Math.round(logical), data.length - 1));
+            const candle = data[index];
+            if (candle) {
+                // Find closest OHLC price
+                const prices = [candle.open, candle.high, candle.low, candle.close];
+                price = prices.reduce((prev, curr) => Math.abs(curr - price!) < Math.abs(prev - price!) ? curr : prev) as any;
+            }
+        }
+
+        return { logical: logical as number, price: price as number };
+    }, [data, isMagnetActive]);
 
     const handlePointerDown = (e: React.PointerEvent) => {
-        if (activeTool === 'cursor' || activeTool === 'trash' || activeTool === 'grid' || activeTool === 'magnet') return;
+        if (activeTool === 'cursor' || activeTool === 'trash') return;
 
         const p = getPointFromEvent(e);
         if (!p) return;
 
         if (activeTool === 'level') {
-            setDrawings(prev => [...prev, { id: Date.now().toString(), type: 'level', price: p.price }]);
+            setDrawings(prev => [...prev, { id: Date.now().toString(), type: 'level', price: p.price as number }]);
             if (onToolChange) onToolChange('cursor'); // Auto-revert
             return;
         }
@@ -229,7 +244,7 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
         if (d.type === 'level' && d.price != null) {
             const y = candleSeriesRef.current?.priceToCoordinate(d.price);
             if (y == null) return null;
-            return <line key={d.id} x1="0" y1={y} x2="100%" y2={y} stroke="#a855f7" strokeWidth="2" strokeDasharray="5,5" className="opacity-80 drop-shadow-[0_0_5px_rgba(168,85,247,0.5)]" />;
+            return <line key={d.id} x1="0" y1={y} x2="100%" y2={y} stroke="#eab308" strokeWidth="2" strokeDasharray="5,5" className="opacity-90 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]" />;
         }
 
         const s = resolveCoords(d.start?.logical, d.start?.price);
@@ -237,7 +252,7 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
         if (!s || !e) return null;
 
         if (d.type === 'trend') {
-            return <line key={d.id} x1={s.x} y1={s.y} x2={e.x} y2={e.y} stroke="#a855f7" strokeWidth="3" strokeLinecap="round" className="opacity-90 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]" />;
+            return <line key={d.id} x1={s.x} y1={s.y} x2={e.x} y2={e.y} stroke="#eab308" strokeWidth="3" strokeLinecap="round" className="opacity-100 drop-shadow-[0_0_8px_rgba(234,179,8,0.6)]" />;
         }
 
         if (d.type === 'measure' && d.start && d.end) {
@@ -264,7 +279,7 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
         return null;
     };
 
-    const isInteractionLayerActive = activeTool !== 'cursor' && activeTool !== 'trash' && activeTool !== 'magnet' && activeTool !== 'grid';
+    const isInteractionLayerActive = activeTool !== 'cursor' && activeTool !== 'trash';
 
     return (
         <div className="w-full h-full relative overflow-hidden group">
