@@ -3,7 +3,7 @@ import { IndexerTrade } from "../types/deriverse";
 import { analyticsService } from "../services/analyticsService";
 import { journalEntries } from "./mockData"; // Initial fallback
 
-export type TabType = "Futures" | "Perps" | "Options";
+export type TabType = "Chart" | "Orderbook" | "Wallet";
 
 interface DeriverseState {
     activeTab: TabType;
@@ -35,7 +35,7 @@ interface DeriverseState {
 const initialMetrics = analyticsService.computeMetrics([]);
 
 export const useDeriverseStore = create<DeriverseState>((set, get) => ({
-    activeTab: "Futures",
+    activeTab: "Chart",
     setActiveTab: (tab) => set({ activeTab: tab }),
 
     executionModalOpen: false,

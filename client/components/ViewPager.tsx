@@ -6,30 +6,12 @@ import { useState } from "react";
 import { LightweightChart } from "./LightweightChart";
 import { useMarketData } from "../hooks/useMarketData";
 import { Timeframe } from "../services/candleAggregator";
-import { Search, ChevronDown, Clock, MousePointer2, Slash, Minus, Ruler, Magnet, Trash2, LayoutGrid } from "lucide-react";
+import { Search, ChevronDown, Clock, MousePointer2, Slash, Minus, Ruler, Magnet, Trash2, LayoutGrid, BookOpen } from "lucide-react";
 
-const tabs: TabType[] = ["Futures", "Perps", "Options"];
+import { mockWalletData } from "@/lib/mockWalletData";
 
-const tabIcons: Record<TabType, React.ReactNode> = {
-    Futures: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-            <polyline points="16 7 22 7 22 13"></polyline>
-        </svg>
-    ),
-    Perps: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4Z"></path>
-        </svg>
-    ),
-    Options: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="6"></circle>
-            <circle cx="12" cy="12" r="2"></circle>
-        </svg>
-    ),
-};
+const tabs: TabType[] = ["Chart", "Orderbook", "Wallet"];
+
 
 const timeframes: Timeframe[] = ['1m', '5m', '15m', '1h'];
 
@@ -48,7 +30,9 @@ export default function ViewPager() {
         setPrevIndex(currentIndex);
     }
 
-    const { candles, loading, currentPrice, setOnCandleUpdate } = useMarketData(activeTab, timeframe);
+    // We explicitly request 'Futures' market data regardless of active tab
+    // because activeTab is now just a UI state ("Chart"), not a market product identifier.
+    const { candles, loading, currentPrice, setOnCandleUpdate } = useMarketData("Futures", timeframe);
 
 
     const variants = {
@@ -113,68 +97,122 @@ export default function ViewPager() {
                         }}
                         className="absolute inset-0 w-full h-full"
                     >
-                        {loading ? (
-                            <div className="w-full h-full flex items-center justify-center bg-abyss">
-                                <div className="text-neon/30 text-xs font-black tracking-[0.3em] uppercase animate-pulse">
-                                    Synchronizing Nodes...
+                        {activeTab === "Chart" && (
+                            <>
+                                {loading ? (
+                                    <div className="w-full h-full flex items-center justify-center bg-abyss">
+                                        <div className="text-neon/30 text-xs font-black tracking-[0.3em] uppercase animate-pulse">
+                                            Synchronizing Nodes...
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <LightweightChart
+                                        data={candles}
+                                        onTick={setOnCandleUpdate}
+                                        activeTool={activeTool}
+                                        isMagnetActive={isMagnetActive}
+                                        onToolChange={setActiveTool}
+                                    />
+                                )}
+                            </>
+                        )}
+
+                        {activeTab === "Orderbook" && (
+                            <div className="w-full h-full flex flex-col items-center justify-center bg-abyss text-white/50 p-6">
+                                <BookOpen size={48} className="mb-4 opacity-50" />
+                                <h2 className="text-2xl font-black tracking-tighter text-white">ORDERBOOK</h2>
+                                <p className="text-sm">Real-time liquidity depth coming soon.</p>
+                            </div>
+                        )}
+
+                        {activeTab === "Wallet" && (
+                            <div className="w-full h-full flex flex-col items-center justify-start bg-abyss pt-12 px-6">
+                                <div className="w-full max-w-sm flex flex-col items-center gap-1 mb-10">
+                                    <h2 className="text-4xl font-black text-white tracking-tighter drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+                                        {mockWalletData.totalBalanceUsd}
+                                    </h2>
+                                    <p className="text-xs font-mono text-neon bg-neon/10 px-3 py-1 rounded-full border border-neon/20">
+                                        {mockWalletData.address}
+                                    </p>
+                                </div>
+
+                                <div className="w-full max-w-sm flex flex-col gap-3">
+                                    <h3 className="text-sm font-bold text-white/50 uppercase tracking-widest pl-2 mb-2">Assets</h3>
+                                    {mockWalletData.tokens.map(token => (
+                                        <div key={token.id} className="flex justify-between items-center bg-white/5 border border-white/10 rounded-2xl p-4 glass hover:bg-white/10 transition-colors cursor-pointer">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-full bg-neon/20 flex items-center justify-center text-neon border border-neon/30 font-black">
+                                                    {token.symbol[0]}
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-white">{token.symbol}</span>
+                                                    <span className="text-xs text-white/50">{token.name}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="font-bold text-white">{token.usdValue}</span>
+                                                <div className="flex gap-2">
+                                                    <span className="text-xs text-white/50">{token.balance} {token.symbol}</span>
+                                                    <span className={`text-xs ${token.isUp ? 'text-buy' : 'text-sell'}`}>
+                                                        {token.change24h}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ) : (
-                            <LightweightChart
-                                data={candles}
-                                onTick={setOnCandleUpdate}
-                                activeTool={activeTool}
-                                isMagnetActive={isMagnetActive}
-                                onToolChange={setActiveTool}
-                            />
                         )}
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Left Sidebar - Quant Tools */}
-                <div
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-[70] flex flex-col gap-2 p-1.5 bg-abyss-light/60 glass-heavy rounded-2xl shadow-2xl border border-white/5 touch-none"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <ToolButton
-                        icon={<MousePointer2 size={18} />}
-                        active={activeTool === "cursor"}
-                        onClick={() => setActiveTool("cursor")}
-                    />
-                    <div className="w-full h-px bg-white/5 my-1" />
-                    <ToolButton
-                        icon={<Slash size={18} />}
-                        active={activeTool === "trend"}
-                        onClick={() => setActiveTool("trend")}
-                    />
-                    <ToolButton
-                        icon={<Minus size={18} />}
-                        active={activeTool === "level"}
-                        onClick={() => setActiveTool("level")}
-                    />
-                    <ToolButton
-                        icon={<LayoutGrid size={18} />}
-                        active={activeTool === "grid"}
-                        onClick={() => setActiveTool("grid")}
-                    />
-                    <ToolButton
-                        icon={<Ruler size={18} />}
-                        active={activeTool === "measure"}
-                        onClick={() => setActiveTool("measure")}
-                    />
-                    <div className="w-full h-px bg-white/5 my-1" />
-                    <ToolButton
-                        icon={<Magnet size={18} />}
-                        active={isMagnetActive}
-                        onClick={() => setIsMagnetActive(!isMagnetActive)}
-                    />
-                    <ToolButton
-                        icon={<Trash2 size={18} />}
-                        className="text-sell/60 hover:text-sell"
-                        onClick={() => setActiveTool("trash")}
-                    />
-                </div>
+                {/* Left Sidebar - Quant Tools (Only visible on Chart) */}
+                {activeTab === "Chart" && (
+                    <div
+                        className="absolute left-4 top-1/2 -translate-y-1/2 z-[70] flex flex-col gap-2 p-1.5 bg-abyss-light/60 glass-heavy rounded-2xl shadow-2xl border border-white/5 touch-none"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+
+                        <ToolButton
+                            icon={<MousePointer2 size={18} />}
+                            active={activeTool === "cursor"}
+                            onClick={() => setActiveTool("cursor")}
+                        />
+                        <div className="w-full h-px bg-white/5 my-1" />
+                        <ToolButton
+                            icon={<Slash size={18} />}
+                            active={activeTool === "trend"}
+                            onClick={() => setActiveTool("trend")}
+                        />
+                        <ToolButton
+                            icon={<Minus size={18} />}
+                            active={activeTool === "level"}
+                            onClick={() => setActiveTool("level")}
+                        />
+                        <ToolButton
+                            icon={<LayoutGrid size={18} />}
+                            active={activeTool === "grid"}
+                            onClick={() => setActiveTool("grid")}
+                        />
+                        <ToolButton
+                            icon={<Ruler size={18} />}
+                            active={activeTool === "measure"}
+                            onClick={() => setActiveTool("measure")}
+                        />
+                        <div className="w-full h-px bg-white/5 my-1" />
+                        <ToolButton
+                            icon={<Magnet size={18} />}
+                            active={isMagnetActive}
+                            onClick={() => setIsMagnetActive(!isMagnetActive)}
+                        />
+                        <ToolButton
+                            icon={<Trash2 size={18} />}
+                            className="text-sell/60 hover:text-sell"
+                            onClick={() => setActiveTool("trash")}
+                        />
+                    </div>
+                )}
             </div>
         </section>
     );
