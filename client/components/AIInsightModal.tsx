@@ -50,16 +50,19 @@ export default function AIInsightModal() {
                                         transition={{ delay: 0.2 }}
                                         className="mb-8"
                                     >
-                                        <span className="px-4 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold tracking-widest uppercase mb-4 inline-flex items-center gap-2">
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                className="w-4 h-4"
-                                            >
-                                                <path d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z" />
-                                            </svg>
-                                            Deep Intelligence
-                                        </span>
+                                        <div className="flex flex-col items-center gap-4 mb-4">
+                                            <img src="/logo.png" alt="Hashquant Logo" className="w-16 h-16 rounded-2xl shadow-2xl" />
+                                            <span className="px-4 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold tracking-widest uppercase inline-flex items-center gap-2">
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    className="w-4 h-4"
+                                                >
+                                                    <path d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z" />
+                                                </svg>
+                                                Deep Intelligence
+                                            </span>
+                                        </div>
                                         <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
                                             AI INSIGHTS
                                         </h2>

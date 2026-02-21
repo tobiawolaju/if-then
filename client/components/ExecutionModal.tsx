@@ -51,9 +51,12 @@ export default function ExecutionModal() {
                                 style={{ background: "#111114" }}
                             >
                                 {/* Title */}
-                                <Dialog.Title className="text-xl font-bold tracking-tight mb-1">
-                                    Execute Trade
-                                </Dialog.Title>
+                                <div className="flex items-center gap-3 mb-1">
+                                    <img src="/logo.png" alt="Logo" className="w-6 h-6 rounded" />
+                                    <Dialog.Title className="text-xl font-bold tracking-tight">
+                                        Execute Trade
+                                    </Dialog.Title>
+                                </div>
                                 <Dialog.Description className="text-muted text-xs mb-6">
                                     Confirm your position size and lock to execute.
                                 </Dialog.Description>

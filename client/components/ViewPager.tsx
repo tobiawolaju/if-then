@@ -80,10 +80,16 @@ export default function ViewPager() {
                 }}
             />
 
-            {/* Header Controls - Centered */}
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-[60] flex items-center justify-center">
-                {/* Timeframe Selector */}
-                <div className="flex bg-abyss-light/40 glass rounded-full p-1 gap-1 shadow-2xl">
+            {/* Header Controls */}
+            <div className="absolute top-8 left-0 right-0 z-[60] flex items-center justify-between px-8">
+                {/* Logo */}
+                <div className="flex items-center gap-3">
+                    <img src="/logo.png" alt="Hashquant Logo" className="w-8 h-8 rounded-lg shadow-lg" />
+                    <span className="text-white font-black tracking-tighter text-lg hidden md:block">HASHQUANT</span>
+                </div>
+
+                {/* Timeframe Selector - Centered */}
+                <div className="absolute left-1/2 -translate-x-1/2 flex bg-abyss-light/40 glass rounded-full p-1 gap-1 shadow-2xl">
                     {timeframes.map(tf => (
                         <button
                             key={tf}
@@ -97,6 +103,9 @@ export default function ViewPager() {
                         </button>
                     ))}
                 </div>
+
+                {/* Right utility spacer */}
+                <div className="w-8 md:w-32" />
             </div>
 
             {/* Main Immersive Chart Area */}
