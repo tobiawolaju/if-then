@@ -5,6 +5,7 @@ import { CandleData } from '../services/candleAggregator';
 interface LightweightChartProps {
     data: CandleData[];
     onTick?: (callback: (candle: CandleData) => void) => void;
+    activeTool?: string;
     colors?: {
         backgroundColor?: string;
         lineColor?: string;
@@ -23,6 +24,7 @@ interface LightweightChartProps {
 export const LightweightChart: React.FC<LightweightChartProps> = ({
     data,
     onTick,
+    activeTool,
     colors: {
         backgroundColor = '#09090b',
         lineColor = '#a855f7',
@@ -33,6 +35,10 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
     const chartRef = useRef<IChartApi | null>(null);
     const candleSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
     const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
+
+    // Tool State
+    const [measureData, setMeasureData] = React.useState<{ start: any, end: any } | null>(null);
+    const isDrawing = useRef(false);
 
     useEffect(() => {
         if (!chartContainerRef.current) return;
@@ -139,6 +145,79 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
         };
     }, [backgroundColor, textColor, onTick]); // Only re-init on theme change
 
+    // Tool Interactions Effect
+    useEffect(() => {
+        if (!chartRef.current || !candleSeriesRef.current || !activeTool) return;
+        const chart = chartRef.current;
+        const container = chartContainerRef.current;
+        if (!container) return;
+
+        const handleMouseDown = (e: MouseEvent) => {
+            if (activeTool === 'cursor') return;
+            isDrawing.current = true;
+
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const time = chart.timeScale().coordinateToTime(x);
+            const price = candleSeriesRef.current!.coordinateToPrice(y);
+
+            if (activeTool === 'measure') {
+                setMeasureData({ start: { time, price, x, y }, end: { time, price, x, y } });
+            }
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!isDrawing.current || activeTool === 'cursor') return;
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const time = chart.timeScale().coordinateToTime(x);
+            const price = candleSeriesRef.current!.coordinateToPrice(y);
+
+            if (activeTool === 'measure') {
+                setMeasureData(prev => prev ? { ...prev, end: { time, price, x, y } } : null);
+            }
+        };
+
+        const handleMouseUp = () => {
+            isDrawing.current = false;
+            if (activeTool === 'measure') {
+                setTimeout(() => setMeasureData(null), 2000); // Keep visible for 2s
+            }
+        };
+
+        container.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            container.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [activeTool]);
+
+    const calculateMeasure = () => {
+        if (!measureData) return null;
+        const p1 = measureData.start;
+        const p2 = measureData.end;
+        const priceDelta = p2.price - p1.price;
+        const percent = (priceDelta / p1.price) * 100;
+
+        return {
+            priceDelta: priceDelta.toFixed(2),
+            percent: percent.toFixed(2) + '%',
+            left: Math.min(p1.x, p2.x),
+            top: Math.min(p1.y, p2.y),
+            width: Math.abs(p2.x - p1.x),
+            height: Math.abs(p2.y - p1.y),
+            isUp: priceDelta >= 0
+        };
+    };
+
     // Handle data updates (e.g. timeframe change or initial historical load finishing)
     useEffect(() => {
         if (!candleSeriesRef.current || !volumeSeriesRef.current) return;
@@ -161,9 +240,35 @@ export const LightweightChart: React.FC<LightweightChartProps> = ({
         volumeSeriesRef.current.setData(formattedVolume);
     }, [data]);
 
+    const measure = calculateMeasure();
+
     return (
-        <div className="w-full h-full relative">
+        <div className="w-full h-full relative group">
             <div ref={chartContainerRef} className="w-full h-full" />
+
+            {/* Ruler Overlay */}
+            {measure && (
+                <div
+                    className="absolute pointer-events-none z-50 flex flex-col items-center justify-center border border-white/20 bg-white/5 backdrop-blur-[2px]"
+                    style={{
+                        left: measure.left,
+                        top: measure.top,
+                        width: measure.width,
+                        height: measure.height,
+                    }}
+                >
+                    <div className={`px-2 py-1 rounded-lg text-[10px] font-black font-mono shadow-2xl ${measure.isUp ? 'bg-buy/80 text-white' : 'bg-sell/80 text-white'}`}>
+                        {measure.priceDelta} ({measure.percent})
+                    </div>
+                </div>
+            )}
+
+            {/* Tool Tooltip */}
+            {activeTool !== 'cursor' && !measure && (
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none bg-neon/80 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse">
+                    {activeTool} tool active
+                </div>
+            )}
         </div>
     );
 };

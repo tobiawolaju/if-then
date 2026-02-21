@@ -122,6 +122,7 @@ export default function ViewPager() {
                             <LightweightChart
                                 data={candles}
                                 onTick={setOnCandleUpdate}
+                                activeTool={activeTool}
                             />
                         )}
                     </motion.div>
