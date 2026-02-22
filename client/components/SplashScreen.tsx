@@ -17,8 +17,7 @@ export default function SplashScreen() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
+        container: containerRef,
     });
 
     const handleImageLoad = useCallback(() => {
@@ -35,31 +34,31 @@ export default function SplashScreen() {
         setIsVisible(false);
     };
 
-    // Parallax Transforms (Reverse on Scroll)
-    // As progress goes 0 -> 1:
-    // BG (Layer 1): Scales up slightly and moves down
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+    // Parallax Transforms (Reverse on Scroll: Elements move AWAY as you scroll DOWN)
+    // BG (Layer 1): Sinks and scales out
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
 
-    // Figure 1 (Diamond Hander): Moves left and fades
-    const figure1X = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
-    const figure1Opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    // Figure 1 (Diamond Hander): Moves further left and fades out
+    const figure1X = useTransform(scrollYProgress, [0, 0.4], ["0%", "-30%"]);
+    const figure1Opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
-    // Figure 2 (Degen Trader): Moves right and fades
-    const figure2X = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-    const figure2Opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    // Figure 2 (Degen Trader): Moves further right and fades out
+    const figure2X = useTransform(scrollYProgress, [0, 0.4], ["0%", "30%"]);
+    const figure2Opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
-    // Floating Hands: Moves down and fades
-    const handsY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-    const handsOpacity = useTransform(scrollYProgress, [0, 0.5], [0.9, 0]);
+    // Floating Hands: Drops down quickly and fades
+    const handsY = useTransform(scrollYProgress, [0, 0.5], ["0%", "40%"]);
+    const handsOpacity = useTransform(scrollYProgress, [0, 0.4], [0.9, 0]);
 
-    // Title Transforms: Fades and scales down
-    const titleOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const titleScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+    // Title Transforms: Fades out and scales down as we leave the hero section
+    const titleOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+    const titleScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.5]);
+    const titleY = useTransform(scrollYProgress, [0, 0.4], [0, -100]);
 
-    // Content Reveal: Fades in as we scroll down
-    const contentOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
-    const contentY = useTransform(scrollYProgress, [0.4, 0.7], [50, 0]);
+    // Content Reveal: Fades in and slides up ONLY after title is mostly gone
+    const contentOpacity = useTransform(scrollYProgress, [0.5, 0.9], [0, 1]);
+    const contentY = useTransform(scrollYProgress, [0.5, 0.9], [100, 0]);
 
     return (
         <AnimatePresence>
@@ -69,10 +68,10 @@ export default function SplashScreen() {
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[999] bg-black overflow-y-auto scrollbar-hide"
+                    className="fixed inset-0 z-[999] bg-black overflow-y-scroll scroll-smooth"
                 >
-                    {/* The Height of the Landing Page (200vh to allow for scroll reveal) */}
-                    <div className="h-[200vh] w-full relative">
+                    {/* The Height of the Landing Page (Increased for a better scroll experience) */}
+                    <div className="h-[250vh] w-full relative">
                         {/* Fixed Background Layers */}
                         <div className="sticky top-0 h-screen w-full overflow-hidden">
                             {/* ═══ z-[0]: Layer 1 — Major Background ═══ */}
@@ -80,7 +79,7 @@ export default function SplashScreen() {
                                 initial={{ scale: 1.1, opacity: 0 }}
                                 animate={imagesLoaded ? { scale: 1, opacity: 0.8 } : {}}
                                 style={{ y: bgY, scale: bgScale, filter: "blur(4px)" }}
-                                transition={{ duration: 6.5, ease: "easeOut" }}
+                                transition={{ duration: 2.5, ease: "easeOut" }}
                                 className="absolute inset-0 z-[0] transform-gpu"
                             >
                                 <Image
@@ -114,8 +113,8 @@ export default function SplashScreen() {
                                 initial={{ x: "-40%", opacity: 0 }}
                                 animate={imagesLoaded ? { x: "0%", opacity: 1 } : {}}
                                 style={{ x: figure1X, opacity: figure1Opacity }}
-                                transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                                className="absolute bottom-0 left-[-10%] z-[10] w-[50%] h-[90%]"
+                                transition={{ delay: 0.5, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                className="absolute bottom-0 left-0 z-[10] w-[50%] h-[90%]"
                             >
                                 <Image
                                     src="/splash/Layer_3_Figure_1_The_Diamond_Hander_Center_Left.png"
@@ -131,8 +130,8 @@ export default function SplashScreen() {
                                 initial={{ x: "40%", opacity: 0 }}
                                 animate={imagesLoaded ? { x: "0%", opacity: 1 } : {}}
                                 style={{ x: figure2X, opacity: figure2Opacity }}
-                                transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                                className="absolute bottom-0 right-[-10%] z-[10] w-[50%] h-[90%]"
+                                transition={{ delay: 0.5, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                className="absolute bottom-0 right-0 z-[10] w-[50%] h-[90%]"
                             >
                                 <Image
                                     src="/splash/Layer_4_Figure_2_The_Degen_Trader_Center_Right.png"
@@ -148,7 +147,7 @@ export default function SplashScreen() {
                                 initial={{ y: "20%", opacity: 0 }}
                                 animate={imagesLoaded ? { y: "0%", opacity: 0.9 } : {}}
                                 style={{ y: handsY, opacity: handsOpacity }}
-                                transition={{ delay: 1.2, duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+                                transition={{ delay: 0.8, duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
                                 className="absolute bottom-0 left-0 right-0 z-[30] h-[60%]"
                             >
                                 <Image
@@ -163,54 +162,62 @@ export default function SplashScreen() {
                             {/* ═══ z-[40]: Gradient Overlay ═══ */}
                             <motion.div
                                 initial={{ opacity: 0 }}
-                                animate={imagesLoaded ? { opacity: 0.4 } : {}}
+                                animate={imagesLoaded ? { opacity: 0.5 } : {}}
                                 transition={{ duration: 2 }}
-                                className="absolute inset-0 z-[40] bg-gradient-to-b from-neon via-abyss/80 to-black pointer-events-none"
+                                className="absolute inset-0 z-[40] bg-gradient-to-b from-abyss/40 via-black/20 to-black pointer-events-none"
                             />
 
-                            {/* ═══ z-[50]: Central Title Section (100vh) ═══ */}
-                            <div className="absolute inset-0 z-[50] flex items-center justify-center">
+                            {/* ═══ z-[50]: Central Title Section (Hero) ═══ */}
+                            <div className="absolute inset-0 z-[50] flex items-center justify-center p-6 text-center">
                                 <motion.div
-                                    style={{ opacity: titleOpacity, scale: titleScale }}
-                                    className="text-center"
+                                    style={{ opacity: titleOpacity, scale: titleScale, y: titleY }}
                                 >
                                     <motion.h1
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
-                                        transition={{ duration: 1.5, ease: "easeOut", delay: 1.5 }}
-                                        className="text-7xl md:text-9xl font-black text-white tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={imagesLoaded ? { opacity: 1, scale: 1 } : {}}
+                                        transition={{ duration: 1.5, ease: "easeOut", delay: 1.2 }}
+                                        className="text-6xl md:text-9xl font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.4)]"
                                     >
                                         Dominus Quant
                                     </motion.h1>
-                                    <motion.p
-                                        initial={{ opacity: 0 }}
-                                        animate={imagesLoaded ? { opacity: 0.6 } : {}}
-                                        transition={{ delay: 2, duration: 1 }}
-                                        className="text-white tracking-[0.5em] uppercase text-sm mt-4"
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
+                                        transition={{ delay: 1.8, duration: 1 }}
+                                        className="mt-8 flex flex-col items-center gap-2"
                                     >
-                                        Scroll to Explore
-                                    </motion.p>
+                                        <p className="text-white tracking-[0.6em] uppercase text-[10px] md:text-xs font-bold opacity-60">
+                                            Scroll to Explore
+                                        </p>
+                                        <motion.div
+                                            animate={{ y: [0, 5, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                            className="w-px h-12 bg-gradient-to-b from-white to-transparent"
+                                        />
+                                    </motion.div>
                                 </motion.div>
                             </div>
 
-                            {/* ═══ z-[51]: Reveal Section Content ═══ */}
-                            <div className="absolute inset-0 z-[51] flex flex-col items-center justify-center pointer-events-none">
+                            {/* ═══ z-[51]: Reveal Section Content (Landing) ═══ */}
+                            <div className="absolute inset-0 z-[51] flex flex-col items-center justify-center pointer-events-none p-6">
                                 <motion.div
                                     style={{ opacity: contentOpacity, y: contentY }}
-                                    className="max-w-xl text-center px-6 pointer-events-auto"
+                                    className="max-w-2xl text-center pointer-events-auto"
                                 >
-                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Turning Random James into Quants</h2>
-                                    <p className="text-white/60 text-lg mb-10 leading-relaxed">
+                                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                                        Turning Random James<br />into Quants
+                                    </h2>
+                                    <p className="text-white/70 text-base md:text-lg mb-12 leading-relaxed max-w-lg mx-auto">
                                         A high-fidelity on-chain trading intelligence protocol.
                                         Distributed market intelligence powering a shared algorithmic trading pool.
                                     </p>
                                     <button
                                         onClick={handleStartTrading}
-                                        className="group relative px-12 py-5 bg-white text-black font-black text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full"
+                                        className="group relative px-16 py-5 bg-white text-black font-black text-sm tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full"
                                     >
-                                        <span className="relative z-10 flex items-center gap-2">
+                                        <span className="relative z-10 flex items-center gap-3">
                                             Hybrid Trade
-                                            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                             </svg>
                                         </span>
@@ -228,3 +235,4 @@ export default function SplashScreen() {
         </AnimatePresence>
     );
 }
+
