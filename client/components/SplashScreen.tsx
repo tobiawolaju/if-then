@@ -173,7 +173,7 @@ export default function SplashScreen() {
                             {/* Button 1: Hybrid Trade (Firm Side) */}
                             <button
                                 onClick={handleStartTrading}
-                                className="group relative px-8 py-4 bg-white text-black font-black text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 active:scale-95"
+                                className="group relative px-10 py-4 bg-white text-black font-black text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
                                     Hybrid Trade
@@ -182,14 +182,6 @@ export default function SplashScreen() {
                                     </svg>
                                 </span>
                                 <div className="absolute inset-0 bg-neon opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </button>
-
-                            {/* Button 2: View Docs (DEX Side) */}
-                            <button
-                                onClick={() => window.open("https://github.com/tobiawolaju/TrueDex", "_blank")}
-                                className="px-8 py-4 border border-white/20 bg-white/5 backdrop-blur-md text-white font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all hover:border-white/40 active:scale-95"
-                            >
-                                View Docs
                             </button>
                         </motion.div>
                     </div>
