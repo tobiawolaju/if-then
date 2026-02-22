@@ -30,7 +30,8 @@ export default function SplashScreen() {
     // Start the dismiss timer only after all images are loaded
     useEffect(() => {
         if (!imagesLoaded) return;
-        const timer = setTimeout(() => setIsVisible(false), 4500);
+        // Extend animation by 1s (to 5.5s) + wait 2 more seconds = 7.5s total
+        const timer = setTimeout(() => setIsVisible(false), 7500);
         return () => clearTimeout(timer);
     }, [imagesLoaded]);
 
@@ -47,7 +48,7 @@ export default function SplashScreen() {
                     <motion.div
                         initial={{ scale: 1.1, opacity: 0 }}
                         animate={imagesLoaded ? { scale: 1, opacity: 0.8 } : {}}
-                        transition={{ duration: 5, ease: "easeOut" }}
+                        transition={{ duration: 6.5, ease: "easeOut" }}
                         className="absolute inset-0 z-[0] transform-gpu"
                         style={{ filter: "blur(4px)" }}
                     >
