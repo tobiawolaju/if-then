@@ -64,19 +64,19 @@ export default function BottomFABBar() {
                             transition: { duration: 1, repeat: Infinity, ease: "easeInOut" }
                         } : { scale: 1 }}
                         onClick={() => setIsPlaying(!isPlaying)}
-                        className={`w-10 h-10 rounded-full font-bold transition-all shadow-lg flex items-center justify-center ${isPlaying
-                                ? "bg-white text-abyss shadow-white/20"
-                                : "bg-neon text-white shadow-neon/20 hover:bg-neon-dim"
+                        className={`w-12 h-12 rounded-full font-bold transition-all shadow-lg flex items-center justify-center ${isPlaying
+                            ? "bg-white text-abyss shadow-white/20"
+                            : "bg-neon text-white shadow-neon/20 hover:bg-neon-dim"
                             }`}
                     >
-                        {isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-0.5" />}
+                        {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
                     </motion.button>
 
                     <motion.button
                         whileTap={{ scale: 0.95 }}
                         whileHover={{ scale: 1.03 }}
                         onClick={openExecutionModal}
-                        className="px-5 py-2 rounded-full font-bold text-xs tracking-wide bg-neon hover:bg-neon-dim text-white transition-colors shadow-lg shadow-neon/20 flex flex-col items-center min-w-[80px]"
+                        className="px-5 py-2 h-12 rounded-full font-bold text-xs tracking-wide bg-neon hover:bg-neon-dim text-white transition-colors shadow-lg shadow-neon/20 flex flex-col items-center justify-center min-w-[80px]"
                     >
                         <span className="text-xs font-bold">BUY</span>
                         <span className="text-[9px] font-mono opacity-80 -mt-0.5">
