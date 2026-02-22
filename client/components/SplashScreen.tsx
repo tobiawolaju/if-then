@@ -163,36 +163,29 @@ export default function SplashScreen() {
                                 Distributed market intelligence powering a shared algorithmic trading pool.
                             </p>
                         </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: 2.2, duration: 1.2 }}
-                            className="flex flex-col sm:flex-row items-center gap-4 mt-12"
-                        >
-                            {/* Button 1: Hybrid Trade (Firm Side) */}
-                            <button
-                                onClick={handleStartTrading}
-                                className="group relative px-8 py-4 bg-white text-black font-black text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 active:scale-95"
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    Hybrid Trade
-                                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </span>
-                                <div className="absolute inset-0 bg-neon opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </button>
-
-                            {/* Button 2: View Docs (DEX Side) */}
-                            <button
-                                onClick={() => window.open("https://github.com/tobiawolaju/TrueDex", "_blank")}
-                                className="px-8 py-4 border border-white/20 bg-white/5 backdrop-blur-md text-white font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all hover:border-white/40 active:scale-95"
-                            >
-                                View Docs
-                            </button>
-                        </motion.div>
                     </div>
+
+                    {/* ═══ z-[60]: Bottom Action Area ═══ */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
+                        transition={{ delay: 2.2, duration: 1.2 }}
+                        className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4"
+                    >
+                        {/* Button 1: Hybrid Trade (Firm Side) */}
+                        <button
+                            onClick={handleStartTrading}
+                            className="group relative px-10 py-4 bg-white text-black font-black text-xs tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                        >
+                            <span className="relative z-10 flex items-center gap-3">
+                                Hybrid Trade
+                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-neon opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
+                    </motion.div>
 
                     {/* ═══ z-[99]: Aesthetic Grain Overlay ═══ */}
                     <div className="absolute inset-0 z-[99] opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
