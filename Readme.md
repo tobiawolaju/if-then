@@ -1,6 +1,7 @@
-# Dominus Quant (DQ Labs): Turning Random James into Quants
+# Dominus Quant
+>Turning John Does into Quants
 
-**Dominus Quant**, built by **DQ Labs**, is a high-fidelity on-chain trading intelligence protocol designed for the Deriverse ecosystem and beyond.
+**Dominus Quant**, is a high-fidelity on-chain trading intelligence protocol designed for the Deriverse ecosystem and beyond.
 
 Our mission is simple:
 
