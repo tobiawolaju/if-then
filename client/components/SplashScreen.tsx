@@ -140,9 +140,9 @@ export default function SplashScreen() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 1.5, ease: "easeOut", delay: 1.5 }}
-                            className="text-7xl md:text-9xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                            className="text-4xl md:text-6xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                         >
-                            <span className="opacity-40">#</span>Quant
+                            <span className="opacity-40">Hash</span>quant
                         </motion.h1>
 
                         <motion.div
@@ -151,7 +151,6 @@ export default function SplashScreen() {
                             transition={{ delay: 2.5, duration: 1.5 }}
                             className="text-center mt-6"
                         >
-                            <span className="text-[10px] font-bold text-white uppercase tracking-[0.8em]">Modular Liquidity Protocol</span>
                         </motion.div>
                     </div>
 
