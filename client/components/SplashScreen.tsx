@@ -142,7 +142,7 @@ export default function SplashScreen() {
                             transition={{ duration: 1.5, ease: "easeOut", delay: 1.5 }}
                             className="text-4xl md:text-6xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                         >
-                            <span className="opacity-40">Hash</span>quant
+                            <span>DQ </span>Labs
                         </motion.h1>
 
                         <motion.div
