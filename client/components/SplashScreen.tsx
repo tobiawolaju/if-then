@@ -16,6 +16,16 @@ export default function SplashScreen() {
     const [loadedCount, setLoadedCount] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // Body scroll lock
+    useEffect(() => {
+        if (isVisible) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+        return () => { document.body.style.overflow = "unset"; };
+    }, [isVisible]);
+
     const { scrollYProgress } = useScroll({
         container: containerRef,
     });
@@ -34,31 +44,27 @@ export default function SplashScreen() {
         setIsVisible(false);
     };
 
-    // Parallax Transforms (Reverse on Scroll: Elements move AWAY as you scroll DOWN)
-    // BG (Layer 1): Sinks and scales out
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+    // Parallax Transforms (Reverse on Scroll)
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
 
-    // Figure 1 (Diamond Hander): Moves further left and fades out
-    const figure1X = useTransform(scrollYProgress, [0, 0.4], ["0%", "-30%"]);
+    const figure1X = useTransform(scrollYProgress, [0, 0.4], ["0%", "-40%"]);
     const figure1Opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
-    // Figure 2 (Degen Trader): Moves further right and fades out
-    const figure2X = useTransform(scrollYProgress, [0, 0.4], ["0%", "30%"]);
+    const figure2X = useTransform(scrollYProgress, [0, 0.4], ["0%", "40%"]);
     const figure2Opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
-    // Floating Hands: Drops down quickly and fades
-    const handsY = useTransform(scrollYProgress, [0, 0.5], ["0%", "40%"]);
+    const handsY = useTransform(scrollYProgress, [0, 0.5], ["0%", "50%"]);
     const handsOpacity = useTransform(scrollYProgress, [0, 0.4], [0.9, 0]);
 
-    // Title Transforms: Fades out and scales down as we leave the hero section
-    const titleOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-    const titleScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.5]);
-    const titleY = useTransform(scrollYProgress, [0, 0.4], [0, -100]);
+    // Title Transforms: Clears out earlier to make room for content
+    const titleOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+    const titleScale = useTransform(scrollYProgress, [0, 0.35], [1, 0.6]);
+    const titleY = useTransform(scrollYProgress, [0, 0.35], [0, -150]);
 
-    // Content Reveal: Fades in and slides up ONLY after title is mostly gone
-    const contentOpacity = useTransform(scrollYProgress, [0.5, 0.9], [0, 1]);
-    const contentY = useTransform(scrollYProgress, [0.5, 0.9], [100, 0]);
+    // Content Reveal: Starts appearing only after title is gone
+    const contentOpacity = useTransform(scrollYProgress, [0.45, 0.85], [0, 1]);
+    const contentY = useTransform(scrollYProgress, [0.45, 0.85], [100, 0]);
 
     return (
         <AnimatePresence>
@@ -168,7 +174,7 @@ export default function SplashScreen() {
                             />
 
                             {/* ═══ z-[50]: Central Title Section (Hero) ═══ */}
-                            <div className="absolute inset-0 z-[50] flex items-center justify-center p-6 text-center">
+                            <div className="absolute inset-0 z-[60] flex items-center justify-center p-6 text-center">
                                 <motion.div
                                     style={{ opacity: titleOpacity, scale: titleScale, y: titleY }}
                                 >
@@ -199,12 +205,12 @@ export default function SplashScreen() {
                             </div>
 
                             {/* ═══ z-[51]: Reveal Section Content (Landing) ═══ */}
-                            <div className="absolute inset-0 z-[51] flex flex-col items-center justify-center pointer-events-none p-6">
+                            <div className="absolute inset-0 z-[70] flex flex-col items-center justify-center pointer-events-none p-6 translate-z-0">
                                 <motion.div
                                     style={{ opacity: contentOpacity, y: contentY }}
-                                    className="max-w-2xl text-center pointer-events-auto"
+                                    className="max-w-2xl text-center pointer-events-auto bg-black/40 backdrop-blur-sm p-12 rounded-3xl border border-white/5"
                                 >
-                                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight leading-[1.1]">
                                         Turning Random James<br />into Quants
                                     </h2>
                                     <p className="text-white/70 text-base md:text-lg mb-12 leading-relaxed max-w-lg mx-auto">
