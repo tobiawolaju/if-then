@@ -144,7 +144,7 @@ export default function SplashScreen() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 1.5, ease: "easeOut", delay: 1.5 }}
-                            className="text-5xl md:text-8xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center leading-none"
+                            className="text-3xl md:text-6xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center leading-none"
                         >
                             <span className="opacity-40">Dominus</span>Quant
                         </motion.h1>
@@ -167,13 +167,12 @@ export default function SplashScreen() {
                         transition={{ delay: 2.2, duration: 1.2 }}
                         className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4"
                     >
-                        {/* Button 1: Hybrid Trade (Firm Side) */}
                         <button
                             onClick={handleStartTrading}
                             className="group relative px-10 py-4 bg-white text-black font-black text-xs tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                         >
                             <span className="relative z-10 flex items-center gap-3">
-                                Start Trading
+                                Trade
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
