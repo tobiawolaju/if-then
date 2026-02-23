@@ -169,7 +169,7 @@ export default function SplashScreen() {
                     >
                         <button
                             onClick={handleStartTrading}
-                            className="group relative px-10 py-4 bg-white text-black font-black text-xs tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                            className="group relative px-10 py-4 bg-neon text-white font-black text-xs tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full shadow-[0_0_30px_rgba(168,85,247,0.4)] neon-glow-sm"
                         >
                             <span className="relative z-10 flex items-center gap-3">
                                 Trade
