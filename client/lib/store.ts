@@ -29,6 +29,8 @@ interface DeriverseState {
     metrics: ReturnType<typeof analyticsService.computeMetrics>;
     setTrades: (trades: IndexerTrade[]) => void;
     refreshAnalytics: () => void;
+    activeMarket: string;
+    setActiveMarket: (market: string) => void;
 }
 
 // Initial metrics structure
@@ -67,5 +69,8 @@ export const useDeriverseStore = create<DeriverseState>((set, get) => ({
         const { trades } = get();
         const metrics = analyticsService.computeMetrics(trades.length > 0 ? trades : journalEntries as any);
         set({ metrics });
-    }
+    },
+    // Market Implementation
+    activeMarket: "SOL/USDC",
+    setActiveMarket: (market) => set({ activeMarket: market }),
 }));

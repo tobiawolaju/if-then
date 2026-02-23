@@ -10,6 +10,7 @@ import { Search, ChevronDown, Clock, MousePointer2, Slash, Minus, Ruler, Magnet,
 
 import { mockWalletData } from "@/lib/mockWalletData";
 import { mockOrderBookData } from "@/lib/mockOrderBook";
+import { mockMarkets } from "@/lib/mockTokens";
 import dynamic from 'next/dynamic';
 
 
@@ -19,7 +20,7 @@ const tabs: TabType[] = ["Chart", "Orderbook", "Wallet"];
 const timeframes: Timeframe[] = ['1m', '5m', '15m', '1h'];
 
 export default function ViewPager() {
-    const { activeTab, setActiveTab } = useDeriverseStore();
+    const { activeTab, setActiveTab, activeMarket, setActiveMarket } = useDeriverseStore();
     const currentIndex = tabs.indexOf(activeTab);
     const [prevIndex, setPrevIndex] = useState(currentIndex);
     const [direction, setDirection] = useState(0);
@@ -33,9 +34,8 @@ export default function ViewPager() {
         setPrevIndex(currentIndex);
     }
 
-    // We explicitly request 'Futures' market data regardless of active tab
-    // because activeTab is now just a UI state ("Chart"), not a market product identifier.
-    const { candles, loading, currentPrice, setOnCandleUpdate } = useMarketData("Futures", timeframe);
+    // We explicitly request data for the active market from the store
+    const { candles, loading, currentPrice, setOnCandleUpdate } = useMarketData(activeMarket, timeframe);
 
 
     const variants = {
@@ -268,6 +268,11 @@ export default function ViewPager() {
                         onClick={(e) => e.stopPropagation()}
                     >
 
+                        <MarketSelector
+                            activeMarket={activeMarket}
+                            onSelect={setActiveMarket}
+                        />
+
                         <ToolButton
                             icon={<MousePointer2 size={18} />}
                             active={activeTool === "cursor"}
@@ -283,11 +288,6 @@ export default function ViewPager() {
                             icon={<Minus size={18} />}
                             active={activeTool === "level"}
                             onClick={() => setActiveTool("level")}
-                        />
-                        <ToolButton
-                            icon={<LayoutGrid size={18} />}
-                            active={activeTool === "grid"}
-                            onClick={() => setActiveTool("grid")}
                         />
                         <ToolButton
                             icon={<Ruler size={18} />}
@@ -309,6 +309,66 @@ export default function ViewPager() {
                 )}
             </div>
         </section>
+    );
+}
+
+function MarketSelector({ activeMarket, onSelect }: { activeMarket: string; onSelect: (m: string) => void }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="relative">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`
+                    w-10 h-12 flex flex-col items-center justify-center rounded-xl transition-all duration-200 gap-0.5
+                    ${isOpen ? 'bg-neon text-white' : 'text-muted hover:bg-white/5 hover:text-white'}
+                `}
+            >
+                <span className="text-[8px] font-black tracking-tighter uppercase opacity-50">Pair</span>
+                <span className="text-[10px] font-black tracking-tighter leading-none">{activeMarket.split('/')[0]}</span>
+                <ChevronDown size={10} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, x: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: 10, scale: 0.95 }}
+                        className="absolute left-14 top-0 z-[100] w-48 bg-abyss-light/95 glass-heavy rounded-2xl border border-white/10 shadow-2xl p-2 overflow-hidden"
+                    >
+                        <div className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] px-3 py-2 border-b border-white/5 mb-1">
+                            Select Market
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            {mockMarkets.map((market) => (
+                                <button
+                                    key={market.id}
+                                    onClick={() => {
+                                        onSelect(market.symbol);
+                                        setIsOpen(false);
+                                    }}
+                                    className={`
+                                        flex items-center justify-between px-3 py-2.5 rounded-xl transition-all
+                                        ${activeMarket === market.symbol
+                                            ? 'bg-neon/20 text-white border border-neon/30'
+                                            : 'hover:bg-white/5 text-white/60 hover:text-white border border-transparent'}
+                                    `}
+                                >
+                                    <div className="flex flex-col items-start">
+                                        <span className="text-xs font-black">{market.symbol}</span>
+                                        <span className="text-[9px] opacity-40 font-bold">{market.name}</span>
+                                    </div>
+                                    {activeMarket === market.symbol && (
+                                        <div className="w-1.5 h-1.5 rounded-full bg-neon shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }
 
