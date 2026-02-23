@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "DQlabs | Institutional Grade Terminal",
+  title: "Dominus Quant | Institutional Grade Terminal",
   description: "Narrated trading analytics built on Deriverse",
   manifest: "/manifest.json",
   icons: {
