@@ -31,7 +31,7 @@ export default function SplashScreen() {
     useEffect(() => {
         if (!imagesLoaded) return;
         // Auto-dismiss after 4.5 seconds
-        const timer = setTimeout(() => setIsVisible(false), 4500);
+        const timer = setTimeout(() => setIsVisible(false), 6500);
         return () => clearTimeout(timer);
     }, [imagesLoaded]);
 
