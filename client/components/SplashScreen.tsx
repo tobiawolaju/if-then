@@ -27,34 +27,13 @@ export default function SplashScreen() {
         });
     }, []);
 
-    // Auto-dismiss is disabled to make it a landing page
-    // useEffect(() => {
-    //     if (!imagesLoaded) return;
-    //     // Extend animation by 1s (to 5.5s) + wait 2 more seconds = 7.5s total
-    //     const timer = setTimeout(() => setIsVisible(false), 7500);
-    //     return () => clearTimeout(timer);
-    // }, [imagesLoaded]);
-
-    // Disable scrolling and overscroll behavior when splash screen is visible
+    // Start the dismiss timer only after all images are loaded
     useEffect(() => {
-        if (isVisible) {
-            document.body.style.overflow = "hidden";
-            document.body.style.overscrollBehavior = "none";
-            document.documentElement.style.overflow = "hidden";
-            document.documentElement.style.overscrollBehavior = "none";
-        } else {
-            document.body.style.overflow = "auto";
-            document.body.style.overscrollBehavior = "auto";
-            document.documentElement.style.overflow = "auto";
-            document.documentElement.style.overscrollBehavior = "auto";
-        }
-        return () => {
-            document.body.style.overflow = "auto";
-            document.body.style.overscrollBehavior = "auto";
-            document.documentElement.style.overflow = "auto";
-            document.documentElement.style.overscrollBehavior = "auto";
-        };
-    }, [isVisible]);
+        if (!imagesLoaded) return;
+        // Auto-dismiss after 4.5 seconds
+        const timer = setTimeout(() => setIsVisible(false), 4500);
+        return () => clearTimeout(timer);
+    }, [imagesLoaded]);
 
     const handleStartTrading = () => {
         setIsVisible(false);
@@ -67,8 +46,7 @@ export default function SplashScreen() {
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[999] bg-black flex items-center justify-center overflow-hidden touch-none overscroll-none"
-                    style={{ overscrollBehavior: "none", touchAction: "none" }}
+                    className="fixed inset-0 z-[999] bg-black flex items-center justify-center overflow-hidden"
                 >
                     {/* ═══ z-[0]: Layer 1 — Major Background (Blurred for Perspective) ═══ */}
                     <motion.div
@@ -181,27 +159,6 @@ export default function SplashScreen() {
                                 Turning John Does into Quants </p>
                         </motion.div>
                     </div>
-
-                    {/* ═══ z-[60]: Bottom Action Area ═══ */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={imagesLoaded ? { opacity: 1, y: 0 } : {}}
-                        transition={{ delay: 2.2, duration: 1.2 }}
-                        className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4"
-                    >
-                        <button
-                            onClick={handleStartTrading}
-                            className="group relative px-10 py-4 bg-white text-black font-black text-xs tracking-[0.2em] uppercase overflow-hidden transition-all hover:scale-105 active:scale-95 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-                        >
-                            <span className="relative z-10 flex items-center gap-3">
-                                Trade
-                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
-                            </span>
-                            <div className="absolute inset-0 bg-neon opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                    </motion.div>
 
                     {/* ═══ z-[99]: Aesthetic Grain Overlay ═══ */}
                     <div className="absolute inset-0 z-[99] opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
