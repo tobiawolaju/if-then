@@ -146,7 +146,7 @@ export default function SplashScreen() {
                             transition={{ duration: 1.5, ease: "easeOut", delay: 1.5 }}
                             className="text-3xl md:text-6xl font-black text-white tracking-[-0.05em] drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center leading-none"
                         >
-                            <span className="opacity-40">Dominus</span>Quant
+                            <span className="text-purple">D</span>QUANT
                         </motion.h1>
 
                         <motion.div
@@ -156,7 +156,8 @@ export default function SplashScreen() {
                             className="text-center mt-4 space-y-4"
                         >
                             <p className="text-sm md:text-base text-white/60 max-w-md mx-auto leading-relaxed">
-                                Turning John Does into Quants </p>
+                                Quants-Native Trading Platform
+                            </p>
                         </motion.div>
                     </div>
 
