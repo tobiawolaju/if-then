@@ -19,7 +19,7 @@ import dynamic from 'next/dynamic';
 const tabs: TabType[] = ["Chart", "Orderbook", "Wallet"];
 
 
-const timeframes: Timeframe[] = ['1m', '5m', '15m', '1h'];
+const timeframes: Timeframe[] = ['1s', '1m', '5m', '15m'];
 
 export default function ViewPager() {
     const { activeTab, setActiveTab, activeMarket, setActiveMarket, availableMarkets, setAvailableMarkets } = useDeriverseStore();
@@ -91,7 +91,7 @@ export default function ViewPager() {
 
             {/* Header Controls - Centered (Only on Chart) */}
             {activeTab === "Chart" && (
-                <div className="absolute top-8 left-1/2 -translate-x-1/2 z-[60] flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[60] flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
                     {/* Active Market Display */}
                     <div className="flex items-center gap-2 bg-abyss-light/40 glass rounded-full px-4 py-2 shadow-2xl">
                         {activeMarket.iconUrl ? (
