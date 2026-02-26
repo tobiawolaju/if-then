@@ -402,7 +402,6 @@ function MarketSelector({ activeMarket, markets, onSelect }: { activeMarket: Mar
                             <div className="relative">
                                 <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/30" />
                                 <input
-                                    autoFocus
                                     type="text"
                                     placeholder="Search pair or DEX..."
                                     value={searchQuery}
