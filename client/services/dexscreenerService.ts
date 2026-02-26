@@ -35,6 +35,12 @@ interface DexScreenerPair {
         usd: number;
     };
     fdv: number;
+    info?: {
+        header?: string;
+        imageUrl?: string;
+        websites?: { label: string; url: string }[];
+        socials?: { type: string; url: string }[];
+    };
 }
 
 interface DexScreenerResponse {
@@ -131,6 +137,7 @@ export const dexscreenerService = {
                 volume24h: p.volume?.h24 || 0,
                 liquidity: p.liquidity?.usd || 0,
                 dexId: p.dexId,
+                iconUrl: p.info?.imageUrl,
             }));
     },
 
@@ -189,6 +196,7 @@ export const dexscreenerService = {
                     volume24h: p.volume?.h24 || 0,
                     liquidity: p.liquidity?.usd || 0,
                     dexId: p.dexId,
+                    iconUrl: p.info?.imageUrl,
                 }));
         } catch (e) {
             console.error('DexScreener getTrendingPairs failed:', e);

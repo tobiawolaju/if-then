@@ -41,4 +41,5 @@ export interface MarketEntry {
     volume24h: number;
     liquidity: number;
     dexId?: string;
+    iconUrl?: string;
 }
