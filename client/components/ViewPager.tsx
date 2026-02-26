@@ -421,8 +421,10 @@ function MarketSelector({ activeMarket, markets, onSelect }: { activeMarket: Mar
                                         <div className="flex items-center gap-1.5">
                                             <span className="text-xs font-black">{market.symbol}</span>
                                             {market.dexId && (
-                                                <span className="text-[8px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-white/30 group-hover:text-white/50 border border-white/5 uppercase tracking-tighter">
-                                                    {market.dexId}
+                                                <span className="text-[7px] font-black px-1.5 py-0.5 rounded bg-white/5 text-white/30 group-hover:text-white/50 border border-white/5 uppercase tracking-tighter truncate max-w-[60px]">
+                                                    {market.dexId.startsWith('0x')
+                                                        ? `${market.dexId.slice(0, 4)}...${market.dexId.slice(-2)}`
+                                                        : market.dexId}
                                                 </span>
                                             )}
                                         </div>
