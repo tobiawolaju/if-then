@@ -1,7 +1,7 @@
 # IF·THEN  
 ### See the future your choices create.
 
-**If·Then** is a personal consequence simulator that turns daily decisions into visible futures.
+**If·Then** is A personal consequence simulator that turns daily decisions into visible futures. other features includes daily routing crafting, direct routing query in natural language, auto synch with google calender
 
 It helps people move from intention to action by making time, habits, and tradeoffs tangible.  
 Not as motivation — but as cause and effect.
