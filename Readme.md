@@ -44,6 +44,46 @@ By combining these layers, DQuant gives both manual traders **actionable insight
 
 ## System Architecture
 
+```mermaid
+graph TD
+    subgraph "Frontend Layer (Next.js 16)"
+        UI["UI Components (Radix, Tailwind)"]
+        State["State Management (Zustand)"]
+        Charts["Charts (Lightweight Charts, Recharts)"]
+    end
+
+    subgraph "Services Layer"
+        DS["DexScreener Service (Market Data)"]
+        AS["Analytics Service (Behavioral Metrics/AI)"]
+        MS["Market Service (State & Polling)"]
+        CA["Candle Aggregator"]
+    end
+
+    subgraph "On-Chain & Auth"
+        PW["Privy Wallet Bridge"]
+        SOL_CONN["Solana Web3 Connection"]
+    end
+
+    subgraph "External Providers"
+        API["DexScreener API"]
+        SOL_BC["Solana Blockchain"]
+        PRV["Privy Auth"]
+    end
+
+    UI --> State
+    UI --> Charts
+    State --> MS
+    MS --> DS
+    MS --> CA
+    DS --> API
+    UI --> AS
+    AS --> State
+    UI --> PW
+    PW --> PRV
+    PW --> SOL_CONN
+    SOL_CONN --> SOL_BC
+```
+
 - **Frontend:** Next.js 16, Tailwind CSS, Zustand  
 - **Analytics & Charts:** Lightweight Charts (trade playback), Recharts (portfolio visualizations)  
 - **Backend & On-Chain:** Solana Web3.js, custom Deriverse indexer, optional capital pool contracts  
