@@ -16,15 +16,14 @@ const ActivityBlock = memo(({ activity, onClick }) => {
         return { start: s, duration: e - s };
     }, [startTime, endTime]);
 
-    const accentColor = color || 'var(--accent-primary)';
+    const accentColor = color || '#fecaca'; // Fallback to a light red/pink if no color
 
     const style = {
         left: `calc(${start} * var(--pixels-per-minute))`,
         width: `calc(${duration} * var(--pixels-per-minute))`,
         top: `calc(${trackIndex} * var(--grid-track-total))`,
-        background: 'var(--bg-elevated)',
+        background: accentColor,
         border: '1px solid var(--border-visible)',
-        borderLeft: `8px solid ${accentColor}`,
         '--block-accent': accentColor,
         boxShadow: 'none',
         borderRadius: 0,
