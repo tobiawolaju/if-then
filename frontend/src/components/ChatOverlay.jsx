@@ -21,7 +21,7 @@ export default function ChatOverlay({
         }
     }, [messages, isTyping]);
 
-    if (!isOpen) return null;
+    if (!isOpen && window.innerWidth <= 900) return null;
 
     return (
         <div className="chat-overlay">

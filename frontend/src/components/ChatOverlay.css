@@ -1,17 +1,10 @@
 .chat-overlay {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(700px, 92%);
-    max-height: 60vh;
-    background: var(--bg-glass);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--border-visible);
+    flex: 1;
+    width: 100%;
+    background: var(--bg-surface);
     display: flex;
     flex-direction: column;
-    z-index: 150;
-    animation: slideUp 0.3s ease-out;
+    z-index: 10;
 }
 
 @keyframes slideUp {
@@ -54,8 +47,6 @@
     padding: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 150px;
-    max-height: calc(60vh - 60px);
 }
 
 .empty-chat {
@@ -80,14 +71,8 @@
     opacity: 0.7;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .chat-overlay {
-        bottom: 90px;
-        width: 94%;
-        max-height: 50vh;
-    }
-
-    .chat-overlay-messages {
-        max-height: calc(50vh - 60px);
+        border-top: 1px solid var(--border-visible);
     }
 }

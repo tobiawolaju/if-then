@@ -1,21 +1,15 @@
 .chat-input-container {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(700px, 92%);
-    background: var(--bg-glass);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--border-visible);
+    width: 100%;
+    background: var(--bg-void);
+    border-top: 1px solid var(--border-visible);
     padding: 8px 8px 8px 24px;
     display: flex;
     align-items: center;
-    z-index: 200;
-    transition: all 0.3s ease;
+    z-index: 20;
 
     /* Flat Design */
-    border-radius: 0px !important;
-    box-shadow: none !important;
+    border-radius: 0px;
+    box-shadow: none;
 }
 
 .chat-input-container:focus-within {
@@ -37,12 +31,7 @@
     color: var(--text-muted);
 }
 
-@media (max-width: 768px) {
-    .chat-input-container {
-        bottom: 24px;
-        width: 90%;
-    }
-}
+/* No media query needed for width/bottom anymore */
 
 .action-btn {
     background: #3b82f6;

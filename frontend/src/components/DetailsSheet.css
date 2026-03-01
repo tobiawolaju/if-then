@@ -124,14 +124,16 @@ textarea:focus {
     background: var(--bg-elevated);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 901px) {
     .details-panel {
         top: var(--header-height);
         bottom: 0;
         right: 0;
-        width: 420px;
+        width: 380px;
+        /* Match sidebar width exactly */
         transform: translateX(100%);
-        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.1);
+        border-left: 1px solid var(--border-visible);
     }
 
     .details-panel.open {
@@ -143,7 +145,7 @@ textarea:focus {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .details-panel {
         bottom: 0;
         left: 0;
