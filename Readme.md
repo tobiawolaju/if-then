@@ -8,35 +8,22 @@ This project demonstrates what’s possible when **trading intelligence, narrati
 
 ## 📸 Platform Screenshots
 
-### Dashboard Overview
-![Dashboard](./screenshots/1.jpg)
+<div style="display:flex; overflow-x:auto; gap:12px; padding:10px 0;">
 
-### Market Analysis Interface
-![Market Analysis](./screenshots/2.jpg)
+  <img src="./screenshots/1.jpg" height="260"/>
+  <img src="./screenshots/2.jpg" height="260"/>
+  <img src="./screenshots/3.jpg" height="260"/>
+  <img src="./screenshots/4.jpg" height="260"/>
+  <img src="./screenshots/5.jpg" height="260"/>
+  <img src="./screenshots/6.jpg" height="260"/>
+  <img src="./screenshots/7.jpg" height="260"/>
+  <img src="./screenshots/8.jpg" height="260"/>
+  <img src="./screenshots/9.jpg" height="260"/>
+  <img src="./screenshots/10.jpg" height="260"/>
 
-### Trade Execution Panel
-![Trade Execution](./screenshots/3.jpg)
+</div>
 
-### Portfolio Analytics
-![Portfolio Analytics](./screenshots/4.jpg)
-
-### Behavioral Insights Engine
-![Behavioral Insights](./screenshots/5.jpg)
-
-### Trade Journal
-![Trade Journal](./screenshots/6.jpg)
-
-### Performance Metrics
-![Performance Metrics](./screenshots/7.jpg)
-
-### AI Confidence Scoring
-![AI Scoring](./screenshots/8.jpg)
-
-### Automated Pool Mode
-![Pool Mode](./screenshots/9.jpg)
-
-### Mobile / Responsive View
-![Mobile View](./screenshots/10.jpg)
+---
 
 ---
 
