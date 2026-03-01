@@ -26,10 +26,6 @@ This project demonstrates what’s possible when **trading intelligence, narrati
   <img src="./screenshots/5.jpg" height="260"/>
 </div>
 
-<p align="center">
-Scroll horizontally to view platform screenshots →
-</p>
-
 ---
 
 ## Why DQuant Matters
