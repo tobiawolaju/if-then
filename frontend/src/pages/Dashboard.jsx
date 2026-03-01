@@ -108,29 +108,32 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
     return (
         <div className="app-container">
             <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
-            <main className="main-content">
-                <Timeline
-                    activities={activities}
-                    onSelectActivity={setSelectedActivity}
-                />
-            </main>
+            <div className="dashboard-body">
+                <main className="dashboard-main">
+                    <Timeline
+                        activities={activities}
+                        onSelectActivity={setSelectedActivity}
+                    />
+                </main>
 
-            <ChatOverlay
-                isOpen={conversation.isOpen}
-                messages={conversation.messages}
-                isTyping={conversation.isTyping}
-                pendingActivities={conversation.pendingActivities}
-                onClose={conversation.closeOverlay}
-                onConfirm={handleConfirmActivities}
-                onReject={conversation.rejectActivities}
-                onClear={conversation.clearConversation}
-            />
-
-            <ChatInput
-                onSendMessage={handleSendMessage}
-                isProcessing={conversation.isTyping}
-                onOpenFutures={() => setShowFuturesModal(true)}
-            />
+                <aside className="dashboard-sidebar">
+                    <ChatOverlay
+                        isOpen={conversation.isOpen}
+                        messages={conversation.messages}
+                        isTyping={conversation.isTyping}
+                        pendingActivities={conversation.pendingActivities}
+                        onClose={conversation.closeOverlay}
+                        onConfirm={handleConfirmActivities}
+                        onReject={conversation.rejectActivities}
+                        onClear={conversation.clearConversation}
+                    />
+                    <ChatInput
+                        onSendMessage={handleSendMessage}
+                        isProcessing={conversation.isTyping}
+                        onOpenFutures={() => setShowFuturesModal(true)}
+                    />
+                </aside>
+            </div>
 
             <FuturesNotification
                 userId={user?.uid}

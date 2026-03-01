@@ -1,9 +1,46 @@
-.main-content {
+.dashboard-body {
     flex: 1;
-    position: relative;
     display: flex;
     overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-/* .main-content.has-selection {
-} */
+.dashboard-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border-right: 1px solid var(--border-visible);
+}
+
+.dashboard-sidebar {
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-visible);
+    position: relative;
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .dashboard-body {
+        flex-direction: column;
+    }
+
+    .dashboard-main {
+        border-right: none;
+        border-bottom: 1px solid var(--border-visible);
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        height: 400px;
+        /* Fixed height or adjustable sheet on mobile */
+        border-left: none;
+        border-top: 1px solid var(--border-visible);
+    }
+}
