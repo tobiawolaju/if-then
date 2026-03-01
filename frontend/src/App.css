@@ -8,7 +8,8 @@
 
 :root {
   /* ===== COLOR SYSTEM: GOOGLE / MATERIAL INSPIRED ===== */
-  --bg-void: #f8f9fa; /* Light grey for depth */
+  --bg-void: #f8f9fa;
+  /* Light grey for depth */
   --bg-surface: #ffffff;
   --bg-elevated: #ffffff;
   --bg-glass: rgba(255, 255, 255, 0.7);
@@ -27,7 +28,8 @@
   --text-ghost: #9aa0a6;
 
   /* Accents */
-  --accent-primary: #1a73e8; /* Google Blue */
+  --accent-primary: #1a73e8;
+  /* Google Blue */
   --accent-secondary: #e8f0fe;
   --accent-tertiary: #4285f4;
 
@@ -69,8 +71,8 @@
   --radius-pill: 9999px;
 
   /* Effects */
-  --shadow-soft: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
-  --shadow-elevated: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-soft: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --backdrop-blur: 20px;
 
   /* Grid overlay colors */
@@ -175,6 +177,39 @@ button,
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: var(--bg-void);
+  position: relative;
+  padding-top: 80px;
+  /* Space for floating header */
+  padding-bottom: 80px;
+  /* Space for bottom nav */
+}
+
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-void);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
+  pointer-events: none;
+}
+
+#splash-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  background: var(--accent-primary);
+  mask: url('/logo.png') no-repeat center;
+  mask-size: contain;
+  -webkit-mask: url('/logo.png') no-repeat center;
+  -webkit-mask-size: contain;
 }
 
 /* Shared Button Styles */
@@ -222,16 +257,18 @@ button,
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 10px;
-  border-radius: 0px;
-  /* Flat */
-  transition: all 0.2s;
+  padding: 8px;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon-btn:hover {
   color: var(--text-primary);
   background: var(--bg-block);
-  box-shadow: none;
+  transform: scale(1.05);
 }
 
 .loading {
