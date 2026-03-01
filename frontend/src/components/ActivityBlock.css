@@ -14,10 +14,8 @@
 }
 
 .activity-block:hover {
-    transform: translateY(-4px) scale(1.02);
     z-index: 20;
-    box-shadow: 0 10px 30px var(--block-accent);
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: var(--bg-surface) !important;
 }
 
 .activity-title {

@@ -7,44 +7,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== COLOR SYSTEM: PREMIUM DEEP DARK ===== */
-  --bg-void: #050505;
-  --bg-surface: #0a0a0c;
-  --bg-elevated: #161618;
-  --bg-glass: rgba(10, 10, 12, 0.7);
-  --bg-panel: #0d0d0f;
-  --bg-block: #1c1c1e;
+  /* ===== COLOR SYSTEM: FLAT LIGHT ===== */
+  --bg-void: #ffffff;
+  --bg-surface: #f4f4f5;
+  --bg-elevated: #e4e4e7;
+  --bg-glass: rgba(255, 255, 255, 0.9);
+  --bg-panel: #ffffff;
+  --bg-block: #f4f4f5;
 
   /* Borders */
-  --border-subtle: transparent;
-  --border-visible: transparent;
+  --border-subtle: #e4e4e7;
+  --border-visible: #000000;
   --border-glow: transparent;
 
   /* Text */
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-ghost: #3f3f46;
+  --text-primary: #000000;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+  --text-ghost: #e4e4e7;
 
-  /* Accents - Electric & Vibrant */
-  --accent-primary: #3b82f6;
-  /* Bright Blue */
-  --accent-secondary: rgba(59, 130, 246, 0.1);
-  --accent-tertiary: #60a5fa;
+  /* Accents - Flat */
+  --accent-primary: #000000;
+  --accent-secondary: #e4e4e7;
+  --accent-tertiary: #a1a1aa;
 
-  --accent-glow: rgba(59, 130, 246, 0.4);
+  --accent-glow: transparent;
   --accent-text: #ffffff;
 
   /* Buttons */
-  --btn-bg: #ffffff;
-  --btn-text: #000000;
-  --btn-hover: #f4f4f5;
+  --btn-bg: #000000;
+  --btn-text: #ffffff;
+  --btn-hover: #3f3f46;
 
   /* Status */
   --status-success: #10b981;
   --status-warning: #f59e0b;
   --status-error: #ef4444;
-  --status-info: #3b82f6;
+  --status-info: #000000;
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
@@ -63,32 +62,24 @@
   --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
-  /* Radius - Aggressive Modernism */
-  --radius-xs: 4px;
-  --radius-s: 8px;
-  --radius-m: 14px;
-  --radius-l: 24px;
-  --radius-pill: 9999px;
+  /* Radius - Sharp/Flat */
+  --radius-xs: 0px;
+  --radius-s: 0px;
+  --radius-m: 0px;
+  --radius-l: 0px;
+  --radius-pill: 0px;
 
   /* Effects */
-  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-  --backdrop-blur: 16px;
+  --shadow-soft: none;
+  --shadow-elevated: none;
+  --backdrop-blur: 0px;
 
   /* Grid overlay colors */
-  --grid-line-primary: rgba(255, 255, 255, 0.05);
-  --grid-line-secondary: rgba(255, 255, 255, 0.02);
+  --grid-line-primary: rgba(0, 0, 0, 0.1);
+  --grid-line-secondary: rgba(0, 0, 0, 0.05);
 }
 
-/* Force Dark Mode defaults as this is a "dark-first" app */
-@media (prefers-color-scheme: light) {
-
-  /* We keep it dark or slightly lighter but still premium */
-  :root {
-    --bg-void: #0f1012;
-    --bg-surface: #16171a;
-  }
-}
+/* Removed dark mode media query to enforce global light theme */
 
 /* ============================================
    GLOBAL RESET
@@ -158,8 +149,8 @@ body {
 .action-button.primary:hover {
   background: var(--bg-surface);
   color: var(--text-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px var(--accent-glow);
+  transform: none;
+  box-shadow: none;
 }
 
 .action-button.secondary {
@@ -188,11 +179,13 @@ body {
 .icon-btn:hover {
   color: var(--text-primary);
   background: var(--border-visible);
-  transform: translateY(-2px);
+  color: white;
+  /* Contrast text inside black bg */
+  transform: none;
 }
 
 .icon-btn:active {
-  transform: translateY(0) scale(0.95);
+  transform: none;
 }
 
 .app-container {
