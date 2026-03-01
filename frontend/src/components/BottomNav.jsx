@@ -2,7 +2,7 @@ import React from 'react';
 import { Home, Search, MessageSquare, User } from 'lucide-react';
 import './BottomNav.css';
 
-export default function BottomNav({ activeView, onViewChange, onOpenChat, user }) {
+const BottomNav = React.memo(({ activeView, onViewChange, onOpenChat, user }) => {
     return (
         <nav className="bottom-nav">
             <button
@@ -12,7 +12,7 @@ export default function BottomNav({ activeView, onViewChange, onOpenChat, user }
                 <div className="nav-icon-wrapper">
                     <Home size={24} />
                 </div>
-                <span>Photos</span>
+                <span>Timeline</span>
             </button>
             <button
                 className="nav-item"
@@ -30,7 +30,7 @@ export default function BottomNav({ activeView, onViewChange, onOpenChat, user }
                 <div className="nav-icon-wrapper">
                     <MessageSquare size={24} />
                 </div>
-                <span>Sharing</span>
+                <span>Chat</span>
             </button>
             <button
                 className={`nav-item ${activeView === 'profile' ? 'active' : ''}`}
@@ -39,8 +39,10 @@ export default function BottomNav({ activeView, onViewChange, onOpenChat, user }
                 <div className="nav-icon-wrapper">
                     <User size={24} />
                 </div>
-                <span>Library</span>
+                <span>Profile</span>
             </button>
         </nav>
     );
-}
+});
+
+export default BottomNav;

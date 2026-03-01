@@ -108,17 +108,10 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
     return (
         <div className="app-container">
             <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
-            <main className={`main-content ${selectedActivity ? 'has-selection' : ''}`}>
+            <main className="main-content">
                 <Timeline
                     activities={activities}
                     onSelectActivity={setSelectedActivity}
-                />
-                <DetailsSheet
-                    activity={selectedActivity}
-                    isOpen={!!selectedActivity}
-                    onClose={() => setSelectedActivity(null)}
-                    onSave={handleSaveActivity}
-                    onDelete={handleDeleteActivity}
                 />
             </main>
 
@@ -157,6 +150,16 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                     user={user}
                     onClose={() => setShowFuturesModal(false)}
                     apiBaseUrl={API_BASE_URL}
+                />
+            )}
+
+            {selectedActivity && (
+                <DetailsSheet
+                    activity={selectedActivity}
+                    isOpen={!!selectedActivity}
+                    onClose={() => setSelectedActivity(null)}
+                    onSave={handleSaveActivity}
+                    onDelete={handleDeleteActivity}
                 />
             )}
         </div>

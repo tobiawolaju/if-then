@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import './ActivityBlock.css';
 
-export default function ActivityBlock({ activity, onClick }) {
-    const parseTime = (timeStr) => {
-        if (!timeStr) return 0;
-        const [hours, minutes] = timeStr.trim().split(':').map(Number);
-        return (hours || 0) * 60 + (minutes || 0);
-    };
+const ActivityBlock = memo(({ activity, onClick }) => {
+    const { startTime, endTime, trackIndex, color, title, id } = activity;
 
-    const start = parseTime(activity.startTime);
-    const end = parseTime(activity.endTime);
-    const duration = end - start;
+    const { start, duration } = useMemo(() => {
+        const parseTime = (timeStr) => {
+            if (!timeStr) return 0;
+            const [hours, minutes] = timeStr.trim().split(':').map(Number);
+            return (hours || 0) * 60 + (minutes || 0);
+        };
 
-    // Color variations for visual interest
-    const accentColor = activity.color || '#e4e4e7';
+        const s = parseTime(startTime);
+        const e = parseTime(endTime);
+        return { start: s, duration: e - s };
+    }, [startTime, endTime]);
+
+    const accentColor = color || 'var(--accent-primary)';
 
     const style = {
         left: `calc(${start} * var(--pixels-per-minute))`,
         width: `calc(${duration} * var(--pixels-per-minute))`,
-        top: `calc(${activity.trackIndex} * var(--grid-track-total))`,
+        top: `calc(${trackIndex} * var(--grid-track-total))`,
         borderLeft: `4px solid ${accentColor}`,
         '--block-accent': accentColor,
         borderRadius: 'var(--radius-m)',
         boxShadow: 'var(--shadow-soft)',
+        willChange: 'left, width'
     };
 
     return (
@@ -42,10 +46,12 @@ export default function ActivityBlock({ activity, onClick }) {
                 }
             }}
         >
-            <div className="activity-title">{activity.title}</div>
+            <div className="activity-title">{title}</div>
             <div className="activity-time">
-                {activity.startTime} — {activity.endTime}
+                {startTime} — {endTime}
             </div>
         </div>
     );
-}
+});
+
+export default ActivityBlock;

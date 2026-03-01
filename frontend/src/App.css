@@ -271,6 +271,33 @@ button,
   transform: scale(1.05);
 }
 
+.crash-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bg-void);
+  color: var(--text-primary);
+  text-align: center;
+  padding: 24px;
+}
+
+.crash-screen h1 {
+  font-family: var(--font-display);
+  margin-bottom: 24px;
+}
+
+.crash-screen button {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .loading {
   display: flex;
   justify-content: center;

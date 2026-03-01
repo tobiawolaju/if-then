@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import ActivityBlock from './ActivityBlock';
 import './Timeline.css';
 
@@ -32,12 +32,16 @@ const TimeIndicator = memo(() => {
     );
 });
 
+const TimeMarker = memo(({ hour }) => (
+    <div className="time-marker">
+        {String(hour).padStart(2, '0')}:00
+    </div>
+));
+
 const TimeRuler = memo(() => (
     <div className="time-ruler" id="time-ruler">
         {HOURS.map(hour => (
-            <div key={hour} className="time-marker">
-                {String(hour).padStart(2, '0')}:00
-            </div>
+            <TimeMarker key={hour} hour={hour} />
         ))}
     </div>
 ));
@@ -49,8 +53,8 @@ function lerp(start, end, factor) {
 
 export default function Timeline({ activities, onSelectActivity }) {
     const containerRef = useRef(null);
-    const [zoom, setZoom] = useState(1.0); // Keep state for non-animation purposes if needed, or initial load
-    const zoomRef = useRef(1.0); // Source of truth for animation
+    const [zoom, setZoom] = useState(1.0);
+    const zoomRef = useRef(1.0);
     const targetZoomRef = useRef(1.0);
     const animatingRef = useRef(false);
     const scrollCenterRef = useRef({ clientX: 0, relativeX: 0 });
@@ -61,17 +65,13 @@ export default function Timeline({ activities, onSelectActivity }) {
         if (containerRef.current) {
             const now = new Date();
             const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
-            const pixelsPerMinute = (200 * zoomRef.current) / 60; // Use ref defaults
+            const pixelsPerMinute = (200 * zoomRef.current) / 60;
             const targetX = currentTimeInMinutes * pixelsPerMinute - (window.innerWidth / 2);
             containerRef.current.scrollLeft = Math.max(0, targetX);
         }
     }, []);
 
-    // Sync ref with state? No, render cycles shouldn't interfere with animation.
-    // We only update `zoom` state when animation STOPS to sync back up for any heavy logic.
-
-    // Smooth zoom animation loop
-    const animateZoom = () => {
+    const animateZoom = useCallback(() => {
         const el = containerRef.current;
         if (!el) {
             animatingRef.current = false;
@@ -81,34 +81,28 @@ export default function Timeline({ activities, onSelectActivity }) {
         const currentZoom = zoomRef.current;
         const targetZoom = targetZoomRef.current;
 
-        // Check if we're close enough to stop
         if (Math.abs(currentZoom - targetZoom) < 0.001) {
             animatingRef.current = false;
             zoomRef.current = targetZoom;
-            setZoom(targetZoom); // Final sync
+            setZoom(targetZoom);
             document.documentElement.style.setProperty('--zoom-level', targetZoom);
             return;
         }
 
-        // Smooth interpolation
-        const newZoom = lerp(currentZoom, targetZoom, 0.2); // Slightly faster factor for responsiveness
+        const newZoom = lerp(currentZoom, targetZoom, 0.2);
         zoomRef.current = newZoom;
         document.documentElement.style.setProperty('--zoom-level', newZoom);
 
-        // Update scroll position to maintain center point
-        // Logic: The relative position (pixel offset) scales with zoom ratio.
         const { clientX, relativeX } = scrollCenterRef.current;
         const rect = el.getBoundingClientRect();
         const ratio = newZoom / currentZoom;
         const newRelativeX = relativeX * ratio;
 
-        // Update stored relativeX for next frame relative calculation consistency
         scrollCenterRef.current.relativeX = newRelativeX;
-
         el.scrollLeft = newRelativeX - (clientX - rect.left);
 
         requestAnimationFrame(animateZoom);
-    };
+    }, []);
 
     // --- ZOOM LOGIC ---
     useEffect(() => {
@@ -123,7 +117,6 @@ export default function Timeline({ activities, onSelectActivity }) {
             if (clamped === targetZoomRef.current) return;
 
             const rect = el.getBoundingClientRect();
-            // Capture cursor position relative to the SCROLL CONTENT (not viewport)
             const currentRelativeX = (centerX - rect.left) + el.scrollLeft;
 
             scrollCenterRef.current = { clientX: centerX, relativeX: currentRelativeX };
@@ -164,7 +157,6 @@ export default function Timeline({ activities, onSelectActivity }) {
 
                 if (lastTouchDistanceRef.current > 0) {
                     const factor = distance / lastTouchDistanceRef.current;
-                    // Dampen the touch zoom for smoother feel
                     const dampedFactor = 1 + (factor - 1) * 0.5;
                     applyZoom(targetZoomRef.current * dampedFactor, centerX);
                 }
@@ -181,12 +173,18 @@ export default function Timeline({ activities, onSelectActivity }) {
             el.removeEventListener('touchstart', handleTouchStart);
             el.removeEventListener('touchmove', handleTouchMove);
         };
-    }, []); // Empty dependency array means listeners are stable
+    }, [animateZoom]);
 
-    const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    const currentDay = useMemo(() => new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase(), []);
 
     // Memoize track assignment
     const { sorted, trackCount } = useMemo(() => {
+        function parseTime(timeStr) {
+            if (!timeStr || typeof timeStr !== 'string') return 0;
+            const [hours, minutes] = timeStr.trim().split(':').map(Number);
+            return (hours || 0) * 60 + (minutes || 0);
+        }
+
         const filteredActivities = activities.filter(activity => {
             if (!activity.days || activity.days.length === 0) return true;
             return activity.days.some(day => day.toString().toLowerCase() === currentDay);
@@ -217,17 +215,11 @@ export default function Timeline({ activities, onSelectActivity }) {
         return { sorted: sortedActivities, trackCount: tracks.length };
     }, [activities, currentDay]);
 
-    function parseTime(timeStr) {
-        if (!timeStr || typeof timeStr !== 'string') return 0;
-        const [hours, minutes] = timeStr.trim().split(':').map(Number);
-        return (hours || 0) * 60 + (minutes || 0);
-    }
-
     return (
         <div className="timeline-container" ref={containerRef} onClick={() => onSelectActivity(null)}>
-            <TimeRuler zoom={zoom} />
+            <TimeRuler />
             <div className="tracks-container" style={{ height: `calc(${trackCount} * var(--grid-track-total))` }}>
-                <TimeIndicator zoom={zoom} />
+                <TimeIndicator />
                 {sorted.map(activity => (
                     <ActivityBlock
                         key={activity.id}
