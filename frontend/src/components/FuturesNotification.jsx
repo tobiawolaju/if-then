@@ -3,6 +3,9 @@ import { Sparkles, X, ArrowRight } from 'lucide-react';
 import './FuturesNotification.css';
 
 export default function FuturesNotification({ userId, onViewFutures, apiBaseUrl }) {
+    // Disabled upon user request
+    return null;
+
     const [isStale, setIsStale] = useState(false);
     const [dismissed, setDismissed] = useState(false);
 
