@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-abyss: #09090b;
+  --color-abyss-light: #131316;
+  --color-abyss-card: #16161a;
+  --color-neon: #a855f7;
+  --color-neon-dim: #7c3aed;
+  --color-neon-glow: rgba(168, 85, 247, 0.35);
+  --color-buy: #22c55e;
+  --color-buy-dim: #16a34a;
+  --color-sell: #ef4444;
+  --color-sell-dim: #dc2626;
+  --color-muted: #71717a;
+  --color-surface: #27272a;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-abyss);
+    color: #fafafa;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
+  }
+}
+
+/* Neon glow utilities */
+.neon-glow {
+  box-shadow: 0 0 20px var(--color-neon-glow), 0 0 60px rgba(168, 85, 247, 0.1);
+}
+
+.neon-glow-sm {
+  box-shadow: 0 0 10px var(--color-neon-glow);
+}
+
+.neon-border {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.1);
+}
