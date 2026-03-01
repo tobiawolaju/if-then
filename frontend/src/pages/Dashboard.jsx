@@ -132,13 +132,6 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                 onOpenFutures={() => setShowFuturesModal(true)}
             />
 
-            <BottomNav
-                activeView={activeView}
-                onViewChange={handleViewChange}
-                onOpenChat={conversation.openOverlay}
-                user={user}
-            />
-
             <FuturesNotification
                 userId={user?.uid}
                 apiBaseUrl={API_BASE_URL}

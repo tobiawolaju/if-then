@@ -16,9 +16,9 @@
   --bg-block: #1c1c1e;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-visible: rgba(255, 255, 255, 0.1);
-  --border-glow: rgba(255, 255, 255, 0.05);
+  --border-subtle: transparent;
+  --border-visible: transparent;
+  --border-glow: transparent;
 
   /* Text */
   --text-primary: #ffffff;
