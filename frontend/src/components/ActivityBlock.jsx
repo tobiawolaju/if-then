@@ -22,11 +22,13 @@ const ActivityBlock = memo(({ activity, onClick }) => {
         left: `calc(${start} * var(--pixels-per-minute))`,
         width: `calc(${duration} * var(--pixels-per-minute))`,
         top: `calc(${trackIndex} * var(--grid-track-total))`,
-        borderLeft: `4px solid ${accentColor}`,
+        background: `rgba(${accentColor.startsWith('var') ? '59, 130, 246' : '255, 255, 255'}, 0.05)`,
+        border: `1px solid ${accentColor}`,
+        borderLeft: `6px solid ${accentColor}`,
         '--block-accent': accentColor,
+        boxShadow: `0 0 20px ${accentColor}22`,
         borderRadius: 'var(--radius-m)',
-        boxShadow: 'var(--shadow-soft)',
-        willChange: 'left, width'
+        willChange: 'left, width, transform'
     };
 
     return (

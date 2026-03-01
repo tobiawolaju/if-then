@@ -1,41 +1,177 @@
 .landing-page {
     position: fixed;
     inset: 0;
-    /* background: var(--bg-void);  Removed to show body grid */
     z-index: 2000;
-    overflow-y: auto;
+    overflow: hidden;
+    background: var(--bg-void);
+}
+
+/* Background Grid Animation */
+.landing-page::before {
+    content: '';
+    position: absolute;
+    inset: -100% -100%;
+    background-image:
+        linear-gradient(var(--grid-line-primary) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line-primary) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.3;
+    animation: gridMove 60s linear infinite;
+    z-index: 0;
+}
+
+@keyframes gridMove {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(80px);
+    }
 }
 
 .landing-section {
-    min-height: 100vh;
+    position: relative;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 24px;
-    text-align: center;
+    z-index: 10;
+}
+
+.hero-glow-container {
+    position: relative;
+    padding: 40px;
+}
+
+.hero-glow-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: var(--accent-glow);
+    filter: blur(80px);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.5;
 }
 
 .brand-title {
-    font-size: clamp(60px, 10vw, 120px);
+    font-size: clamp(80px, 15vw, 160px);
     font-weight: 800;
-    letter-spacing: -0.05em;
-    background: linear-gradient(to right, var(--text-primary) 20%, var(--text-muted) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 32px;
-    filter: none;
+    letter-spacing: -0.06em;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
-.hero-badge {
-    color: var(--text-primary);
-    border: 1px solid var(--border-visible);
-    background: var(--bg-block);
-    padding: 8px 16px;
-    border-radius: 0px;
+.brand-subtitle {
     font-family: var(--font-mono);
-    font-size: 13px;
-    margin-bottom: 40px;
-    box-shadow: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--text-secondary);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.cta-wrapper {
+    position: absolute;
+    bottom: 12vh;
+}
+
+.hero-cta {
+    position: relative;
+    background: var(--text-primary);
+    color: var(--bg-void);
+    border: none;
+    padding: 18px 48px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: var(--radius-pill);
+}
+
+.hero-cta:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+.hero-cta:hover .cta-glow {
+    opacity: 0.3;
+}
+
+/* Floating Orbs */
+.floating-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+    animation: orbFloat 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--accent-primary);
+    top: -100px;
+    right: -100px;
+    animation-delay: -2s;
+}
+
+.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: #7c3aed;
+    bottom: -50px;
+    left: -50px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+    background: #0ea5e9;
+    top: 40%;
+    left: 20%;
+    animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(50px, 100px) scale(1.2);
+    }
 }

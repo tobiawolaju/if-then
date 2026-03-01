@@ -7,114 +7,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== COLOR SYSTEM: GOOGLE / MATERIAL INSPIRED ===== */
-  --bg-void: #f8f9fa;
-  /* Light grey for depth */
-  --bg-surface: #ffffff;
-  --bg-elevated: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.7);
-  --bg-panel: #ffffff;
-  --bg-block: #f1f3f4;
+  /* ===== COLOR SYSTEM: PREMIUM DEEP DARK ===== */
+  --bg-void: #050505;
+  --bg-surface: #0a0a0c;
+  --bg-elevated: #161618;
+  --bg-glass: rgba(10, 10, 12, 0.7);
+  --bg-panel: #0d0d0f;
+  --bg-block: #1c1c1e;
 
   /* Borders */
-  --border-subtle: #e8eaed;
-  --border-visible: #dadce0;
-  --border-glow: transparent;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-visible: rgba(255, 255, 255, 0.1);
+  --border-glow: rgba(255, 255, 255, 0.05);
 
   /* Text */
-  --text-primary: #202124;
-  --text-secondary: #5f6368;
-  --text-muted: #70757a;
-  --text-ghost: #9aa0a6;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-ghost: #3f3f46;
 
-  /* Accents */
-  --accent-primary: #1a73e8;
-  /* Google Blue */
-  --accent-secondary: #e8f0fe;
-  --accent-tertiary: #4285f4;
+  /* Accents - Electric & Vibrant */
+  --accent-primary: #3b82f6;
+  /* Bright Blue */
+  --accent-secondary: rgba(59, 130, 246, 0.1);
+  --accent-tertiary: #60a5fa;
 
-  --accent-glow: rgba(66, 133, 244, 0.15);
+  --accent-glow: rgba(59, 130, 246, 0.4);
   --accent-text: #ffffff;
 
   /* Buttons */
-  --btn-bg: #1a73e8;
-  --btn-text: #ffffff;
-  --btn-hover: #1765cc;
+  --btn-bg: #ffffff;
+  --btn-text: #000000;
+  --btn-hover: #f4f4f5;
 
   /* Status */
-  --status-success: #1e8e3e;
-  --status-warning: #f9ab00;
-  --status-error: #d93025;
-  --status-info: #1a73e8;
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+  --status-info: #3b82f6;
 
   /* Typography */
-  --font-display: 'Google Sans', 'Space Grotesk', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Metrics */
-  --header-height: 64px;
-  --track-height: 72px;
-  --track-gap: 16px;
+  --header-height: 72px;
+  --track-height: 80px;
+  --track-gap: 20px;
   --grid-track-total: calc(var(--track-height) + var(--track-gap));
 
   /* Zoom */
   --zoom-level: 1;
-  --base-hour-width: 240px;
+  --base-hour-width: 280px;
   --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
-  /* Radius - Google Photos Style */
+  /* Radius - Aggressive Modernism */
+  --radius-xs: 4px;
   --radius-s: 8px;
-  --radius-m: 16px;
-  --radius-l: 28px;
+  --radius-m: 14px;
+  --radius-l: 24px;
   --radius-pill: 9999px;
 
   /* Effects */
-  --shadow-soft: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
-  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --backdrop-blur: 20px;
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  --backdrop-blur: 16px;
 
   /* Grid overlay colors */
-  --grid-line-primary: rgba(0, 0, 0, 0.05);
-  --grid-line-secondary: rgba(0, 0, 0, 0.02);
+  --grid-line-primary: rgba(255, 255, 255, 0.05);
+  --grid-line-secondary: rgba(255, 255, 255, 0.02);
 }
 
-/* ===== DARK THEME OVERRIDE ===== */
-@media (prefers-color-scheme: dark) {
+/* Force Dark Mode defaults as this is a "dark-first" app */
+@media (prefers-color-scheme: light) {
+
+  /* We keep it dark or slightly lighter but still premium */
   :root {
-    --bg-void: #121212;
-    --bg-surface: #202124;
-    --bg-elevated: #2d2e31;
-    --bg-glass: rgba(32, 33, 36, 0.7);
-    --bg-panel: #202124;
-    --bg-block: #3c4043;
-
-    /* Borders */
-    --border-subtle: #3c4043;
-    --border-visible: #5f6368;
-
-    /* Text */
-    --text-primary: #e8eaed;
-    --text-secondary: #bdc1c6;
-    --text-muted: #9aa0a6;
-    --text-ghost: #80868b;
-
-    /* Accents */
-    --accent-primary: #8ab4f8;
-    --accent-secondary: rgba(138, 180, 248, 0.1);
-    --accent-tertiary: #aecbfa;
-
-    --accent-glow: rgba(138, 180, 248, 0.2);
-
-    /* Buttons */
-    --btn-bg: #8ab4f8;
-    --btn-text: #202124;
-    --btn-hover: #93bafe;
-
-    /* Grid overlay colors */
-    --grid-line-primary: rgba(255, 255, 255, 0.05);
-    --grid-line-secondary: rgba(255, 255, 255, 0.02);
+    --bg-void: #0f1012;
+    --bg-surface: #16171a;
   }
 }
 
@@ -146,100 +118,48 @@ body {
     linear-gradient(var(--grid-line-secondary) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
   background-size:
-    100px 100px,
-    100px 100px,
+    80px 80px,
+    80px 80px,
     20px 20px,
     20px 20px;
-  background-position:
-    -1px -1px,
-    -1px -1px,
-    -1px -1px,
-    -1px -1px;
+  background-position: center center;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-.brand-font {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
+/* Glass Utility */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  border: 1px solid var(--border-visible);
 }
 
-/* ============================================
-   SHARED UTILITIES
-   ============================================ */
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: var(--bg-void);
-  position: relative;
-  padding-top: 80px;
-  /* Space for floating header */
-  padding-bottom: 80px;
-  /* Space for bottom nav */
-}
-
-#splash-screen {
-  position: fixed;
-  inset: 0;
-  background: var(--bg-void);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
-  pointer-events: none;
-}
-
-#splash-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.splash-logo {
-  width: 120px;
-  height: 120px;
-  background: var(--accent-primary);
-  mask: url('/logo.png') no-repeat center;
-  mask-size: contain;
-  -webkit-mask: url('/logo.png') no-repeat center;
-  -webkit-mask-size: contain;
-}
-
-/* Shared Button Styles */
 .action-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 14px;
   font-weight: 600;
   border-radius: var(--radius-m);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-visible);
-  backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .action-button.primary {
-  background: var(--bg-block);
-  border-color: var(--border-visible);
-  color: var(--text-primary);
-  box-shadow: none;
+  background: var(--text-primary);
+  color: var(--bg-void);
+  border-color: var(--text-primary);
 }
 
 .action-button.primary:hover {
-  background: var(--bg-elevated);
-  border-color: var(--text-primary);
-  box-shadow: none;
+  background: var(--bg-surface);
+  color: var(--text-primary);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
 .action-button.secondary {
@@ -257,9 +177,9 @@ button,
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
   border-radius: var(--radius-pill);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,8 +187,36 @@ button,
 
 .icon-btn:hover {
   color: var(--text-primary);
-  background: var(--bg-block);
-  transform: scale(1.05);
+  background: var(--border-visible);
+  transform: translateY(-2px);
+}
+
+.icon-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-void);
+  position: relative;
+  padding-top: calc(var(--header-height) + 40px);
+  padding-bottom: 120px;
+  overflow: hidden;
+  animation: fadeInApp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInApp {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .crash-screen {

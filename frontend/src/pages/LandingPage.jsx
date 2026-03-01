@@ -4,20 +4,13 @@ import './LandingPage.css';
 // Neon Nebulas
 function NeonOrbs() {
     return (
-        <div className="floating-orbs" style={{ display: 'block' }}>
-            <div className="orb orb-1" style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                animationDuration: '10s'
-            }} />
-            <div className="orb orb-2" style={{
-                background: 'radial-gradient(circle, rgba(200,200,200,0.05) 0%, transparent 70%)',
-                animationDuration: '15s'
-            }} />
+        <div className="floating-orbs">
+            <div className="orb orb-1" />
+            <div className="orb orb-2" />
+            <div className="orb orb-3" />
         </div>
     );
 }
-
-
 
 export default function LandingPage({ onLogin }) {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -40,48 +33,35 @@ export default function LandingPage({ onLogin }) {
 
     return (
         <div className="landing-page">
-            {/* Removed NeonOrbs for cleaner grid look */}
+            <NeonOrbs />
 
             <div className="landing-scroll-container">
                 <section className="landing-section" ref={heroRef}>
                     <div
                         className="hero-content"
                         style={{
-                            transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * -15}px)`
+                            transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px)`
                         }}
                     >
-
-
-                        <h1 className="brand-title fade-in-up" style={{ animationDelay: '0.1s' }}>
-                            IF·THEN
-                        </h1>
-
-
+                        <div className="hero-glow-container">
+                            <h1 className="brand-title fade-in-up">
+                                IF·THEN
+                            </h1>
+                            <div className="brand-subtitle fade-in-up" style={{ animationDelay: '0.2s' }}>
+                                The Next Era of Agentic Productivity
+                            </div>
+                        </div>
                     </div>
 
                     {/* CTA Section */}
-                    <div className="fade-in-up" style={{ position: 'absolute', bottom: '15vh', width: '100%', textAlign: 'center', animationDelay: '0.5s', zIndex: 10 }}>
+                    <div className="fade-in-up cta-wrapper" style={{ animationDelay: '0.5s' }}>
                         <button
                             className="hero-cta"
                             onClick={onLogin}
-                            style={{
-                                background: 'var(--text-primary)',
-                                color: 'var(--bg-void)',
-                                padding: '16px 48px',
-                                borderRadius: '0px',
-                                fontWeight: 700,
-                                fontSize: '16px',
-                                letterSpacing: '0.1em',
-                                border: 'none',
-                                cursor: 'pointer',
-                                boxShadow: 'none',
-                                textTransform: 'uppercase'
-                            }}
                         >
-                            LOGIN
+                            Get Started
+                            <div className="cta-glow" />
                         </button>
-
-
                     </div>
                 </section>
             </div>

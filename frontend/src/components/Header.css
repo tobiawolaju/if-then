@@ -7,23 +7,30 @@ header.floating-header {
     display: flex;
     justify-content: center;
     padding: 0;
-    z-index: 100;
-    background: transparent;
-    backdrop-filter: none;
-    border-bottom: none;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    height: var(--header-height);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: var(--bg-glass);
+    backdrop-filter: blur(var(--backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur));
+    border: 1px solid var(--border-visible);
+    border-radius: var(--radius-l);
+    padding: 0 24px;
+    box-shadow: var(--shadow-elevated);
 }
 
 .header-search-bar {
-    width: 100%;
-    max-width: 720px;
-    height: 48px;
-    background: var(--bg-surface);
     display: flex;
     align-items: center;
-    padding: 0 8px 0 16px;
-    border-radius: var(--radius-l);
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--border-subtle);
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
 }
 
 .search-logo {
@@ -34,10 +41,9 @@ header.floating-header {
 
 .logo-text {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.1em;
 }
 
 .search-content {
@@ -55,21 +61,21 @@ header.floating-header {
 #auth-container {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 12px;
 }
 
 #user-profile {
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-pill);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid var(--border-subtle);
-    transition: transform 0.2s;
+    border: 2px solid var(--accent-primary);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 #user-profile:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 #user-photo {
