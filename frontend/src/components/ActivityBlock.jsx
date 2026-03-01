@@ -19,12 +19,10 @@ export default function ActivityBlock({ activity, onClick }) {
         left: `calc(${start} * var(--pixels-per-minute))`,
         width: `calc(${duration} * var(--pixels-per-minute))`,
         top: `calc(${activity.trackIndex} * var(--grid-track-total))`,
-        borderLeftWidth: '4px',
-        borderLeftStyle: 'solid',
-        borderLeftColor: accentColor,
+        borderLeft: `4px solid ${accentColor}`,
         '--block-accent': accentColor,
-        borderRadius: '0px',
-        boxShadow: 'none',
+        borderRadius: 'var(--radius-m)',
+        boxShadow: 'var(--shadow-soft)',
     };
 
     return (

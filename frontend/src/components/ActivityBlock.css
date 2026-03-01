@@ -1,35 +1,32 @@
 .activity-block {
     position: absolute;
     height: var(--track-height);
-    background: var(--bg-block);
-    border: 1px solid var(--border-visible);
-    border-top: 1px solid var(--accent-secondary);
-    padding: 8px 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 8px 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: inset 4px 0 0 var(--accent-primary);
-
-    /* Flat Design Overrides */
-    border-radius: 0px !important;
-    box-shadow: none !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease-out;
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-soft);
 }
 
 .activity-block:hover {
     background: var(--bg-elevated);
-    border-color: var(--text-primary);
+    border-color: var(--accent-primary);
     z-index: 10;
-    transform: translateY(-2px) scale(1.01);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
 }
 
 .activity-title {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
     color: var(--text-primary);
     margin-bottom: 2px;
     white-space: nowrap;
@@ -39,9 +36,10 @@
 }
 
 .activity-time {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--accent-secondary);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

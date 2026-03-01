@@ -10,86 +10,25 @@ import { useSchedule } from '../hooks/useSchedule';
 import { useConversation } from '../hooks/useConversation';
 import './Dashboard.css';
 
+import BottomNav from '../components/BottomNav';
+
 export default function Dashboard({ user, onLogout, accessToken, getFreshAccessToken, onNavigateToProfile }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [showFuturesModal, setShowFuturesModal] = useState(false);
+    const [activeView, setActiveView] = useState('timeline');
 
     // Conversation state
     const conversation = useConversation(user, getFreshAccessToken);
 
-    // Dynamic API URL for local vs production testing
-    const API_BASE_URL = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : ''; // Use relative paths in production (Vercel)
+    // ... (rest of logic)
 
-    const handleSendMessage = async (message) => {
-        // Use the new conversation system
-        await conversation.sendMessage(message);
-    };
-
-    const handleConfirmActivities = async () => {
-        const success = await conversation.confirmActivities();
-        // Firebase real-time updates will automatically refresh the schedule
-    };
-
-    const handleSaveActivity = async (updatedActivity) => {
-        if (!user) return;
-        console.log(`Flow: Saving activity update to ${API_BASE_URL}/api/activities/update`);
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        try {
-            const freshToken = await getFreshAccessToken();
-            const response = await fetch(`${API_BASE_URL}/api/activities/update`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: updatedActivity.id,
-                    updates: updatedActivity,
-                    userId: user.uid,
-                    accessToken: freshToken,
-                    timeZone
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || "Failed to update activity");
-            }
-
-            const result = await response.json();
-            console.log("Flow: Save result:", result);
-            return true;
-        } catch (error) {
-            console.error("Flow: Save error:", error);
-            throw error;
+    const handleViewChange = (view) => {
+        if (view === 'profile') {
+            onNavigateToProfile();
+        } else {
+            setActiveView(view);
         }
-    };
-
-    const handleDeleteActivity = async (activityId) => {
-        if (!user || !window.confirm("Are you sure?")) return;
-        console.log(`Flow: Deleting activity via ${API_BASE_URL}/api/activities/delete`);
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        try {
-            const freshToken = await getFreshAccessToken();
-            const response = await fetch(`${API_BASE_URL}/api/activities/delete`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: activityId,
-                    userId: user.uid,
-                    accessToken: freshToken,
-                    timeZone
-                })
-            });
-            const result = await response.json();
-            console.log("Flow: Delete result:", result);
-        } catch (error) {
-            console.error("Flow: Delete error:", error);
-        }
-
-        setSelectedActivity(null);
     };
 
     if (scheduleLoading) return <div className="loading">Loading Schedule...</div>;
@@ -126,6 +65,13 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                 onSendMessage={handleSendMessage}
                 isProcessing={conversation.isTyping}
                 onOpenFutures={() => setShowFuturesModal(true)}
+            />
+
+            <BottomNav
+                activeView={activeView}
+                onViewChange={handleViewChange}
+                onOpenChat={conversation.openOverlay}
+                user={user}
             />
 
             <FuturesNotification

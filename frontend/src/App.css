@@ -7,53 +7,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== COLOR SYSTEM: DARK THEME (Default) ===== */
-  --bg-void: #1a1a1a;
-  --bg-surface: #262626;
-  --bg-elevated: #333333;
-  --bg-glass: rgba(26, 26, 26, 0.8);
-  --bg-panel: #262626;
-  --bg-block: rgba(255, 255, 255, 0.1);
+  /* ===== COLOR SYSTEM: GOOGLE / MATERIAL INSPIRED ===== */
+  --bg-void: #f8f9fa; /* Light grey for depth */
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-panel: #ffffff;
+  --bg-block: #f1f3f4;
 
   /* Borders */
-  --border-subtle: transparent;
-  --border-visible: rgba(255, 255, 255, 0.1);
+  --border-subtle: #e8eaed;
+  --border-visible: #dadce0;
   --border-glow: transparent;
 
-  /* Text - Pure White & Grey */
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-ghost: #52525b;
+  /* Text */
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --text-muted: #70757a;
+  --text-ghost: #9aa0a6;
 
-  /* Accents - Monochrome / Subtle */
-  --accent-primary: #ffffff;
-  --accent-secondary: #d4d4d8;
-  --accent-tertiary: #a1a1aa;
+  /* Accents */
+  --accent-primary: #1a73e8; /* Google Blue */
+  --accent-secondary: #e8f0fe;
+  --accent-tertiary: #4285f4;
 
-  --accent-glow: transparent;
+  --accent-glow: rgba(66, 133, 244, 0.15);
   --accent-text: #ffffff;
 
   /* Buttons */
-  --btn-bg: #ffffff;
-  --btn-text: #000000;
-  --btn-hover: #e4e4e7;
+  --btn-bg: #1a73e8;
+  --btn-text: #ffffff;
+  --btn-hover: #1765cc;
 
   /* Status */
-  --status-success: #fff;
-  --status-warning: #d4d4d8;
-  --status-error: #fff;
-  --status-info: #fff;
+  --status-success: #1e8e3e;
+  --status-warning: #f9ab00;
+  --status-error: #d93025;
+  --status-info: #1a73e8;
 
   /* Typography */
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Google Sans', 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Metrics */
-  --header-height: 70px;
-  --track-height: 80px;
-  --track-gap: 12px;
+  --header-height: 64px;
+  --track-height: 72px;
+  --track-gap: 16px;
   --grid-track-total: calc(var(--track-height) + var(--track-gap));
 
   /* Zoom */
@@ -62,63 +62,57 @@
   --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
-  --radius-s: 0px;
-  --radius-m: 0px;
-  --radius-l: 0px;
-  --radius-pill: 0px;
+  /* Radius - Google Photos Style */
+  --radius-s: 8px;
+  --radius-m: 16px;
+  --radius-l: 28px;
+  --radius-pill: 9999px;
 
   /* Effects */
-  --shadow-glow: none;
-  --backdrop-blur: none;
+  --shadow-soft: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+  --shadow-elevated: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --backdrop-blur: 20px;
 
   /* Grid overlay colors */
-  --grid-line-primary: rgba(255, 255, 255, 0.03);
-  --grid-line-secondary: rgba(255, 255, 255, 0.02);
+  --grid-line-primary: rgba(0, 0, 0, 0.05);
+  --grid-line-secondary: rgba(0, 0, 0, 0.02);
 }
 
-/* ===== LIGHT THEME ===== */
-@media (prefers-color-scheme: light) {
+/* ===== DARK THEME OVERRIDE ===== */
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg-void: #f5f5f5;
-    --bg-surface: #ffffff;
-    --bg-elevated: #fafafa;
-    --bg-glass: rgba(255, 255, 255, 0.85);
-    --bg-panel: #ffffff;
-    --bg-block: rgba(0, 0, 0, 0.05);
+    --bg-void: #121212;
+    --bg-surface: #202124;
+    --bg-elevated: #2d2e31;
+    --bg-glass: rgba(32, 33, 36, 0.7);
+    --bg-panel: #202124;
+    --bg-block: #3c4043;
 
     /* Borders */
-    --border-subtle: transparent;
-    --border-visible: rgba(0, 0, 0, 0.1);
-    --border-glow: transparent;
+    --border-subtle: #3c4043;
+    --border-visible: #5f6368;
 
-    /* Text - Dark on Light */
-    --text-primary: #18181b;
-    --text-secondary: #52525b;
-    --text-muted: #71717a;
-    --text-ghost: #a1a1aa;
+    /* Text */
+    --text-primary: #e8eaed;
+    --text-secondary: #bdc1c6;
+    --text-muted: #9aa0a6;
+    --text-ghost: #80868b;
 
-    /* Accents - Monochrome for Light */
-    --accent-primary: #18181b;
-    --accent-secondary: #3f3f46;
-    --accent-tertiary: #52525b;
+    /* Accents */
+    --accent-primary: #8ab4f8;
+    --accent-secondary: rgba(138, 180, 248, 0.1);
+    --accent-tertiary: #aecbfa;
 
-    --accent-glow: transparent;
-    --accent-text: #18181b;
+    --accent-glow: rgba(138, 180, 248, 0.2);
 
     /* Buttons */
-    --btn-bg: #18181b;
-    --btn-text: #ffffff;
-    --btn-hover: #3f3f46;
-
-    /* Status */
-    --status-success: #18181b;
-    --status-warning: #52525b;
-    --status-error: #18181b;
-    --status-info: #18181b;
+    --btn-bg: #8ab4f8;
+    --btn-text: #202124;
+    --btn-hover: #93bafe;
 
     /* Grid overlay colors */
-    --grid-line-primary: rgba(0, 0, 0, 0.04);
-    --grid-line-secondary: rgba(0, 0, 0, 0.02);
+    --grid-line-primary: rgba(255, 255, 255, 0.05);
+    --grid-line-secondary: rgba(255, 255, 255, 0.02);
   }
 }
 

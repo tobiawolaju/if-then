@@ -9,22 +9,26 @@ export default function Header({ user, onLogout, onProfileClick }) {
     const currentDate = new Date().toLocaleDateString('en-US', dateOptions);
 
     return (
-        <header>
-            <div className="header-main">
-                <h1>IF·THEN</h1>
-                <span id="current-date" className="hidden-mobile">
-                    {currentDate}
-                </span>
-            </div>
-            <div id="auth-container">
-                <div id="user-profile" onClick={onProfileClick}>
-                    <img
-                        id="user-photo"
-                        src={user.photoURL}
-                        alt={user.displayName || 'User'}
-                    />
+        <header className="floating-header">
+            <div className="header-search-bar">
+                <div className="search-logo">
+                    <span className="logo-text">IF·THEN</span>
+                </div>
+                <div className="search-content">
+                    <span id="current-date" className="hidden-mobile">
+                        {currentDate}
+                    </span>
+                </div>
+                <div id="auth-container">
+                    <div id="user-profile" onClick={onProfileClick}>
+                        <img
+                            id="user-photo"
+                            src={user.photoURL}
+                            alt={user.displayName || 'User'}
+                        />
+                    </div>
                     <button
-                        className="icon-btn"
+                        className="icon-btn logout-btn"
                         onClick={(e) => {
                             e.stopPropagation();
                             onLogout();
