@@ -115,25 +115,23 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                         onSelectActivity={setSelectedActivity}
                     />
                 </main>
-
-                <aside className="dashboard-sidebar">
-                    <ChatOverlay
-                        isOpen={conversation.isOpen}
-                        messages={conversation.messages}
-                        isTyping={conversation.isTyping}
-                        pendingActivities={conversation.pendingActivities}
-                        onClose={conversation.closeOverlay}
-                        onConfirm={handleConfirmActivities}
-                        onReject={conversation.rejectActivities}
-                        onClear={conversation.clearConversation}
-                    />
-                    <ChatInput
-                        onSendMessage={handleSendMessage}
-                        isProcessing={conversation.isTyping}
-                        onOpenFutures={() => setShowFuturesModal(true)}
-                    />
-                </aside>
             </div>
+
+            <ChatOverlay
+                isOpen={conversation.isOpen}
+                messages={conversation.messages}
+                isTyping={conversation.isTyping}
+                pendingActivities={conversation.pendingActivities}
+                onClose={conversation.closeOverlay}
+                onConfirm={handleConfirmActivities}
+                onReject={conversation.rejectActivities}
+                onClear={conversation.clearConversation}
+            />
+            <ChatInput
+                onSendMessage={handleSendMessage}
+                isProcessing={conversation.isTyping}
+                onOpenFutures={() => setShowFuturesModal(true)}
+            />
 
             <FuturesNotification
                 userId={user?.uid}
