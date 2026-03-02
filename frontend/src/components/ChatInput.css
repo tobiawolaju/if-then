@@ -1,15 +1,27 @@
 .chat-input-container {
-    width: 100%;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
     background: var(--bg-void);
-    border-top: 1px solid var(--border-visible);
-    padding: 8px 8px 8px 24px;
+    border: 1px solid var(--border-visible);
+    padding: 8px 8px 8px 16px;
     display: flex;
     align-items: center;
-    z-index: 20;
+    z-index: 1200;
 
-    /* Flat Design */
     border-radius: 0px;
-    box-shadow: none;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 901px) {
+    .chat-input-container {
+        left: auto;
+        right: 20px;
+        width: min(380px, calc(100vw - 40px));
+        bottom: 20px;
+    }
 }
 
 .chat-input-container:focus-within {
