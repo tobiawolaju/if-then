@@ -11,6 +11,7 @@
     align-items: center;
     z-index: 1200;
 
+    border-radius: 0px;
     border-radius: 14px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
 }
