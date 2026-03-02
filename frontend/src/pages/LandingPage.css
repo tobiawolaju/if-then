@@ -1,164 +1,288 @@
+/* ============================================
+   Landing Page - Apple iOS Style
+   ============================================ */
+
 .landing-page {
     position: fixed;
     inset: 0;
     z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 60px) 24px calc(env(safe-area-inset-bottom, 0px) + 40px);
+    background: linear-gradient(180deg,
+            #FFFFFF 0%,
+            #F2F2F7 50%,
+            #E5E5EA 100%);
     overflow: hidden;
-    background: var(--bg-void);
 }
 
-/* Background Grid Animation */
+/* Subtle background pattern */
 .landing-page::before {
     content: '';
     position: absolute;
-    inset: -100% -100%;
-    background-image:
-        linear-gradient(var(--grid-line-primary) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line-primary) 1px, transparent 1px);
-    background-size: 80px 80px;
-    opacity: 0.3;
-    animation: gridMove 60s linear infinite;
-    z-index: 0;
-}
-
-@keyframes gridMove {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(80px);
-    }
-}
-
-.landing-section {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-.hero-glow-container {
-    position: relative;
-    padding: 40px;
-}
-
-.hero-glow-container::before {
-    display: none;
-}
-
-.brand-title {
-    font-size: clamp(80px, 15vw, 160px);
-    font-weight: 800;
-    letter-spacing: -0.06em;
-    color: var(--text-primary);
-    margin: 0;
-    line-height: 1;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-}
-
-.brand-subtitle {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.4em;
-    color: var(--text-secondary);
-    margin-top: 20px;
-    text-align: center;
-}
-
-.cta-wrapper {
-    position: absolute;
-    bottom: 12vh;
-}
-
-.hero-cta {
-    position: relative;
-    background: var(--text-primary);
-    color: var(--bg-void);
-    border: none;
-    padding: 18px 48px;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    border: 1px solid var(--border-visible);
-    border-radius: 0;
-}
-
-.hero-cta:hover {
-    background: var(--bg-surface);
-    color: var(--text-primary);
-}
-
-.cta-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 0%,
+            rgba(0, 122, 255, 0.08) 0%,
+            transparent 50%);
     pointer-events: none;
 }
 
-.hero-cta:hover .cta-glow {
-    opacity: 0.3;
+/* Content Container */
+.landing-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
 }
 
-/* Floating Orbs */
-.floating-orbs {
-    display: none;
+/* Logo Mark */
+.landing-logo {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.4;
-    animation: orbFloat 20s infinite alternate ease-in-out;
+.landing-logo.animate-in {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.orb-1 {
-    width: 400px;
-    height: 400px;
-    background: var(--accent-primary);
-    top: -100px;
-    right: -100px;
-    animation-delay: -2s;
+.logo-mark {
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
 }
 
-.orb-2 {
-    width: 350px;
-    height: 350px;
-    background: #7c3aed;
-    bottom: -50px;
-    left: -50px;
-    animation-delay: -5s;
+.logo-mark svg {
+    width: 100%;
+    height: 100%;
 }
 
-.orb-3 {
-    width: 250px;
-    height: 250px;
-    background: #0ea5e9;
-    top: 40%;
-    left: 20%;
-    animation-delay: -10s;
+/* Title */
+.landing-title {
+    margin-top: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes orbFloat {
-    0% {
-        transform: translate(0, 0) scale(1);
+.landing-title.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.landing-title h1 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #000000;
+    margin: 0;
+}
+
+/* Tagline */
+.landing-tagline {
+    margin-top: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-tagline.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.landing-tagline p {
+    font-size: 17px;
+    color: #8E8E93;
+    margin: 0;
+}
+
+/* CTA Button - iOS Style */
+.landing-cta {
+    margin-top: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 32px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #007AFF 0%, #0056CC 100%);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow:
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 6px 16px rgba(0, 122, 255, 0.35),
+        0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 8px rgba(0, 122, 255, 0.3),
+        0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button svg {
+    transition: transform 0.2s ease;
+}
+
+.cta-button:hover svg {
+    transform: translateX(4px);
+}
+
+/* Feature Pills */
+.landing-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-features.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3C3C43;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.feature-pill svg {
+    color: #007AFF;
+}
+
+/* Footer */
+.landing-footer {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-footer.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.landing-footer p {
+    font-size: 12px;
+    color: #8E8E93;
+    text-align: center;
+}
+
+/* Animation Delays */
+.delay-1 {
+    transition-delay: 0.1s;
+}
+
+.delay-2 {
+    transition-delay: 0.2s;
+}
+
+.delay-3 {
+    transition-delay: 0.3s;
+}
+
+.delay-4 {
+    transition-delay: 0.4s;
+}
+
+.delay-5 {
+    transition-delay: 0.5s;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .landing-title h1 {
+        font-size: 36px;
     }
 
-    100% {
-        transform: translate(50px, 100px) scale(1.2);
+    .cta-button {
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+
+    .feature-pill {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .landing-page {
+        background: linear-gradient(180deg,
+                #000000 0%,
+                #1C1C1E 50%,
+                #2C2C2E 100%);
+    }
+
+    .landing-page::before {
+        background-image: radial-gradient(circle at 50% 0%,
+                rgba(0, 122, 255, 0.15) 0%,
+                transparent 50%);
+    }
+
+    .landing-title h1 {
+        color: #FFFFFF;
+    }
+
+    .landing-tagline p {
+        color: #8E8E93;
+    }
+
+    .feature-pill {
+        background: rgba(60, 60, 67, 0.4);
+        color: #EBEBF5;
+    }
+
+    .feature-pill svg {
+        color: #0A84FF;
+    }
+
+    .landing-footer p {
+        color: #636366;
     }
 }

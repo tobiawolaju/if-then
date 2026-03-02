@@ -1,192 +1,256 @@
-/* Profile Page Specific Styles */
+/* ============================================
+   Profile Page - Apple iOS Settings Style
+   ============================================ */
 
-.futures-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    width: 100%;
+.ios-profile-page {
+    min-height: 100vh;
+    background-color: #F2F2F7;
+    padding-bottom: 100px;
 }
 
-.future-card {
-    background-color: var(--surface-secondary, #1a1a1a);
-    border: 1px solid var(--border-visible, #333);
-    border-radius: 8px;
-    padding: 20px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+/* Profile Header */
+.ios-profile-header {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    text-align: left;
-}
-
-.future-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-color: var(--text-primary, #fff);
-}
-
-.future-card-header {
-    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--border-subtle, #333);
-    padding-bottom: 8px;
-}
-
-.future-card h4 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary, #fff);
-}
-
-.time-horizon {
-    font-size: 0.75rem;
-    color: var(--text-muted, #888);
-    font-family: var(--font-mono, monospace);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.future-summary {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 16px 0;
-    flex: 1;
-}
-
-.future-summary li {
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: var(--text-secondary, #ccc);
-    line-height: 1.4;
-    position: relative;
-    padding-left: 12px;
-}
-
-.future-summary li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: var(--text-muted, #666);
-}
-
-.future-card-footer {
-    font-size: 0.8rem;
-    color: #1a73e8;
-    font-weight: 500;
-    margin-top: auto;
-}
-
-.loading-futures,
-.no-futures {
-    padding: 32px;
-    background: linear-gradient(135deg, rgba(26, 115, 232, 0.15) 0%, rgba(26, 115, 232, 0.05) 100%);
-    border-radius: 12px;
-    text-align: center;
-    color: #1a73e8;
-    border: 1px solid rgba(26, 115, 232, 0.3);
-    font-weight: 500;
-}
-
-/* Modal */
-.future-modal-overlay {
-    position: fixed;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 16px;
+    background-color: rgba(242, 242, 247, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+.profile-back-btn {
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-    animation: fadeIn 0.2s ease-out;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    color: #007AFF;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+.profile-back-btn:active {
+    background-color: rgba(0, 122, 255, 0.1);
 }
 
-.future-modal {
-    background-color: var(--surface-primary, #111);
-    border: 1px solid var(--border-visible, #333);
+.profile-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+}
+
+/* Profile Card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 20px;
+    background-color: #FFFFFF;
+    margin-top: 0;
+}
+
+.profile-avatar-container {
+    flex-shrink: 0;
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-email {
+    font-size: 15px;
+    color: #8E8E93;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Settings Groups */
+.settings-group {
+    margin-top: 32px;
+    padding: 0 16px;
+}
+
+.settings-group:first-of-type {
+    margin-top: 24px;
+}
+
+.settings-list {
+    background-color: #FFFFFF;
     border-radius: 12px;
-    padding: 32px;
+    overflow: hidden;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    max-width: 600px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    animation: slideUp 0.3s ease-out;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-bottom: 0.5px solid rgba(60, 60, 67, 0.12);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
     text-align: left;
 }
 
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.settings-item:active {
+    background-color: rgba(120, 120, 128, 0.08);
+}
+
+.settings-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-item-left span {
+    font-size: 17px;
+    color: #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.settings-item-right {
+    display: flex;
+    align-items: center;
+    color: #C7C7CC;
+    flex-shrink: 0;
+}
+
+.settings-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Sign Out Button */
+.settings-item.sign-out {
+    justify-content: center;
+    padding: 14px 16px;
+}
+
+.settings-item.sign-out:active {
+    background-color: rgba(255, 59, 48, 0.1);
+}
+
+.sign-out-text {
+    color: #FF3B30 !important;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+/* Profile Footer */
+.profile-footer {
+    margin-top: 48px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.profile-footer p {
+    font-size: 13px;
+    color: #8E8E93;
+    margin: 0;
+}
+
+.profile-copyright {
+    margin-top: 4px !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ios-profile-page {
+        background-color: #000000;
     }
 
-    to {
-        transform: translateY(0);
-        opacity: 1;
+    .ios-profile-header {
+        background-color: rgba(0, 0, 0, 0.85);
     }
-}
 
-.close-modal {
-    background: none;
-    border: none;
-    color: var(--text-muted, #888);
-    font-size: 24px;
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 4px;
-    transition: color 0.2s;
-}
+    .profile-title {
+        color: #FFFFFF;
+    }
 
-.close-modal:hover {
-    color: var(--text-primary, #fff);
-}
+    .profile-card {
+        background-color: #1C1C1E;
+    }
 
-.future-modal h2 {
-    margin: 0 0 8px 0;
-    font-family: var(--font-display, sans-serif);
-    font-size: 1.75rem;
-    color: var(--text-primary, #fff);
-}
+    .profile-avatar {
+        border-color: #1C1C1E;
+    }
 
-.modal-horizon {
-    color: #1a73e8;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 24px;
-    display: inline-block;
-    background: rgba(26, 115, 232, 0.1);
-    border: 1px solid rgba(26, 115, 232, 0.3);
-    padding: 4px 8px;
-    border-radius: 4px;
-}
+    .profile-name {
+        color: #FFFFFF;
+    }
 
-.modal-content {
-    color: var(--text-secondary, #ddd);
-    line-height: 1.6;
-    font-size: 1rem;
-    white-space: pre-wrap;
+    .profile-email {
+        color: #8E8E93;
+    }
+
+    .settings-list {
+        background-color: #1C1C1E;
+    }
+
+    .settings-item {
+        border-bottom-color: rgba(84, 84, 88, 0.36);
+    }
+
+    .settings-item-left span {
+        color: #FFFFFF;
+    }
+
+    .settings-item-right {
+        color: #636366;
+    }
+
+    .settings-item:active {
+        background-color: rgba(120, 120, 128, 0.2);
+    }
+
+    .profile-footer p {
+        color: #636366;
+    }
 }

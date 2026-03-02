@@ -1,78 +1,181 @@
-.bottom-nav {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+/* ============================================
+   Bottom Tab Bar - Apple iOS Style
+   ============================================ */
+
+.ios-tab-bar {
+    height: calc(83px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 0.5px solid rgba(60, 60, 67, 0.12);
     display: flex;
-    align-items: center;
-    padding: 8px;
-    gap: 8px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(var(--backdrop-blur));
-    -webkit-backdrop-filter: blur(var(--backdrop-blur));
-    border: 1px solid var(--border-visible);
-    border-radius: var(--radius-pill);
-    z-index: 1000;
-    box-shadow: var(--shadow-elevated);
+    align-items: flex-start;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.nav-item {
+/* Tab Item */
+.tab-item {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
+    justify-content: flex-start;
+    padding-top: 10px;
+    gap: 4px;
+    background: none;
     border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-width: 64px;
+}
+
+.tab-item:active {
+    transform: scale(0.95);
+}
+
+/* Tab Icon */
+.tab-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8E8E93;
+    transition: all 0.15s ease;
+}
+
+.tab-item.active .tab-icon {
+    color: #007AFF;
+}
+
+/* Tab Label */
+.tab-item span {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8E8E93;
+    transition: color 0.15s ease;
+}
+
+.tab-item.active span {
+    color: #007AFF;
+}
+
+/* Tab Item Variations */
+.tab-item:hover span {
+    color: #636366;
+}
+
+.tab-item.active:hover span {
+    color: #0056CC;
+}
+
+/* Icon Scale Animation on Active */
+.tab-item.active .tab-icon {
+    transform: scale(1.05);
+}
+
+/* Special styling for Messages tab (center position in some apps) */
+.tab-item:nth-child(3) {
     position: relative;
 }
 
-.nav-item span {
-    font-size: 10px;
-    font-weight: 500;
-    margin-top: 4px;
-    opacity: 0.6;
+.tab-item:nth-child(3)::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #007AFF, #0056CC);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
 }
 
-.nav-item.active {
-    background: var(--text-primary);
-    color: var(--bg-void);
-    box-shadow: 0 0 15px var(--accent-glow);
-}
-
-.nav-item.active span {
+.tab-item:nth-child(3).active::before {
     opacity: 1;
+    transform: scale(1);
 }
 
-.nav-item:hover:not(.active) {
-    background: var(--border-visible);
-    color: var(--text-primary);
-    transform: translateY(-5px);
+.tab-item:nth-child(3) .tab-icon {
+    background: none;
 }
 
-.nav-icon-wrapper {
+/* Badge for notifications */
+.tab-badge {
+    position: absolute;
+    top: 4px;
+    right: 50%;
+    transform: translateX(14px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+    background: #FF3B30;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.nav-item.active .nav-icon-wrapper {
-    background-color: var(--accent-secondary);
-    color: var(--accent-primary);
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ios-tab-bar {
+        background-color: rgba(28, 28, 30, 0.85);
+        border-top-color: rgba(84, 84, 88, 0.36);
+    }
+
+    .tab-icon {
+        color: #8E8E93;
+    }
+
+    .tab-item.active .tab-icon {
+        color: #0A84FF;
+    }
+
+    .tab-item span {
+        color: #8E8E93;
+    }
+
+    .tab-item.active span {
+        color: #0A84FF;
+    }
+
+    .tab-item:hover span {
+        color: #AEAEB2;
+    }
 }
 
-.nav-item:hover .nav-icon-wrapper {
-    background-color: var(--bg-block);
+/* Safe area adjustments for notched devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .ios-tab-bar {
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    }
 }
 
-@media (min-width: 600px) {
-    .bottom-nav {
-        padding-left: 20%;
-        padding-right: 20%;
+/* Landscape mode adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .ios-tab-bar {
+        height: calc(56px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .tab-item {
+        padding-top: 6px;
+    }
+
+    .tab-icon {
+        width: 24px;
+        height: 24px;
     }
 }

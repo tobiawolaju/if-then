@@ -1,9 +1,13 @@
+/* ============================================
+   Chat Bubble - Apple iOS Style
+   ============================================ */
+
 .chat-bubble {
-    max-width: 85%;
-    padding: 12px 16px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.5;
+    max-width: 80%;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    line-height: 1.4;
     word-wrap: break-word;
     animation: bubbleIn 0.2s ease-out;
 }
@@ -11,7 +15,7 @@
 @keyframes bubbleIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(8px);
     }
 
     to {
@@ -20,32 +24,39 @@
     }
 }
 
+/* User Message */
 .chat-bubble.user {
     align-self: flex-end;
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: 1px solid var(--border-visible);
+    background: linear-gradient(135deg, #007AFF, #0056CC);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
 }
 
+/* Assistant Message */
 .chat-bubble.assistant {
     align-self: flex-start;
-    background: var(--bg-block);
-    color: var(--text-primary);
-    border: 1px solid var(--border-visible);
+    background-color: #F2F2F7;
+    color: #000000;
+    border-radius: 18px 18px 18px 4px;
 }
 
+/* Proposal Bubble */
 .chat-bubble.proposal {
-    background: var(--bg-surface);
-    border: 1px solid var(--accent-secondary);
+    align-self: stretch;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    border: 0.5px solid rgba(60, 60, 67, 0.12);
+    margin: 8px 0;
 }
 
+/* Bubble Content */
 .bubble-content {
     white-space: pre-wrap;
 }
 
 /* Typing Indicator */
 .chat-bubble.typing {
-    padding: 16px 20px;
+    padding: 14px 18px;
 }
 
 .typing-indicator {
@@ -57,7 +68,7 @@
 .typing-indicator span {
     width: 8px;
     height: 8px;
-    background: var(--text-muted);
+    background-color: #8E8E93;
     border-radius: 50%;
     animation: typingBounce 1.4s ease-in-out infinite;
 }
@@ -83,11 +94,11 @@
     }
 }
 
-/* Proposal Styles */
+/* Proposal Activities */
 .proposal-activities {
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid var(--border-visible);
+    border-top: 0.5px solid rgba(60, 60, 67, 0.12);
 }
 
 .activities-list {
@@ -101,31 +112,33 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 8px 12px;
-    background: var(--bg-block);
-    border: 1px solid var(--border-visible);
-    font-size: 13px;
+    padding: 10px 12px;
+    background-color: #F2F2F7;
+    border-radius: 10px;
+    font-size: 14px;
 }
 
 .activity-title {
-    font-weight: 600;
-    color: var(--text-primary);
+    font-weight: 500;
+    color: #000000;
 }
 
 .activity-time {
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    color: #8E8E93;
+    font-size: 13px;
 }
 
 .activity-days {
-    color: var(--text-secondary);
-    font-size: 12px;
+    color: #3C3C43;
+    font-size: 13px;
 }
 
+/* Proposal Actions */
 .proposal-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    margin-top: 12px;
 }
 
 .confirm-btn,
@@ -135,29 +148,83 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 16px;
-    border: 1px solid var(--border-visible);
-    font-size: 13px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .confirm-btn {
-    background: var(--btn-bg);
-    color: var(--btn-text);
+    background: linear-gradient(135deg, #34C759, #28A745);
+    color: white;
 }
 
 .confirm-btn:hover {
-    background: var(--btn-hover);
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+}
+
+.confirm-btn:active {
+    transform: scale(0.98);
 }
 
 .reject-btn {
-    background: transparent;
-    color: var(--text-secondary);
+    background-color: #F2F2F7;
+    color: #FF3B30;
 }
 
 .reject-btn:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
+    background-color: #E5E5EA;
+}
+
+.reject-btn:active {
+    transform: scale(0.98);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .chat-bubble.user {
+        background: linear-gradient(135deg, #0A84FF, #0066CC);
+    }
+
+    .chat-bubble.assistant {
+        background-color: #2C2C2E;
+        color: #FFFFFF;
+    }
+
+    .chat-bubble.proposal {
+        background-color: #1C1C1E;
+        border-color: rgba(84, 84, 88, 0.36);
+    }
+
+    .typing-indicator span {
+        background-color: #636366;
+    }
+
+    .activity-preview {
+        background-color: #2C2C2E;
+    }
+
+    .activity-title {
+        color: #FFFFFF;
+    }
+
+    .activity-time {
+        color: #8E8E93;
+    }
+
+    .activity-days {
+        color: #EBEBF5;
+    }
+
+    .reject-btn {
+        background-color: #2C2C2E;
+    }
+
+    .reject-btn:hover {
+        background-color: #3C3C3E;
+    }
 }
