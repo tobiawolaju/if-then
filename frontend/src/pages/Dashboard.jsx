@@ -107,7 +107,9 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
 
     return (
         <div className="app-container">
-            <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
+            {conversation.isOpen && (
+                <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
+            )}
             <div className="dashboard-body">
                 <main className="dashboard-main">
                     <Timeline
