@@ -1,9 +1,14 @@
 # IF·THEN  
 ### See the future your choices create.
 
-**If·Then** is A personal consequence simulator that turns daily decisions into visible futures. other features includes daily routing crafting, direct routing query in natural language, auto synch with google calender
+**IF·THEN** is a personal consequence simulator that turns daily decisions into visible futures.
 
-It helps people move from intention to action by making time, habits, and tradeoffs tangible.  
+Core features include:
+- Daily route crafting  
+- Natural language route queries  
+- Automatic Google Calendar sync
+
+It helps people move from intention to action by making time, habits, and trade-offs tangible.  
 Not as motivation — but as cause and effect.
 
 > If you keep living like this… then this is where you end up.
@@ -20,15 +25,13 @@ IF·THEN makes the future concrete.
 
 Instead of asking *what you want to do*, IF·THEN shows you *what happens if you don’t* — and how small changes compound over time.
 
-This is especially critical in environments where structure is weak and consequences are delayed.
-
 ---
 
 ## What IF·THEN does
 
-- Transforms goals and habits into **branching future timelines**
-- Shows **cause-and-effect** over days, weeks, and months
-- Lets users **edit decisions** and instantly see downstream impact
+- Transforms goals and habits into **branching future timelines**  
+- Shows **cause-and-effect** over days, weeks, and months  
+- Lets users **edit decisions** and instantly see downstream impact  
 - Turns time into something you can reason about, not just schedule
 
 This is not prediction.  
@@ -39,11 +42,9 @@ It’s simulation.
 ## How it works
 
 ### 1. Timeline-first life model
-- Time is represented as a continuous, editable timeline
-- Days are treated like footage, not lists
+- Time is represented as a continuous, editable timeline  
+- Days are treated like footage, not lists  
 - If it’s not on the timeline, it doesn’t exist
-
----
 
 ### 2. Natural language → structured time
 Users speak normally:
@@ -51,46 +52,40 @@ Users speak normally:
 > “I work late most nights and scroll till 2am.”
 
 IF·THEN:
-- Extracts habits, constraints, and patterns
-- Places them on the timeline
+- Extracts habits, constraints, and patterns  
+- Places them on the timeline  
 - Builds a baseline life trajectory
-
----
 
 ### 3. Branching futures (core feature)
 From the same starting point, IF·THEN simulates:
 
-- **Current path** — no change
-- **Improved path** — small discipline
+- **Current path** — no change  
+- **Improved path** — small discipline  
 - **Focused path** — enforced structure
 
 Each future explains:
-- What improves
-- What breaks
-- What compounds
+- What improves  
+- What breaks  
+- What compounds  
 - Why it happens
 
----
-
 ### 4. Edit decisions, not tasks
-- Drag a habit → future recalculates
-- Remove a behavior → timeline degrades
+- Drag a habit → future recalculates  
+- Remove a behavior → timeline degrades  
 - Add structure → long-term stability appears
 
 You don’t manage tasks.  
 You manage consequences.
 
----
-
 ### 5. “Show me my future”
 IF·THEN generates:
-- A short narrated scenario
-- Visual snapshots of key moments
+- A short narrated scenario  
+- Visual snapshots of key moments  
 - A causal explanation linking today → tomorrow
 
 No prophecy.  
 No fantasy.  
-Just logic over time.
+Just logic applied over time.
 
 ---
 
@@ -129,11 +124,11 @@ It shows what you are *choosing* to become.
 
 ## Roadmap (high level)
 
-- Gemini-powered long-horizon reasoning
-- Real-time future recalculation
-- Timeline playback (scrub through outcomes)
-- Multimodal future summaries (text + visuals)
-- Offline-first personal modeling
+- Gemini-powered long-horizon reasoning  
+- Real-time future recalculation  
+- Timeline playback (scrub through outcomes)  
+- Multimodal future summaries (text + visuals)  
+- Offline-first personal modeling  
 
 ---
 
