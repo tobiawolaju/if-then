@@ -1,13 +1,9 @@
-/* ============================================
-   Chat Bubble - Apple iOS Style
-   ============================================ */
-
 .chat-bubble {
-    max-width: 80%;
-    padding: 10px 14px;
-    margin-bottom: 8px;
-    font-size: 16px;
-    line-height: 1.4;
+    max-width: 85%;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
     word-wrap: break-word;
     animation: bubbleIn 0.2s ease-out;
 }
@@ -15,7 +11,7 @@
 @keyframes bubbleIn {
     from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(10px);
     }
 
     to {
@@ -24,39 +20,32 @@
     }
 }
 
-/* User Message */
 .chat-bubble.user {
     align-self: flex-end;
-    background: linear-gradient(135deg, #007AFF, #0056CC);
-    color: white;
-    border-radius: 18px 18px 4px 18px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--border-visible);
 }
 
-/* Assistant Message */
 .chat-bubble.assistant {
     align-self: flex-start;
-    background-color: #F2F2F7;
-    color: #000000;
-    border-radius: 18px 18px 18px 4px;
+    background: var(--bg-block);
+    color: var(--text-primary);
+    border: 1px solid var(--border-visible);
 }
 
-/* Proposal Bubble */
 .chat-bubble.proposal {
-    align-self: stretch;
-    background-color: #FFFFFF;
-    border-radius: 16px;
-    border: 0.5px solid rgba(60, 60, 67, 0.12);
-    margin: 8px 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--accent-secondary);
 }
 
-/* Bubble Content */
 .bubble-content {
     white-space: pre-wrap;
 }
 
 /* Typing Indicator */
 .chat-bubble.typing {
-    padding: 14px 18px;
+    padding: 16px 20px;
 }
 
 .typing-indicator {
@@ -68,7 +57,7 @@
 .typing-indicator span {
     width: 8px;
     height: 8px;
-    background-color: #8E8E93;
+    background: var(--text-muted);
     border-radius: 50%;
     animation: typingBounce 1.4s ease-in-out infinite;
 }
@@ -94,11 +83,11 @@
     }
 }
 
-/* Proposal Activities */
+/* Proposal Styles */
 .proposal-activities {
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 0.5px solid rgba(60, 60, 67, 0.12);
+    border-top: 1px solid var(--border-visible);
 }
 
 .activities-list {
@@ -112,33 +101,31 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 10px 12px;
-    background-color: #F2F2F7;
-    border-radius: 10px;
-    font-size: 14px;
+    padding: 8px 12px;
+    background: var(--bg-block);
+    border: 1px solid var(--border-visible);
+    font-size: 13px;
 }
 
 .activity-title {
-    font-weight: 500;
-    color: #000000;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .activity-time {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    color: #8E8E93;
-    font-size: 13px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-size: 12px;
 }
 
 .activity-days {
-    color: #3C3C43;
-    font-size: 13px;
+    color: var(--text-secondary);
+    font-size: 12px;
 }
 
-/* Proposal Actions */
 .proposal-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 8px;
 }
 
 .confirm-btn,
@@ -148,83 +135,29 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 12px 16px;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-visible);
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s;
 }
 
 .confirm-btn {
-    background: linear-gradient(135deg, #34C759, #28A745);
-    color: white;
+    background: var(--btn-bg);
+    color: var(--btn-text);
 }
 
 .confirm-btn:hover {
-    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
-}
-
-.confirm-btn:active {
-    transform: scale(0.98);
+    background: var(--btn-hover);
 }
 
 .reject-btn {
-    background-color: #F2F2F7;
-    color: #FF3B30;
+    background: transparent;
+    color: var(--text-secondary);
 }
 
 .reject-btn:hover {
-    background-color: #E5E5EA;
-}
-
-.reject-btn:active {
-    transform: scale(0.98);
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    .chat-bubble.user {
-        background: linear-gradient(135deg, #0A84FF, #0066CC);
-    }
-
-    .chat-bubble.assistant {
-        background-color: #2C2C2E;
-        color: #FFFFFF;
-    }
-
-    .chat-bubble.proposal {
-        background-color: #1C1C1E;
-        border-color: rgba(84, 84, 88, 0.36);
-    }
-
-    .typing-indicator span {
-        background-color: #636366;
-    }
-
-    .activity-preview {
-        background-color: #2C2C2E;
-    }
-
-    .activity-title {
-        color: #FFFFFF;
-    }
-
-    .activity-time {
-        color: #8E8E93;
-    }
-
-    .activity-days {
-        color: #EBEBF5;
-    }
-
-    .reject-btn {
-        background-color: #2C2C2E;
-    }
-
-    .reject-btn:hover {
-        background-color: #3C3C3E;
-    }
+    border-color: var(--text-primary);
+    color: var(--text-primary);
 }

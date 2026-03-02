@@ -1,38 +1,42 @@
 import React from 'react';
-import { LogOut, Settings, ChevronRight } from 'lucide-react';
+import { LogOut, ChevronRight } from 'lucide-react';
 import './Header.css';
 
 export default function Header({ user, onLogout, onProfileClick }) {
     if (!user) return null;
 
-    const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+    const dateOptions = { weekday: 'long', month: 'short', day: 'numeric' };
     const currentDate = new Date().toLocaleDateString('en-US', dateOptions);
 
     return (
-        <header className="ios-header">
-            <div className="header-content">
-                {/* Logo / Title */}
-                <div className="header-left">
-                    <span className="header-logo">IF·THEN</span>
+        <header className="floating-header">
+            <div className="header-search-bar">
+                <div className="search-logo">
+                    <span className="logo-text">IF·THEN</span>
                 </div>
-
-                {/* Center - Date */}
-                <div className="header-center">
-                    <span className="header-date">{currentDate}</span>
+                <div className="search-content">
+                    <span id="current-date" className="hidden-mobile">
+                        {currentDate}
+                    </span>
                 </div>
-
-                {/* Right - User Actions */}
-                <div className="header-right">
-                    <button
-                        className="header-avatar-btn"
-                        onClick={onProfileClick}
-                        aria-label="View profile"
-                    >
+                <div id="auth-container">
+                    <div id="user-profile" onClick={onProfileClick}>
                         <img
+                            id="user-photo"
                             src={user.photoURL}
                             alt={user.displayName || 'User'}
-                            className="header-avatar"
                         />
+                    </div>
+                    <button
+                        className="icon-btn logout-btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onLogout();
+                        }}
+                        title="Sign Out"
+                        aria-label="Sign out"
+                    >
+                        <LogOut size={18} />
                     </button>
                 </div>
             </div>

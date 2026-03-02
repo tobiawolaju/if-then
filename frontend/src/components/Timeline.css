@@ -1,58 +1,57 @@
-/* ============================================
-   Timeline - Apple iOS Style
-   ============================================ */
-
 .timeline-container {
     flex: 1;
     overflow: auto;
     position: relative;
-    background-color: #F2F2F7;
-    /* Clean iOS background */
+    /* Functional Grid - Tracks & Time */
+    background-image:
+        linear-gradient(var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+    background-size: 100% var(--grid-track-total), var(--hour-width) 100%;
+    background-attachment: local;
+
+    /* Mobile Zoom Fixes */
     touch-action: pan-x pan-y;
     user-select: none;
     -webkit-user-select: none;
 }
 
-/* Time Ruler */
 .time-ruler {
-    height: 44px;
+    height: 50px;
     display: flex;
     position: sticky;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px);
     z-index: 40;
-    border-bottom: 0.5px solid rgba(60, 60, 67, 0.12);
+    border-bottom: 1px solid var(--border-visible);
 }
 
 .time-marker {
     width: var(--hour-width);
     flex-shrink: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 400;
-    color: #8E8E93;
-    border-right: 0.5px solid rgba(60, 60, 67, 0.12);
+    color: var(--text-muted);
+    border-right: 1px solid var(--border-visible);
     display: flex;
     align-items: flex-end;
-    padding: 0 0 6px 12px;
+    padding: 0 0 8px 12px;
 }
 
-/* Tracks Container */
 .tracks-container {
     position: relative;
-    padding: 16px 0;
-    min-height: calc(100% - 44px);
+    padding: 20px 0;
+    min-height: calc(100% - 50px);
 }
 
-/* Current Time Indicator */
 .current-time-indicator {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: #FF3B30;
+    background: #ef4444;
+    /* Red playhead line */
+    box-shadow: none;
     z-index: 50;
     pointer-events: none;
 }
@@ -61,93 +60,9 @@
     content: '';
     position: absolute;
     top: 0;
-    left: -5px;
-    width: 12px;
-    height: 12px;
-    background-color: #FF3B30;
-    border-radius: 50%;
-}
-
-/* Timeline Activity Card */
-.timeline-activity {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    padding: 14px 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-    overflow: hidden;
-}
-
-.timeline-activity:active {
-    transform: scale(0.98);
-    background-color: #F2F2F7;
-}
-
-.activity-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000000;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.activity-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #8E8E93;
-}
-
-.activity-time {
-    font-weight: 400;
-}
-
-.activity-duration {
-    color: #C7C7CC;
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    .timeline-container {
-        background-color: #000000;
-    }
-
-    .time-ruler {
-        background-color: rgba(28, 28, 30, 0.85);
-        border-bottom-color: rgba(84, 84, 88, 0.36);
-    }
-
-    .time-marker {
-        color: #8E8E93;
-        border-right-color: rgba(84, 84, 88, 0.36);
-    }
-
-    .timeline-activity {
-        background-color: #1C1C1E;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    }
-
-    .timeline-activity:active {
-        background-color: #2C2C2E;
-    }
-
-    .activity-title {
-        color: #FFFFFF;
-    }
-
-    .activity-meta {
-        color: #8E8E93;
-    }
-
-    .activity-duration {
-        color: #48484A;
-    }
+    left: -6px;
+    width: 14px;
+    height: 14px;
+    background: #ef4444;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
 }

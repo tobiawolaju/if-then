@@ -1,7 +1,3 @@
-/* ============================================
-   Dashboard - Apple iOS Style
-   ============================================ */
-
 .dashboard-body {
     flex: 1;
     display: flex;
@@ -10,7 +6,6 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #F2F2F7;
 }
 
 .dashboard-main {
@@ -18,141 +13,34 @@
     display: flex;
     overflow: hidden;
     position: relative;
-    background-color: #F2F2F7;
+    border-right: 1px solid var(--border-visible);
 }
 
 .dashboard-sidebar {
     width: 380px;
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFF;
-    border-left: 0.5px solid rgba(60, 60, 67, 0.12);
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-visible);
     position: relative;
     flex-shrink: 0;
 }
 
-/* iOS-style loading state */
-.dashboard-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    gap: 16px;
-    color: #8E8E93;
-}
-
-.dashboard-loading-spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid #E5E5EA;
-    border-top-color: #007AFF;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Dashboard sections */
-.dashboard-section {
-    padding: 20px;
-    background-color: #F2F2F7;
-}
-
-.dashboard-section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding: 0 4px;
-}
-
-.dashboard-section-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #8E8E93;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.dashboard-section-action {
-    font-size: 15px;
-    font-weight: 400;
-    color: #007AFF;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-/* iOS-style card */
-.dashboard-card {
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-/* Responsive - Mobile */
 @media (max-width: 900px) {
     .dashboard-body {
         flex-direction: column;
     }
 
     .dashboard-main {
-        flex: 1;
         border-right: none;
+        border-bottom: 1px solid var(--border-visible);
     }
 
     .dashboard-sidebar {
         width: 100%;
-        height: 45vh;
-        min-height: 300px;
+        height: 400px;
+        /* Fixed height or adjustable sheet on mobile */
         border-left: none;
-        border-top: 0.5px solid rgba(60, 60, 67, 0.12);
+        border-top: 1px solid var(--border-visible);
     }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .dashboard-body {
-        background-color: #000000;
-    }
-
-    .dashboard-main {
-        background-color: #000000;
-    }
-
-    .dashboard-sidebar {
-        background-color: #1C1C1E;
-        border-left-color: rgba(84, 84, 88, 0.36);
-    }
-
-    .dashboard-section {
-        background-color: #000000;
-    }
-
-    .dashboard-section-title {
-        color: #8E8E93;
-    }
-
-    .dashboard-card {
-        background-color: #1C1C1E;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    @media (max-width: 900px) {
-        .dashboard-sidebar {
-            border-top-color: rgba(84, 84, 88, 0.36);
-        }
-    }
-}
-
-/* Safe area for notched devices */
-.dashboard-body {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
 }

@@ -1,18 +1,27 @@
-/* ============================================
-   Details Sheet - Apple iOS Bottom Sheet Style
-   ============================================ */
+.details-panel {
+    position: fixed;
+    background: var(--bg-panel);
+    border-left: 1px solid var(--border-visible);
+    z-index: 500;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: -10px 0 60px rgba(0, 0, 0, 0.25);
 
-/* Overlay */
+    /* Flat Design */
+    border-radius: 0px !important;
+}
+
 .details-panel-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     z-index: 400;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.3s;
 }
 
 .details-panel-overlay.active {
@@ -20,187 +29,111 @@
     pointer-events: auto;
 }
 
-/* Panel */
-.details-panel {
-    position: fixed;
-    background-color: #FFFFFF;
-    z-index: 500;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-}
-
-/* Drag Handle */
-.drag-handle {
-    width: 36px;
-    height: 5px;
-    background-color: #C7C7CC;
-    border-radius: 3px;
-    margin: 8px auto;
-    flex-shrink: 0;
-}
-
-/* Detail Container */
 .detail-container {
-    padding: 8px 20px 32px;
+    padding: 40px 32px;
     height: 100%;
     overflow-y: auto;
-    color: #000000;
+    color: var(--text-primary);
 }
 
 .detail-header {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .detail-header h2 {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 12px;
-    color: #000000;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--text-primary);
 }
 
 .detail-label {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    color: #8E8E93;
+    font-family: var(--font-mono);
+    color: var(--accent-secondary);
     font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 4px;
     text-transform: uppercase;
+    margin-bottom: 6px;
     letter-spacing: 0.05em;
 }
 
 .detail-value {
-    font-size: 15px;
-    color: #3C3C43;
-    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
 }
 
-/* Status Chip */
 .status-chip {
     display: inline-block;
-    font-size: 13px;
-    font-weight: 500;
-    color: #FF9500;
-    background-color: rgba(255, 149, 0, 0.12);
-    padding: 4px 10px;
-    border-radius: 8px;
-    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--status-warning);
+    margin-right: 12px;
 }
 
-.status-chip.completed {
-    color: #34C759;
-    background-color: rgba(52, 199, 89, 0.12);
-}
-
-/* Tags */
 .tags-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 20px;
 }
 
 .tag-chip {
-    background-color: #F2F2F7;
-    color: #3C3C43;
+    background: var(--bg-block);
+    border: 1px solid var(--border-visible);
+    color: var(--text-primary);
     font-size: 14px;
-    font-weight: 500;
     padding: 6px 12px;
-    border-radius: 8px;
+    border-radius: 0px;
+    /* Flat */
 }
 
-/* Form Groups */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .form-group label {
-    color: #8E8E93;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
+    color: var(--accent-secondary);
+    font-family: var(--font-mono);
+    font-size: 11px;
     margin-bottom: 8px;
     display: block;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-.form-group input[type="text"],
-.form-group input[type="time"],
-.form-group textarea {
+input[type="text"],
+input[type="time"],
+textarea {
     width: 100%;
-    background-color: #F2F2F7;
-    border: none;
-    color: #000000;
+    background: var(--bg-block);
+    border: 1px solid var(--border-visible);
+    color: var(--text-primary);
     padding: 14px;
-    border-radius: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    font-size: 16px;
+    border-radius: 0px;
+    /* Flat */
+    font-family: var(--font-body);
+    font-size: 15px;
     outline: none;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    background-color: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+input:focus,
+textarea:focus {
+    border-color: var(--text-primary);
+    background: var(--bg-elevated);
 }
 
-/* Action Buttons */
-.detail-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 0.5px solid rgba(60, 60, 67, 0.12);
-}
-
-.detail-actions button {
-    flex: 1;
-    padding: 14px 20px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.detail-actions .save-btn {
-    background: linear-gradient(135deg, #007AFF, #0056CC);
-    color: white;
-    border: none;
-}
-
-.detail-actions .save-btn:hover {
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-}
-
-.detail-actions .delete-btn {
-    background-color: #FFFFFF;
-    color: #FF3B30;
-    border: 1px solid #FF3B30;
-}
-
-.detail-actions .delete-btn:hover {
-    background-color: rgba(255, 59, 48, 0.1);
-}
-
-/* Desktop - Side Sheet */
 @media (min-width: 901px) {
     .details-panel {
-        top: 0;
+        top: var(--header-height);
         bottom: 0;
         right: 0;
-        width: 400px;
-        max-width: 100%;
+        width: 380px;
+        /* Match sidebar width exactly */
         transform: translateX(100%);
-        border-radius: 20px 0 0 20px;
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.1);
+        border-left: 1px solid var(--border-visible);
     }
 
     .details-panel.open {
@@ -208,11 +141,10 @@
     }
 
     .drag-handle {
-        display: none;
+        display: none !important;
     }
 }
 
-/* Mobile - Bottom Sheet */
 @media (max-width: 900px) {
     .details-panel {
         bottom: 0;
@@ -220,64 +152,13 @@
         right: 0;
         height: auto;
         max-height: 85vh;
-        border-radius: 20px 20px 0 0;
+        border-top: 1px solid var(--border-visible);
         transform: translateY(100%);
+        border-radius: 0px;
+        /* Flat */
     }
 
     .details-panel.open {
         transform: translateY(0);
-    }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    .details-panel {
-        background-color: #1C1C1E;
-    }
-
-    .drag-handle {
-        background-color: #48484A;
-    }
-
-    .detail-header h2 {
-        color: #FFFFFF;
-    }
-
-    .detail-value {
-        color: #EBEBF5;
-    }
-
-    .status-chip {
-        color: #FF9F0A;
-        background-color: rgba(255, 159, 10, 0.2);
-    }
-
-    .status-chip.completed {
-        color: #30D158;
-        background-color: rgba(48, 209, 88, 0.2);
-    }
-
-    .tag-chip {
-        background-color: #2C2C2E;
-        color: #EBEBF5;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        background-color: #2C2C2E;
-        color: #FFFFFF;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        background-color: #3C3C3E;
-    }
-
-    .detail-actions .delete-btn {
-        background-color: #1C1C1E;
-    }
-
-    .detail-actions {
-        border-top-color: rgba(84, 84, 88, 0.36);
     }
 }

@@ -1,135 +1,56 @@
-/* ============================================
-   Chat Input - Apple iOS Style
-   ============================================ */
-
 .chat-input-container {
     width: 100%;
-    background-color: #FFFFFF;
-    border-top: 0.5px solid rgba(60, 60, 67, 0.12);
-    padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    z-index: 20;
-}
-
-.chat-input-wrapper {
-    flex: 1;
-    display: flex;
-    align-items: flex-end;
-    background-color: #F2F2F7;
-    border-radius: 20px;
-    padding: 8px 12px;
-    min-height: 36px;
-    max-height: 120px;
-}
-
-#chat-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #000000;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    font-size: 17px;
-    line-height: 1.4;
-    outline: none;
-    resize: none;
-    min-height: 20px;
-    max-height: 100px;
-    padding: 0;
-}
-
-#chat-input::placeholder {
-    color: #8E8E93;
-}
-
-/* Send Button */
-.send-btn {
-    width: 36px;
-    height: 36px;
+    background: var(--bg-void);
+    border-top: 1px solid var(--border-visible);
+    padding: 8px 8px 8px 24px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #007AFF, #0056CC);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+    z-index: 20;
 
-.send-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
-}
-
-.send-btn:active {
-    transform: scale(0.95);
-}
-
-.send-btn:disabled {
-    background: #C7C7CC;
-    cursor: not-allowed;
-    transform: none;
+    /* Flat Design */
+    border-radius: 0px;
     box-shadow: none;
 }
 
-/* Futures Button */
-.futures-btn {
-    width: 36px;
-    height: 36px;
+.chat-input-container:focus-within {
+    border-color: var(--text-primary);
+}
+
+#chat-input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    flex: 1;
+    outline: none;
+    resize: none;
+}
+
+#chat-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* No media query needed for width/bottom anymore */
+
+.action-btn {
+    background: #3b82f6;
+    /* Vibrant Blue */
+    color: white;
+    border-radius: 0px !important;
+    height: 44px;
+    width: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F2F2F7;
+    box-shadow: none !important;
     border: none;
-    border-radius: 50%;
-    color: #007AFF;
     cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s;
 }
 
-.futures-btn:hover {
-    background-color: #E5E5EA;
-}
-
-.futures-btn:active {
-    transform: scale(0.95);
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    .chat-input-container {
-        background-color: #1C1C1E;
-        border-top-color: rgba(84, 84, 88, 0.36);
-    }
-
-    .chat-input-wrapper {
-        background-color: #2C2C2E;
-    }
-
-    #chat-input {
-        color: #FFFFFF;
-    }
-
-    .send-btn {
-        background: linear-gradient(135deg, #0A84FF, #0066CC);
-    }
-
-    .send-btn:disabled {
-        background: #48484A;
-    }
-
-    .futures-btn {
-        background-color: #2C2C2E;
-        color: #0A84FF;
-    }
-
-    .futures-btn:hover {
-        background-color: #3C3C3E;
-    }
+.action-btn:hover {
+    background: #2563eb;
+    /* Darker Blue */
+    color: white;
 }
