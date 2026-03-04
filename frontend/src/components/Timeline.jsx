@@ -1,18 +1,6 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import ActivityBlock from './ActivityBlock';
 import './Timeline.css';
-
-const TimeMarker = memo(({ hour }) => (
-    <div className="time-marker">{String(hour).padStart(2, '0')}:00</div>
-));
-
-const TimeRuler = memo(() => (
-    <div className="time-ruler" id="time-ruler">
-        {Array.from({ length: 24 }, (_, i) => (
-            <TimeMarker key={i} hour={i} />
-        ))}
-    </div>
-));
 
 function parseTime(timeStr) {
     if (!timeStr || typeof timeStr !== 'string') return 0;
@@ -37,7 +25,6 @@ export default function Timeline({ activities, onSelectActivity }) {
 
     return (
         <div className="timeline-container" onClick={() => onSelectActivity(null)}>
-            <TimeRuler />
             <div className="timeline-list" role="list">
                 {sortedActivities.map((activity) => (
                     <ActivityBlock
