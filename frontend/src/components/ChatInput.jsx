@@ -21,7 +21,7 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
     };
 
     return (
-        <div className="chat-input-container" style={{ borderRadius: '0px', boxShadow: 'none' }}>
+        <div className="chat-input-container">
             <textarea
                 ref={textareaRef}
                 id="chat-input"
@@ -30,7 +30,6 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 disabled={isProcessing}
-                style={{ borderRadius: '0px' }}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -49,7 +48,6 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
                 }}
                 disabled={isProcessing}
                 aria-label={message.trim() ? "Send message" : "Predict Future"}
-                style={{ borderRadius: '0px', boxShadow: 'none' }}
                 title={!message.trim() ? "See your predicted future" : "Send"}
             >
                 {isProcessing ? (
