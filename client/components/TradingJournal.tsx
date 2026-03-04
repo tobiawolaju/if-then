@@ -53,6 +53,7 @@ export default function TradingJournal() {
     const totalPages = Math.ceil(journalEntries.length / ITEMS_PER_PAGE);
     const start = journalPage * ITEMS_PER_PAGE;
     const pageEntries = journalEntries.slice(start, start + ITEMS_PER_PAGE);
+    const timeMarkers = pageEntries.map((entry) => entry.time);
 
     return (
         <section className="min-h-screen px-4 py-20 md:px-8">
@@ -84,55 +85,69 @@ export default function TradingJournal() {
                     70% of your losses happened after midnight. Your revenge trades cost you $2,829.
                 </p>
 
-                {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {pageEntries.map((entry, i) => (
-                        <motion.div
-                            key={entry.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.08, duration: 0.4 }}
-                            className="rounded-xl p-5 neon-border card-hover"
-                            style={{ background: "#16161a" }}
-                        >
-                            {/* Top row */}
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-2.5">
-                                    <TradeSnapshot pnl={entry.pnl} />
-                                    <div>
-                                        <p className="font-semibold text-sm tracking-wide">
-                                            {entry.pair}
-                                        </p>
-                                        <p className="text-muted text-[11px]">{entry.date}</p>
-                                    </div>
-                                </div>
-                                <span
-                                    className={`font-mono font-bold text-lg ${entry.pnl >= 0 ? "text-buy" : "text-sell"
-                                        }`}
-                                >
-                                    {entry.pnl >= 0 ? "+" : ""}
-                                    ${Math.abs(entry.pnl).toFixed(2)}
+                {/* Timeline List */}
+                <div className="flex gap-4 md:gap-6">
+                    <div className="w-16 md:w-20 flex-shrink-0 flex flex-col relative">
+                        <div className="absolute left-7 md:left-9 top-0 bottom-0 w-px bg-white/15" />
+                        {timeMarkers.map((time, i) => (
+                            <div key={`${time}-${i}`} className="relative h-[188px] flex items-start pt-4">
+                                <span className="text-[10px] md:text-xs font-mono text-white/50 bg-abyss px-1.5 py-0.5 rounded z-10">
+                                    {time}
                                 </span>
+                                <span className="absolute left-[26px] md:left-[34px] top-6 w-2.5 h-2.5 rounded-full bg-neon shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
                             </div>
+                        ))}
+                    </div>
 
-                            {/* Notes */}
-                            <p className="text-muted text-xs leading-relaxed line-clamp-2 mb-3">
-                                {entry.notes}
-                            </p>
-
-                            {/* Tags */}
-                            <div className="flex gap-1.5 flex-wrap">
-                                {entry.tags.map((tag) => (
+                    <div className="flex-1 flex flex-col gap-4">
+                        {pageEntries.map((entry, i) => (
+                            <motion.div
+                                key={entry.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.08, duration: 0.4 }}
+                                className="rounded-xl p-5 neon-border card-hover"
+                                style={{ background: "#16161a" }}
+                            >
+                                {/* Top row */}
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-2.5">
+                                        <TradeSnapshot pnl={entry.pnl} />
+                                        <div>
+                                            <p className="font-semibold text-sm tracking-wide">
+                                                {entry.pair}
+                                            </p>
+                                            <p className="text-muted text-[11px]">{entry.date}</p>
+                                        </div>
+                                    </div>
                                     <span
-                                        key={tag}
-                                        className="px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide bg-neon/10 text-neon"
+                                        className={`font-mono font-bold text-lg ${entry.pnl >= 0 ? "text-buy" : "text-sell"
+                                            }`}
                                     >
-                                        {tag}
+                                        {entry.pnl >= 0 ? "+" : ""}
+                                        ${Math.abs(entry.pnl).toFixed(2)}
                                     </span>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
+                                </div>
+
+                                {/* Notes */}
+                                <p className="text-muted text-xs leading-relaxed line-clamp-2 mb-3">
+                                    {entry.notes}
+                                </p>
+
+                                {/* Tags */}
+                                <div className="flex gap-1.5 flex-wrap">
+                                    {entry.tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide bg-neon/10 text-neon"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Pagination */}

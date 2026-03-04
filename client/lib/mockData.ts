@@ -6,6 +6,7 @@ export interface JournalEntry {
   emotion: string;
   notes: string;
   date: string;
+  time: string;
   tags: string[];
 }
 
@@ -17,6 +18,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "😎",
     notes: "Clean breakout from the 4H consolidation. Entered on retest of the $148 level.",
     date: "2026-02-19",
+    time: "09:12",
     tags: ["Strategy"],
   },
   {
@@ -26,6 +28,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "😤",
     notes: "FOMO'd into a pump. No setup, just chased the green candle.",
     date: "2026-02-18",
+    time: "10:45",
     tags: ["FOMO"],
   },
   {
@@ -35,6 +38,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "🧊",
     notes: "Scalped the London session open. Tight stop, quick profit.",
     date: "2026-02-17",
+    time: "12:20",
     tags: ["Strategy"],
   },
   {
@@ -44,6 +48,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "🤦",
     notes: "Fat-fingered the size. Meant 0.5 SOL, entered 5 SOL.",
     date: "2026-02-16",
+    time: "13:58",
     tags: ["Fat Finger"],
   },
   {
@@ -53,6 +58,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "💎",
     notes: "Held through the dip on news catalyst. Conviction trade paid off.",
     date: "2026-02-15",
+    time: "15:15",
     tags: ["News", "Strategy"],
   },
   {
@@ -62,6 +68,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "🚀",
     notes: "Caught the breakout above $98k. Trailed stop perfectly.",
     date: "2026-02-14",
+    time: "16:40",
     tags: ["Strategy"],
   },
   {
@@ -71,6 +78,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "😰",
     notes: "Overleveraged on a news trade. CPI print went opposite direction.",
     date: "2026-02-13",
+    time: "18:05",
     tags: ["News", "FOMO"],
   },
   {
@@ -80,6 +88,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "😂",
     notes: "Meme coin momentum play. In and out in 3 minutes.",
     date: "2026-02-12",
+    time: "19:27",
     tags: ["FOMO"],
   },
   {
@@ -89,6 +98,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "🎯",
     notes: "Perfect entry on the 1H order block. Textbook setup.",
     date: "2026-02-11",
+    time: "21:11",
     tags: ["Strategy"],
   },
   {
@@ -98,6 +108,7 @@ export const journalEntries: JournalEntry[] = [
     emotion: "😶",
     notes: "Stop hunted by 2 cents. Would have been a winner.",
     date: "2026-02-10",
+    time: "23:44",
     tags: ["Strategy"],
   },
 ];
