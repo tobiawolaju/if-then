@@ -4,18 +4,17 @@
     right: 12px;
     bottom: 12px;
     width: auto;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 8px 8px 8px 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.28));
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    padding: 8px 8px 8px 18px;
     display: flex;
     align-items: center;
     z-index: 1200;
-
-    border-radius: 14px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(16px) saturate(155%);
-    -webkit-backdrop-filter: blur(16px) saturate(155%);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    border-radius: 360px;
+    box-shadow: 0 14px 36px rgba(42, 78, 130, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(22px) saturate(165%);
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 @media (min-width: 901px) {
@@ -28,8 +27,8 @@
 }
 
 .chat-input-container:focus-within {
-    border-color: rgba(255, 255, 255, 0.45);
-    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    border-color: rgba(192, 222, 255, 0.95);
+    box-shadow: 0 16px 42px rgba(47, 94, 158, 0.28), 0 0 0 4px rgba(91, 157, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 #chat-input {
@@ -50,23 +49,24 @@
 /* No media query needed for width/bottom anymore */
 
 .action-btn {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.88), rgba(37, 99, 235, 0.92));
+    background: linear-gradient(135deg, rgba(110, 176, 255, 0.95), rgba(59, 130, 246, 0.95));
     color: white;
-    border-radius: 10px;
+    border-radius: 999px;
     height: 44px;
     width: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 24px rgba(59, 130, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.45);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .action-btn:hover {
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.95), rgba(37, 99, 235, 0.95));
+    background: linear-gradient(135deg, rgba(141, 196, 255, 1), rgba(66, 140, 247, 1));
     color: white;
+    transform: translateY(-1px);
 }
 
 .chat-input-container--blocked {
