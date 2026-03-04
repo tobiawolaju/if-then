@@ -371,6 +371,14 @@ export default function DetailsSheet({ activity, isOpen, onClose, onSave, onDele
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
+                <button
+                    className="details-close-btn"
+                    onClick={onClose}
+                    type="button"
+                    aria-label="Close details"
+                >
+                    <X size={18} />
+                </button>
                 {/* Drag handle - visible only on mobile via CSS */}
                 <div
                     className="drag-handle"

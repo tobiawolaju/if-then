@@ -107,9 +107,7 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
 
     return (
         <div className="app-container">
-            {conversation.isOpen && (
-                <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
-            )}
+            <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
             <div className="dashboard-body">
                 <main className="dashboard-main">
                     <Timeline
@@ -119,7 +117,8 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                 </main>
             </div>
 
-            <ChatOverlay
+            {!selectedActivity && !showFuturesModal && (
+                <ChatOverlay
                 isOpen={conversation.isOpen}
                 messages={conversation.messages}
                 isTyping={conversation.isTyping}
@@ -129,10 +128,12 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                 onReject={conversation.rejectActivities}
                 onClear={conversation.clearConversation}
             />
+            )}
             <ChatInput
                 onSendMessage={handleSendMessage}
                 isProcessing={conversation.isTyping}
                 onOpenFutures={() => setShowFuturesModal(true)}
+                isBlocked={!!selectedActivity || showFuturesModal}
             />
 
             <FuturesNotification
