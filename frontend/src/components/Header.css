@@ -6,8 +6,8 @@ header.floating-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(140deg, rgba(46, 62, 103, 0.55), rgba(19, 27, 48, 0.46));
-    border: 1px solid rgba(198, 213, 255, 0.28);
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(0, 0, 0, 0.14);
     border-radius: var(--radius-pill);
     padding: 0 28px;
     flex-shrink: 0;
@@ -35,7 +35,7 @@ header.floating-header {
     font-size: 18px;
     letter-spacing: 0.16em;
     color: var(--text-primary);
-    text-shadow: 0 0 24px rgba(151, 184, 255, 0.26);
+    text-shadow: none;
 }
 
 .search-content {
@@ -62,15 +62,15 @@ header.floating-header {
     border-radius: var(--radius-pill);
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid rgba(188, 208, 255, 0.45);
+    border: 1px solid rgba(0, 0, 0, 0.18);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 12px 24px rgba(6, 12, 31, 0.36);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
 }
 
 #user-profile:hover {
-    border-color: rgba(176, 203, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.3);
     transform: translateY(-1px);
-    box-shadow: 0 16px 28px rgba(6, 12, 31, 0.52);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 #user-photo {
@@ -86,7 +86,7 @@ header.floating-header {
 
 .logout-btn:hover {
     opacity: 1;
-    background: rgba(136, 162, 222, 0.18);
+    background: rgba(0, 0, 0, 0.06);
 }
 
 @media (max-width: 600px) {
