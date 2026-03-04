@@ -4,7 +4,7 @@ import './BottomNav.css';
 
 const BottomNav = React.memo(({ activeView, onViewChange, onOpenChat, user }) => {
     return (
-        <nav className="bottom-nav">
+        <nav className="bottom-nav liquid-glass">
             <button
                 className={`nav-item ${activeView === 'timeline' ? 'active' : ''}`}
                 onClick={() => onViewChange('timeline')}
