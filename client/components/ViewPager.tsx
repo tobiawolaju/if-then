@@ -79,16 +79,6 @@ export default function ViewPager() {
 
     return (
         <section className="h-[70vh] w-screen flex flex-col relative overflow-hidden bg-abyss">
-            {/* Background grid */}
-            <div
-                className="absolute inset-0 opacity-[0.02] pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(168,85,247,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.5) 1px, transparent 1px)",
-                    backgroundSize: "60px 60px",
-                }}
-            />
-
             {/* Header Controls - Centered (Only on Chart) */}
             {activeTab === "Chart" && (
                 <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[60] flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
