@@ -8,7 +8,7 @@
 
 :root {
   /* ===== COLOR SYSTEM: PREMIUM ATMOSPHERE ===== */
-  --bg-void: #070b16;
+  --bg-void: #ffffff;
   --bg-surface: rgba(18, 24, 43, 0.65);
   --bg-elevated: rgba(27, 34, 58, 0.78);
   --bg-glass: rgba(20, 28, 52, 0.52);
@@ -35,9 +35,9 @@
   --accent-text: #ffffff;
 
   /* Buttons */
-  --btn-bg: linear-gradient(135deg, #86b3ff, #6f94ff);
+  --btn-bg: #86b3ff;
   --btn-text: #ffffff;
-  --btn-hover: linear-gradient(135deg, #9bc0ff, #82a9ff);
+  --btn-hover: #9bc0ff;
 
   /* Status */
   --status-success: #10b981;
@@ -102,33 +102,11 @@ body {
   height: 100vh;
   font-size: 15px;
 
-  /* Starline / Technical Grid with Varying Opacity */
-  background-image:
-    radial-gradient(circle at 16% 12%, rgba(125, 112, 255, 0.34), transparent 40%),
-    radial-gradient(circle at 84% 10%, rgba(64, 188, 255, 0.24), transparent 48%),
-    radial-gradient(circle at 40% 100%, rgba(164, 125, 255, 0.19), transparent 50%),
-    linear-gradient(var(--grid-line-primary) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-primary) 1px, transparent 1px),
-    linear-gradient(var(--grid-line-secondary) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
-  background-size:
-    cover,
-    cover,
-    cover,
-    80px 80px,
-    80px 80px,
-    20px 20px,
-    20px 20px;
-  background-position: center center;
+  background-image: none;
 }
 
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6) 0, transparent 32%), radial-gradient(circle at 80% 70%, rgba(189, 203, 255, 0.5) 0, transparent 34%);
+  content: none;
 }
 
 /* Glass Utility */
