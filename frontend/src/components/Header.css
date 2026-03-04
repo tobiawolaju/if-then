@@ -6,13 +6,13 @@ header.floating-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(0, 0, 0, 0.14);
-    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     padding: 0 28px;
     flex-shrink: 0;
     z-index: 1000;
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
 }
 
 .header-search-bar {
