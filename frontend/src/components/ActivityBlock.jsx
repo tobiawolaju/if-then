@@ -1,39 +1,31 @@
 import React, { memo, useMemo } from 'react';
 import './ActivityBlock.css';
 
+function parseTime(timeStr) {
+    if (!timeStr) return 0;
+    const [hours, minutes] = timeStr.trim().split(':').map(Number);
+    return (hours || 0) * 60 + (minutes || 0);
+}
+
 const ActivityBlock = memo(({ activity, onClick }) => {
-    const { startTime, endTime, trackIndex, color, title, id } = activity;
+    const { startTime, endTime, color, title } = activity;
 
-    const { start, duration } = useMemo(() => {
-        const parseTime = (timeStr) => {
-            if (!timeStr) return 0;
-            const [hours, minutes] = timeStr.trim().split(':').map(Number);
-            return (hours || 0) * 60 + (minutes || 0);
-        };
+    const durationLabel = useMemo(() => {
+        const duration = Math.max(0, parseTime(endTime) - parseTime(startTime));
+        const hours = Math.floor(duration / 60);
+        const minutes = duration % 60;
 
-        const s = parseTime(startTime);
-        const e = parseTime(endTime);
-        return { start: s, duration: e - s };
+        if (hours && minutes) return `${hours}h ${minutes}m`;
+        if (hours) return `${hours}h`;
+        return `${minutes}m`;
     }, [startTime, endTime]);
 
-    const accentColor = color || '#fecaca'; // Fallback to a light red/pink if no color
-
-    const style = {
-        left: `calc(${start} * var(--pixels-per-minute))`,
-        width: `calc(${duration} * var(--pixels-per-minute))`,
-        top: `calc(${trackIndex} * var(--grid-track-total))`,
-        background: accentColor,
-        border: '1px solid var(--border-visible)',
-        '--block-accent': accentColor,
-        boxShadow: 'none',
-        borderRadius: 0,
-        willChange: 'left, width, transform'
-    };
+    const accentColor = color || '#fecaca';
 
     return (
         <div
             className="activity-block"
-            style={style}
+            style={{ '--block-accent': accentColor }}
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
@@ -47,9 +39,12 @@ const ActivityBlock = memo(({ activity, onClick }) => {
                 }
             }}
         >
-            <div className="activity-title">{title}</div>
-            <div className="activity-time">
-                {startTime} — {endTime}
+            <div className="activity-start-time">{startTime}</div>
+            <div className="activity-card">
+                <div className="activity-title">{title}</div>
+                <div className="activity-time">
+                    {startTime} — {endTime} • {durationLabel}
+                </div>
             </div>
         </div>
     );

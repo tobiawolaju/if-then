@@ -1,41 +1,39 @@
 .activity-block {
-    position: absolute;
-    height: var(--track-height);
-    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 10px;
+    align-items: start;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 10;
 }
 
-.activity-block:hover {
-    z-index: 20;
-    filter: brightness(0.9);
+.activity-start-time {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 10px;
+}
+
+.activity-card {
+    border: 1px solid var(--border-visible);
+    border-left: 6px solid var(--block-accent);
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.activity-block:hover .activity-card {
+    filter: brightness(0.97);
 }
 
 .activity-title {
     font-size: 14px;
     font-weight: 600;
     color: #000000;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    margin-bottom: 4px;
 }
 
 .activity-time {
     font-family: var(--font-body);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.7);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
 }
