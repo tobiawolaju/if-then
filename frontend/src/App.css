@@ -7,37 +7,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== COLOR SYSTEM: FLAT LIGHT ===== */
-  --bg-void: #ffffff;
-  --bg-surface: #f4f4f5;
-  --bg-elevated: #e4e4e7;
-  --bg-glass: rgba(255, 255, 255, 0.9);
-  --bg-panel: #ffffff;
-  --bg-block: #f4f4f5;
+  /* ===== COLOR SYSTEM: iOS GLASS LIGHT ===== */
+  --bg-void: #edf3ff;
+  --bg-surface: rgba(255, 255, 255, 0.62);
+  --bg-elevated: rgba(255, 255, 255, 0.78);
+  --bg-glass: rgba(255, 255, 255, 0.5);
+  --bg-panel: rgba(255, 255, 255, 0.72);
+  --bg-block: rgba(255, 255, 255, 0.42);
 
   /* Borders */
-  --border-subtle: #e4e4e7;
-  --border-visible: #000000;
-  --border-glow: transparent;
+  --border-subtle: rgba(255, 255, 255, 0.45);
+  --border-visible: rgba(255, 255, 255, 0.6);
+  --border-glow: rgba(155, 189, 255, 0.5);
 
   /* Text */
-  --text-primary: #000000;
-  --text-secondary: #52525b;
-  --text-muted: #a1a1aa;
-  --text-ghost: #e4e4e7;
+  --text-primary: #10213e;
+  --text-secondary: #344a6a;
+  --text-muted: #6c7d98;
+  --text-ghost: #d7e1f4;
 
   /* Accents - Flat */
-  --accent-primary: #000000;
-  --accent-secondary: #e4e4e7;
-  --accent-tertiary: #a1a1aa;
+  --accent-primary: #3b82f6;
+  --accent-secondary: rgba(230, 240, 255, 0.95);
+  --accent-tertiary: #8fb5ff;
 
-  --accent-glow: transparent;
+  --accent-glow: rgba(59, 130, 246, 0.42);
   --accent-text: #ffffff;
 
   /* Buttons */
-  --btn-bg: #000000;
+  --btn-bg: linear-gradient(135deg, #5ea2ff, #3b82f6);
   --btn-text: #ffffff;
-  --btn-hover: #3f3f46;
+  --btn-hover: linear-gradient(135deg, #79b3ff, #4f91ff);
 
   /* Status */
   --status-success: #10b981;
@@ -62,21 +62,21 @@
   --hour-width: calc(var(--base-hour-width) * var(--zoom-level));
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
-  /* Radius - Sharp/Flat */
-  --radius-xs: 0px;
-  --radius-s: 0px;
-  --radius-m: 0px;
-  --radius-l: 0px;
-  --radius-pill: 0px;
+  /* Radius - Soft/Glass */
+  --radius-xs: 10px;
+  --radius-s: 14px;
+  --radius-m: 20px;
+  --radius-l: 28px;
+  --radius-pill: 360px;
 
   /* Effects */
-  --shadow-soft: none;
-  --shadow-elevated: none;
-  --backdrop-blur: 0px;
+  --shadow-soft: 0 12px 28px rgba(31, 67, 117, 0.12);
+  --shadow-elevated: 0 18px 38px rgba(31, 67, 117, 0.18);
+  --backdrop-blur: 18px;
 
   /* Grid overlay colors */
-  --grid-line-primary: rgba(0, 0, 0, 0.1);
-  --grid-line-secondary: rgba(0, 0, 0, 0.05);
+  --grid-line-primary: rgba(255, 255, 255, 0.2);
+  --grid-line-secondary: rgba(255, 255, 255, 0.08);
 }
 
 /* Removed dark mode media query to enforce global light theme */
@@ -93,10 +93,6 @@
   box-sizing: border-box;
 }
 
-* {
-  border-radius: 0 !important;
-}
-
 body {
   font-family: var(--font-body);
   background-color: var(--bg-void);
@@ -108,11 +104,15 @@ body {
 
   /* Starline / Technical Grid with Varying Opacity */
   background-image:
+    radial-gradient(circle at 15% 20%, rgba(135, 182, 255, 0.4), transparent 40%),
+    radial-gradient(circle at 80% 2%, rgba(174, 214, 255, 0.35), transparent 45%),
     linear-gradient(var(--grid-line-primary) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line-primary) 1px, transparent 1px),
     linear-gradient(var(--grid-line-secondary) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
   background-size:
+    cover,
+    cover,
     80px 80px,
     80px 80px,
     20px 20px,
@@ -126,6 +126,7 @@ body {
   backdrop-filter: blur(var(--backdrop-blur));
   -webkit-backdrop-filter: blur(var(--backdrop-blur));
   border: 1px solid var(--border-visible);
+  box-shadow: var(--shadow-soft);
 }
 
 .action-button {
@@ -145,16 +146,15 @@ body {
 }
 
 .action-button.primary {
-  background: var(--text-primary);
-  color: var(--bg-void);
-  border-color: var(--text-primary);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: transparent;
 }
 
 .action-button.primary:hover {
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  transform: none;
-  box-shadow: none;
+  background: var(--btn-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
 }
 
 .action-button.secondary {
@@ -182,10 +182,8 @@ body {
 
 .icon-btn:hover {
   color: var(--text-primary);
-  background: var(--border-visible);
-  color: white;
-  /* Contrast text inside black bg */
-  transform: none;
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
 }
 
 .icon-btn:active {

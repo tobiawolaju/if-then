@@ -1,14 +1,19 @@
 header.floating-header {
     height: var(--header-height);
-    width: 100%;
+    width: calc(100% - 24px);
+    margin: 12px auto 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--bg-void);
-    border-bottom: 1px solid var(--border-visible);
-    padding: 0 32px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.46));
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    border-radius: var(--radius-pill);
+    padding: 0 28px;
     flex-shrink: 0;
     z-index: 1000;
+    backdrop-filter: blur(var(--backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur));
+    box-shadow: var(--shadow-soft);
 }
 
 .header-search-bar {
@@ -53,15 +58,18 @@ header.floating-header {
 #user-profile {
     width: 40px;
     height: 40px;
-    border-radius: 0;
+    border-radius: var(--radius-pill);
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid var(--border-visible);
-    transition: none;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 14px rgba(53, 95, 153, 0.15);
 }
 
 #user-profile:hover {
-    border-color: var(--text-primary);
+    border-color: rgba(170, 204, 255, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(53, 95, 153, 0.2);
 }
 
 #user-photo {
