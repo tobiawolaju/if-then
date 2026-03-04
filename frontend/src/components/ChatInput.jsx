@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles } from 'lucide-react';
 import './ChatInput.css';
 
-export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }) {
+export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures, isBlocked = false }) {
     const [message, setMessage] = useState('');
     const textareaRef = useRef(null);
 
@@ -21,7 +21,7 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
     };
 
     return (
-        <div className="chat-input-container">
+        <div className={`chat-input-container ${isBlocked ? 'chat-input-container--blocked' : ''}`}>
             <textarea
                 ref={textareaRef}
                 id="chat-input"
@@ -29,7 +29,7 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
                 placeholder={isProcessing ? "Planning your time..." : "Schedule something..."}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                disabled={isProcessing}
+                disabled={isProcessing || isBlocked}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -46,7 +46,7 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures }
                         handleSubmit();
                     }
                 }}
-                disabled={isProcessing}
+                disabled={isProcessing || isBlocked}
                 aria-label={message.trim() ? "Send message" : "Predict Future"}
                 title={!message.trim() ? "See your predicted future" : "Send"}
             >
