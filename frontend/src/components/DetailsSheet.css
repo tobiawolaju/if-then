@@ -129,8 +129,7 @@ textarea:focus {
         top: var(--header-height);
         bottom: 0;
         right: 0;
-        width: 380px;
-        /* Match sidebar width exactly */
+        width: 50vw;
         transform: translateX(100%);
         box-shadow: -20px 0 50px rgba(0, 0, 0, 0.1);
         border-left: 1px solid var(--border-visible);
@@ -147,11 +146,12 @@ textarea:focus {
 
 @media (max-width: 900px) {
     .details-panel {
+        top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-        height: auto;
-        max-height: 85vh;
+        height: 100dvh;
+        max-height: none;
         border-top: 1px solid var(--border-visible);
         transform: translateY(100%);
         border-radius: 0px;
