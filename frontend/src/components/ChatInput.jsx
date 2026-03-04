@@ -21,7 +21,7 @@ export default function ChatInput({ onSendMessage, isProcessing, onOpenFutures, 
     };
 
     return (
-        <div className={`chat-input-container ${isBlocked ? 'chat-input-container--blocked' : ''}`}>
+        <div className={`chat-input-container liquid-glass ${isBlocked ? 'chat-input-container--blocked' : ''}`}>
             <textarea
                 ref={textareaRef}
                 id="chat-input"

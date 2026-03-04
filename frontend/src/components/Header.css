@@ -1,18 +1,17 @@
 header.floating-header {
+    position: relative;
     height: var(--header-height);
     width: calc(100% - 24px);
     margin: 12px auto 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.46));
-    border: 1px solid rgba(255, 255, 255, 0.66);
+    background: linear-gradient(140deg, rgba(46, 62, 103, 0.55), rgba(19, 27, 48, 0.46));
+    border: 1px solid rgba(198, 213, 255, 0.28);
     border-radius: var(--radius-pill);
     padding: 0 28px;
     flex-shrink: 0;
     z-index: 1000;
-    backdrop-filter: blur(var(--backdrop-blur));
-    -webkit-backdrop-filter: blur(var(--backdrop-blur));
     box-shadow: var(--shadow-soft);
 }
 
@@ -32,9 +31,11 @@ header.floating-header {
 
 .logo-text {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.16em;
+    color: var(--text-primary);
+    text-shadow: 0 0 24px rgba(151, 184, 255, 0.26);
 }
 
 .search-content {
@@ -46,7 +47,7 @@ header.floating-header {
 #current-date {
     font-family: var(--font-body);
     font-size: 14px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 #auth-container {
@@ -61,15 +62,15 @@ header.floating-header {
     border-radius: var(--radius-pill);
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(188, 208, 255, 0.45);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 6px 14px rgba(53, 95, 153, 0.15);
+    box-shadow: 0 12px 24px rgba(6, 12, 31, 0.36);
 }
 
 #user-profile:hover {
-    border-color: rgba(170, 204, 255, 0.95);
+    border-color: rgba(176, 203, 255, 0.92);
     transform: translateY(-1px);
-    box-shadow: 0 10px 20px rgba(53, 95, 153, 0.2);
+    box-shadow: 0 16px 28px rgba(6, 12, 31, 0.52);
 }
 
 #user-photo {
@@ -85,7 +86,7 @@ header.floating-header {
 
 .logout-btn:hover {
     opacity: 1;
-    background: var(--bg-block);
+    background: rgba(136, 162, 222, 0.18);
 }
 
 @media (max-width: 600px) {
