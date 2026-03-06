@@ -9,7 +9,7 @@ export default function Header({ user, onLogout, onProfileClick }) {
     const currentDate = new Date().toLocaleDateString("en-US", dateOptions);
 
     return (
-        <header className="floating-header liquid-glass">
+        <header className="floating-header">
             <div className="header-search-bar">
                 <div className="search-logo">
                     <span className="logo-text">IF·THEN</span>

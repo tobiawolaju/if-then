@@ -4,14 +4,14 @@
     right: 12px;
     bottom: 12px;
 
-    border-radius: 360px;
+    border-radius: 100%;
     padding: 8px 8px 8px 18px;
 
     display: flex;
     align-items: center;
 
     z-index: 1200;
-
+    width: auto;
     transition:
         opacity 0.2s ease,
         transform 0.2s ease,
@@ -84,17 +84,18 @@
 .liquid-glass {
     position: relative;
     overflow: hidden;
-    border-radius: inherit;
+
+    border-radius: 100%;
 
     /* droplet transparency */
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
 
     /* very light lens blur (water is not frosted) */
     backdrop-filter: blur(2px) contrast(110%) brightness(105%);
     -webkit-backdrop-filter: blur(2px) contrast(110%) brightness(105%);
 
     /* droplet edge */
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.02);
 
     /* curved water shadow + inner refraction */
     box-shadow:
@@ -108,7 +109,8 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: inherit;
+
+    border-radius: 100%;
     pointer-events: none;
 
     background: radial-gradient(
@@ -127,7 +129,8 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: inherit;
+
+    border-radius: 100%;
     pointer-events: none;
 
     background: radial-gradient(
