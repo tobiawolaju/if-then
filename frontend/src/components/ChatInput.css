@@ -1,8 +1,8 @@
 .chat-input-container {
     position: fixed;
-    left: 12px;
-    right: 12px;
+    left: 50%;
     bottom: 12px;
+    transform: translateX(-50%);
 
     border-radius: 999px;
     padding: 8px 8px 8px 18px;
@@ -11,7 +11,7 @@
     align-items: center;
 
     z-index: 1200;
-    width: auto;
+    width: min(560px, calc(100vw - 24px));
     transition:
         opacity 0.2s ease,
         transform 0.2s ease,
@@ -22,9 +22,7 @@
 
 @media (min-width: 901px) {
     .chat-input-container {
-        left: auto;
-        right: 20px;
-        width: min(380px, calc(100vw - 40px));
+        width: min(560px, calc(100vw - 40px));
         bottom: 20px;
     }
 }
@@ -88,7 +86,7 @@
 .chat-input-container--blocked {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(20px);
+    transform: translate(-50%, 20px);
 }
 
 .liquid-glass {
