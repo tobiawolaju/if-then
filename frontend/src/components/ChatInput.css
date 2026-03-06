@@ -3,16 +3,20 @@
     left: 12px;
     right: 12px;
     bottom: 12px;
-    width: auto;
-    background: rgba(255, 255, 255, 0.86);
-    border: 1px solid rgba(0, 0, 0, 0.16);
+
+    border-radius: 360px;
     padding: 8px 8px 8px 18px;
+
     display: flex;
     align-items: center;
+
     z-index: 1200;
-    border-radius: 360px;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        backdrop-filter 0.3s ease;
 }
 
 @media (min-width: 901px) {
@@ -25,8 +29,10 @@
 }
 
 .chat-input-container:focus-within {
-    border-color: rgba(0, 0, 0, 0.32);
-    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.16), 0 0 0 4px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 #chat-input {
@@ -55,7 +61,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.2s;
@@ -71,4 +79,62 @@
     opacity: 0;
     pointer-events: none;
     transform: translateY(20px);
+}
+
+.liquid-glass {
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+
+    background: rgba(255, 255, 255, 0.22);
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+
+    background: linear-gradient(
+        140deg,
+        rgba(255, 255, 255, 0.55) 0%,
+        rgba(255, 255, 255, 0.18) 30%,
+        rgba(255, 255, 255, 0.05) 55%,
+        rgba(255, 255, 255, 0.25) 100%
+    );
+
+    opacity: 0.55;
+}
+
+.liquid-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 30% 20%,
+            rgba(255, 255, 255, 0.3),
+            transparent 60%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 255, 255, 0.15),
+            transparent 70%
+        );
+
+    opacity: 0.35;
 }
