@@ -7,43 +7,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== COLOR SYSTEM: PREMIUM ATMOSPHERE ===== */
-  --bg-void: #ffffff;
-  --bg-surface: rgba(255, 255, 255, 0.92);
-  --bg-elevated: rgba(255, 255, 255, 0.96);
-  --bg-glass: rgba(255, 255, 255, 0.78);
-  --bg-panel: rgba(255, 255, 255, 0.94);
-  --bg-block: rgba(244, 244, 244, 0.95);
+  /* ===== COLOR SYSTEM: DARK ATMOSPHERE ===== */
+  --bg-void: #07090d;
+  --bg-surface: rgba(15, 19, 27, 0.92);
+  --bg-elevated: rgba(20, 25, 35, 0.96);
+  --bg-glass: rgba(18, 22, 32, 0.78);
+  --bg-panel: rgba(16, 20, 29, 0.94);
+  --bg-block: rgba(23, 28, 38, 0.95);
 
   /* Borders */
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-visible: rgba(0, 0, 0, 0.16);
-  --border-glow: rgba(0, 0, 0, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-visible: rgba(255, 255, 255, 0.18);
+  --border-glow: rgba(111, 145, 255, 0.35);
 
   /* Text */
-  --text-primary: #000000;
-  --text-secondary: #1a1a1a;
-  --text-muted: #383838;
-  --text-ghost: #555555;
+  --text-primary: #f5f7ff;
+  --text-secondary: #d8dcef;
+  --text-muted: #a9b2cd;
+  --text-ghost: #7f89a7;
 
   /* Accents - Flat */
-  --accent-primary: #000000;
-  --accent-secondary: rgba(0, 0, 0, 0.72);
-  --accent-tertiary: #2c2c2c;
+  --accent-primary: #8ba7ff;
+  --accent-secondary: rgba(139, 167, 255, 0.75);
+  --accent-tertiary: #b7c8ff;
 
-  --accent-glow: rgba(0, 0, 0, 0.14);
-  --accent-text: #000000;
+  --accent-glow: rgba(139, 167, 255, 0.22);
+  --accent-text: #f5f7ff;
 
   /* Buttons */
-  --btn-bg: #ffffff;
-  --btn-text: #000000;
-  --btn-hover: #f2f2f2;
+  --btn-bg: #171d2b;
+  --btn-text: #f5f7ff;
+  --btn-hover: #20283a;
 
   /* Status */
   --status-success: #10b981;
   --status-warning: #f59e0b;
   --status-error: #ef4444;
-  --status-info: #000000;
+  --status-info: #8ba7ff;
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
@@ -70,16 +70,16 @@
   --radius-pill: 360px;
 
   /* Effects */
-  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.08);
-  --shadow-elevated: 0 16px 36px rgba(0, 0, 0, 0.12);
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.38);
+  --shadow-elevated: 0 16px 36px rgba(0, 0, 0, 0.5);
   --backdrop-blur: 10px;
 
   /* Grid overlay colors */
-  --grid-line-primary: rgba(0, 0, 0, 0.08);
-  --grid-line-secondary: rgba(0, 0, 0, 0.04);
+  --grid-line-primary: rgba(255, 255, 255, 0.1);
+  --grid-line-secondary: rgba(255, 255, 255, 0.05);
 }
 
-/* Removed dark mode media query to enforce global light theme */
+/* Dark theme is now the default global theme */
 
 /* ============================================
    GLOBAL RESET
@@ -132,7 +132,7 @@ body::before {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(115% 88% at 14% 8%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.38) 48%, rgba(255, 255, 255, 0.08) 100%);
+  background: radial-gradient(115% 88% at 14% 8%, rgba(125, 145, 210, 0.35), rgba(45, 56, 81, 0.28) 48%, rgba(15, 19, 27, 0.1) 100%);
   transform: scale(1.05);
   opacity: 0.9;
 }
@@ -143,8 +143,8 @@ body::before {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: inset 2px 1px 0 rgba(255, 255, 255, 0.85), inset -1px -2px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 2px 1px 0 rgba(255, 255, 255, 0.16), inset -1px -2px 0 rgba(0, 0, 0, 0.25);
 }
 
 .action-button {
@@ -200,7 +200,7 @@ body::before {
 
 .icon-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-1px);
 }
 
