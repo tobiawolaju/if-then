@@ -20,6 +20,11 @@ function formatMarkerTime(totalMinutes) {
 }
 
 export default function Timeline({ activities, onSelectActivity }) {
+    const nowInMinutes = useMemo(() => {
+        const now = new Date();
+        return now.getHours() * 60 + now.getMinutes();
+    }, []);
+
     const currentDay = useMemo(
         () => new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase(),
         []
@@ -110,6 +115,7 @@ export default function Timeline({ activities, onSelectActivity }) {
                             key={activity.id}
                             activity={activity}
                             variantIndex={index}
+                            state={start <= nowInMinutes && nowInMinutes < end ? 'live' : start > nowInMinutes ? 'upcoming' : 'past'}
                             onClick={() => onSelectActivity(activity)}
                             style={{
                                 left: `${(start - minTime) * pixelsPerMinute}px`,

@@ -1,6 +1,7 @@
 .activity-block {
     position: absolute;
     height: var(--timeline-row-height);
+    min-width: 50vw;
     border-left: 6px solid var(--block-accent);
     border-radius: 0;
     padding: 10px 12px;
@@ -10,6 +11,22 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.16);
     cursor: pointer;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .activity-block {
+        min-width: 25vw;
+    }
+}
+
+.activity-block--live {
+    background: #8b5cf6;
+    border-left-color: #8b5cf6;
+}
+
+.activity-block--upcoming {
+    background: #ec4899;
+    border-left-color: #ec4899;
 }
 
 .activity-block:hover {
