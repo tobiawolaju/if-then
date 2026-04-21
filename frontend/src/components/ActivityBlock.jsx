@@ -7,8 +7,10 @@ function parseTime(timeStr) {
     return (hours || 0) * 60 + (minutes || 0);
 }
 
-const ActivityBlock = memo(({ activity, onClick, style }) => {
-    const { startTime, endTime, color, title } = activity;
+const BLOCK_COLORS = ['#8b5cf6', '#14b8a6', '#7f1d3f'];
+
+const ActivityBlock = memo(({ activity, onClick, style, variantIndex = 0 }) => {
+    const { startTime, endTime, title } = activity;
 
     const durationLabel = useMemo(() => {
         const duration = Math.max(0, parseTime(endTime) - parseTime(startTime));
@@ -20,7 +22,7 @@ const ActivityBlock = memo(({ activity, onClick, style }) => {
         return `${minutes}m`;
     }, [startTime, endTime]);
 
-    const accentColor = color || '#fecaca';
+    const accentColor = BLOCK_COLORS[variantIndex % BLOCK_COLORS.length];
 
     return (
         <div

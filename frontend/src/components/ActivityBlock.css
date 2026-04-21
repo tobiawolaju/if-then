@@ -1,7 +1,6 @@
 .activity-block {
     position: absolute;
     height: var(--timeline-row-height);
-    min-width: 120px;
     border-left: 6px solid var(--block-accent);
     border-radius: 0;
     padding: 10px 12px;
@@ -20,7 +19,7 @@
 .activity-title {
     font-size: 14px;
     font-weight: 600;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 6px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -31,7 +30,7 @@
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(17, 17, 17, 0.85);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
