@@ -7,7 +7,7 @@ function parseTime(timeStr) {
     return (hours || 0) * 60 + (minutes || 0);
 }
 
-const ActivityBlock = memo(({ activity, onClick }) => {
+const ActivityBlock = memo(({ activity, onClick, style }) => {
     const { startTime, endTime, color, title } = activity;
 
     const durationLabel = useMemo(() => {
@@ -25,7 +25,7 @@ const ActivityBlock = memo(({ activity, onClick }) => {
     return (
         <div
             className="activity-block"
-            style={{ '--block-accent': accentColor }}
+            style={{ '--block-accent': accentColor, ...style }}
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
@@ -39,12 +39,9 @@ const ActivityBlock = memo(({ activity, onClick }) => {
                 }
             }}
         >
-            <div className="activity-start-time">{startTime}</div>
-            <div className="activity-card">
-                <div className="activity-title">{title}</div>
-                <div className="activity-time">
-                    {startTime} — {endTime} • {durationLabel}
-                </div>
+            <div className="activity-title">{title}</div>
+            <div className="activity-time">
+                {startTime} — {endTime} • {durationLabel}
             </div>
         </div>
     );
