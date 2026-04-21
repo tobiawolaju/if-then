@@ -19,7 +19,7 @@
 .activity-title {
     font-size: 14px;
     font-weight: 600;
-    color: #111111;
+    color: rgba(255, 255, 255, 0.96);
     margin-bottom: 6px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -30,7 +30,7 @@
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 500;
-    color: rgba(17, 17, 17, 0.85);
+    color: rgba(255, 255, 255, 0.88);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
