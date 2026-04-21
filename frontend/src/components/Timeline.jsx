@@ -74,6 +74,8 @@ export default function Timeline({ activities, onSelectActivity }) {
 
     const { items, minTime, maxTime, rowCount } = timelineLayout;
     const span = Math.max(120, maxTime - minTime);
+    const pixelsPerMinute = 2;
+    const timelineWidth = Math.max(820, Math.round(span * pixelsPerMinute));
 
     const markers = useMemo(() => {
         const markerCount = 7;
@@ -90,19 +92,19 @@ export default function Timeline({ activities, onSelectActivity }) {
     return (
         <div className="timeline-container" onClick={() => onSelectActivity(null)}>
             <div className="timeline-scroll-area">
-                <div className="timeline-ruler" aria-hidden="true">
+                <div className="timeline-ruler" aria-hidden="true" style={{ width: `${timelineWidth}px` }}>
                     {markers.map((marker) => (
                         <div
                             key={`${marker.label}-${marker.position}`}
                             className="timeline-ruler-marker"
-                            style={{ left: `${marker.position}%` }}
+                            style={{ left: `${(marker.position / 100) * timelineWidth}px` }}
                         >
                             <span>{marker.label}</span>
                         </div>
                     ))}
                 </div>
 
-                <div className="timeline-track" style={{ '--row-count': rowCount }} role="list">
+                <div className="timeline-track" style={{ '--row-count': rowCount, width: `${timelineWidth}px` }} role="list">
                     {items.map(({ activity, start, end, rowIndex }, index) => (
                         <ActivityBlock
                             key={activity.id}
@@ -110,8 +112,8 @@ export default function Timeline({ activities, onSelectActivity }) {
                             variantIndex={index}
                             onClick={() => onSelectActivity(activity)}
                             style={{
-                                left: `${((start - minTime) / span) * 100}%`,
-                                width: `${(Math.max(15, end - start) / span) * 100}%`,
+                                left: `${(start - minTime) * pixelsPerMinute}px`,
+                                width: `${Math.max(15, end - start) * pixelsPerMinute}px`,
                                 top: `calc(${rowIndex} * (var(--timeline-row-height) + var(--timeline-row-gap)))`
                             }}
                         />
