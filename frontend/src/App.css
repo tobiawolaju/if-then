@@ -63,16 +63,16 @@
   --pixels-per-minute: calc(var(--hour-width) / 60);
 
   /* Radius - Soft/Glass */
-  --radius-xs: 10px;
-  --radius-s: 14px;
-  --radius-m: 20px;
-  --radius-l: 28px;
-  --radius-pill: 360px;
+  --radius-xs: 0;
+  --radius-s: 0;
+  --radius-m: 0;
+  --radius-l: 0;
+  --radius-pill: 0;
 
   /* Effects */
-  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.38);
-  --shadow-elevated: 0 16px 36px rgba(0, 0, 0, 0.5);
-  --backdrop-blur: 10px;
+  --shadow-soft: none;
+  --shadow-elevated: none;
+  --backdrop-blur: 0;
 
   /* Grid overlay colors */
   --grid-line-primary: rgba(255, 255, 255, 0.1);

@@ -4,8 +4,10 @@
     bottom: 12px;
     transform: translateX(-50%);
 
-    border-radius: 999px;
+    border-radius: 0;
     padding: 8px 8px 8px 18px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-visible);
 
     display: flex;
     align-items: center;
@@ -15,9 +17,7 @@
     transition:
         opacity 0.2s ease,
         transform 0.2s ease,
-        box-shadow 0.2s ease,
-        backdrop-filter 0.3s ease,
-        background 0.3s ease;
+        background 0.2s ease;
 }
 
 @media (min-width: 901px) {
@@ -28,11 +28,7 @@
 }
 
 .chat-input-container:focus-within {
-    box-shadow:
-        0 20px 40px rgba(6, 10, 18, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.85),
-        inset 0 -8px 12px rgba(62, 85, 120, 0.22);
+    border-color: var(--text-primary);
 }
 
 #chat-input {
@@ -58,29 +54,23 @@
 /* No media query needed for width/bottom anymore */
 
 .action-btn {
-    background:
-        radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.72) 38%, rgba(212, 234, 255, 0.52) 100%);
-    color: #000000;
-    border-radius: 999px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border-radius: 0;
     height: 44px;
     width: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow:
-        0 8px 18px rgba(10, 16, 28, 0.22),
-        inset 0 2px 4px rgba(255, 255, 255, 0.8),
-        inset 0 -6px 10px rgba(42, 72, 106, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--border-visible);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .action-btn:hover {
-    background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 1) 0%, rgba(240, 249, 255, 0.78) 46%, rgba(196, 224, 255, 0.6) 100%);
-    color: #000000;
-    transform: translateY(-1px);
+    background: var(--btn-hover);
+    color: var(--btn-text);
+    transform: none;
 }
 
 .chat-input-container--blocked {
@@ -92,64 +82,15 @@
 .liquid-glass {
     position: relative;
     overflow: hidden;
-
-    border-radius: 999px;
-
-    /* clear, watery body (not frosted) */
-    background:
-        radial-gradient(150% 140% at 18% 16%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.12) 34%, rgba(147, 200, 255, 0.12) 62%, rgba(110, 171, 242, 0.2) 100%),
-        linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(169, 215, 255, 0.2));
-
-    /* very light optical distortion */
-    backdrop-filter: blur(1.25px) saturate(125%) contrast(108%) brightness(104%);
-    -webkit-backdrop-filter: blur(1.25px) saturate(125%) contrast(108%) brightness(104%);
-
-    /* specular edge */
-    border: 1px solid rgba(255, 255, 255, 0.45);
-
-    /* curved shadow + refraction */
-    box-shadow:
-        0 10px 30px rgba(8, 14, 26, 0.32),
-        inset 0 2px 8px rgba(255, 255, 255, 0.68),
-        inset 0 -12px 18px rgba(55, 88, 132, 0.24),
-        inset 14px 0 16px rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
-/* top highlight (water reflection) */
 .liquid-glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    border-radius: 999px;
-    pointer-events: none;
-
-    background: radial-gradient(
-        circle at 22% 18%,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.5) 17%,
-        rgba(255, 255, 255, 0.15) 34%,
-        transparent 55%
-    );
-
-    opacity: 0.9;
+    content: none;
 }
 
-/* curved droplet edge lighting */
 .liquid-glass::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    border-radius: 999px;
-    pointer-events: none;
-
-    background: radial-gradient(
-        ellipse at center,
-        transparent 56%,
-        rgba(255, 255, 255, 0.18) 70%,
-        rgba(90, 132, 183, 0.28) 100%
-    );
-
-    mix-blend-mode: soft-light;
+    content: none;
 }

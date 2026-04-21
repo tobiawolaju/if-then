@@ -3,22 +3,24 @@
     height: var(--timeline-row-height);
     min-width: 120px;
     border-left: 6px solid var(--block-accent);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    background: var(--block-accent);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
     cursor: pointer;
     overflow: hidden;
 }
 
 .activity-block:hover {
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.14);
+    filter: brightness(1.05);
 }
 
 .activity-title {
     font-size: 14px;
     font-weight: 600;
-    color: #111827;
+    color: #ffffff;
     margin-bottom: 6px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -29,7 +31,7 @@
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 500;
-    color: rgba(17, 24, 39, 0.72);
+    color: rgba(255, 255, 255, 0.88);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
