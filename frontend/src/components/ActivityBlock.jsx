@@ -9,7 +9,7 @@ function parseTime(timeStr) {
 
 const BLOCK_COLORS = ['#8b5cf6', '#14b8a6', '#7f1d3f'];
 
-const ActivityBlock = memo(({ activity, onClick, style, variantIndex = 0 }) => {
+const ActivityBlock = memo(({ activity, onClick, style, variantIndex = 0, state = 'past' }) => {
     const { startTime, endTime, title } = activity;
 
     const durationLabel = useMemo(() => {
@@ -26,7 +26,7 @@ const ActivityBlock = memo(({ activity, onClick, style, variantIndex = 0 }) => {
 
     return (
         <div
-            className="activity-block"
+            className={`activity-block activity-block--${state}`}
             style={{ '--block-accent': accentColor, ...style }}
             onClick={(e) => {
                 e.stopPropagation();
