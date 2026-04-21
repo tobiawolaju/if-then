@@ -87,7 +87,7 @@ export default function TradingJournal() {
 
                 {/* Timeline List */}
                 <div className="flex gap-4 md:gap-6">
-                    <div className="w-16 md:w-20 flex-shrink-0 flex flex-col relative">
+                    <div className="w-fit min-w-[4.5rem] md:min-w-[5.5rem] flex-shrink-0 flex flex-col relative">
                         <div className="absolute left-7 md:left-9 top-0 bottom-0 w-px bg-white/15" />
                         {timeMarkers.map((time, i) => (
                             <div key={`${time}-${i}`} className="relative h-[188px] flex items-start pt-4">
@@ -130,7 +130,7 @@ export default function TradingJournal() {
                                 </div>
 
                                 {/* Notes */}
-                                <p className="text-muted text-xs leading-relaxed line-clamp-2 mb-3">
+                                <p className="text-muted text-xs leading-relaxed mb-3 whitespace-normal break-words">
                                     {entry.notes}
                                 </p>
 
