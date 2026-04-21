@@ -9,29 +9,13 @@
   <title>IF·THEN</title>
   <!-- Web App Manifest & Fullscreen Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#07090d">
   <link rel="manifest" href="manifest.json">
 
   <script>
-    (function () {
-      try {
-        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const setTheme = (isDark) => {
-          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        };
-
-        // Initial set
-        setTheme(darkModeMediaQuery.matches);
-
-        // Listen for changes and refresh
-        darkModeMediaQuery.addEventListener('change', () => {
-          window.location.reload();
-        });
-      } catch (e) { }
-    })();
+    document.documentElement.setAttribute('data-theme', 'dark');
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">

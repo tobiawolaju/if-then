@@ -46,7 +46,7 @@
     --timeline-row-gap: 10px;
     position: relative;
     min-height: calc(var(--row-count) * var(--timeline-row-height) + (var(--row-count) - 1) * var(--timeline-row-gap));
-    border-radius: 14px;
+    border-radius: 0;
     background:
         repeating-linear-gradient(
             to bottom,

@@ -9,10 +9,9 @@
     flex-direction: column;
     z-index: 1190;
     border: 1px solid var(--border-visible);
-    border-radius: 0px;
-    border-radius: 14px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
-    animation: slideUp 0.2s ease-out;
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
 }
 
 @keyframes slideUp {
