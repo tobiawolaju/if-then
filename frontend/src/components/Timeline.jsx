@@ -103,10 +103,11 @@ export default function Timeline({ activities, onSelectActivity }) {
                 </div>
 
                 <div className="timeline-track" style={{ '--row-count': rowCount }} role="list">
-                    {items.map(({ activity, start, end, rowIndex }) => (
+                    {items.map(({ activity, start, end, rowIndex }, index) => (
                         <ActivityBlock
                             key={activity.id}
                             activity={activity}
+                            variantIndex={index}
                             onClick={() => onSelectActivity(activity)}
                             style={{
                                 left: `${((start - minTime) / span) * 100}%`,
