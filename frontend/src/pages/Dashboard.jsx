@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
 import Timeline from '../components/Timeline';
 import ChatInput from '../components/ChatInput';
 import ChatOverlay from '../components/ChatOverlay';
 import DetailsSheet from '../components/DetailsSheet';
-import FuturesNotification from '../components/FuturesNotification';
-import FuturesModal from '../components/FuturesModal';
 import { useSchedule } from '../hooks/useSchedule';
 import { useConversation } from '../hooks/useConversation';
 import './Dashboard.css';
@@ -15,7 +12,6 @@ import BottomNav from '../components/BottomNav';
 export default function Dashboard({ user, onLogout, accessToken, getFreshAccessToken, onNavigateToProfile }) {
     const { activities, loading: scheduleLoading } = useSchedule(user?.uid);
     const [selectedActivity, setSelectedActivity] = useState(null);
-    const [showFuturesModal, setShowFuturesModal] = useState(false);
     const [activeView, setActiveView] = useState('timeline');
 
     // Conversation state
@@ -107,7 +103,6 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
 
     return (
         <div className="app-container">
-            <Header user={user} onLogout={onLogout} onProfileClick={onNavigateToProfile} />
             <div className="dashboard-body">
                 <main className="dashboard-main">
                     <Timeline
@@ -117,7 +112,7 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
                 </main>
             </div>
 
-            {!selectedActivity && !showFuturesModal && (
+            {!selectedActivity && (
                 <ChatOverlay
                 isOpen={conversation.isOpen}
                 messages={conversation.messages}
@@ -132,23 +127,10 @@ export default function Dashboard({ user, onLogout, accessToken, getFreshAccessT
             <ChatInput
                 onSendMessage={handleSendMessage}
                 isProcessing={conversation.isTyping}
-                onOpenFutures={() => setShowFuturesModal(true)}
-                isBlocked={!!selectedActivity || showFuturesModal}
+                isBlocked={!!selectedActivity}
+                user={user}
+                onProfileClick={onNavigateToProfile}
             />
-
-            <FuturesNotification
-                userId={user?.uid}
-                apiBaseUrl={API_BASE_URL}
-                onViewFutures={() => setShowFuturesModal(true)}
-            />
-
-            {showFuturesModal && (
-                <FuturesModal
-                    user={user}
-                    onClose={() => setShowFuturesModal(false)}
-                    apiBaseUrl={API_BASE_URL}
-                />
-            )}
 
             {selectedActivity && (
                 <DetailsSheet

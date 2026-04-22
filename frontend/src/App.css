@@ -109,6 +109,17 @@ body::before {
   content: none;
 }
 
+/* Hide scrollbars (colorless) */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
 /* Glass Utility */
 .glass {
   background: var(--bg-glass);
